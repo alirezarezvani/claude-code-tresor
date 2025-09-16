@@ -1,0 +1,45 @@
+{
+  "name": "review",
+  "description": "Automated code review with best practices, security checks, and performance analysis",
+  "category": "workflow",
+  "parameters": {
+    "required": [],
+    "optional": ["scope", "checks", "format", "output", "severity"]
+  },
+  "examples": [
+    {
+      "usage": "/review --scope staged",
+      "description": "Review only staged changes in git"
+    },
+    {
+      "usage": "/review --checks security,performance,style",
+      "description": "Focus on specific types of checks"
+    },
+    {
+      "usage": "/review --format detailed --output review-report.md",
+      "description": "Generate detailed report and save to file"
+    }
+  ],
+  "supported_scopes": [
+    "staged",
+    "unstaged",
+    "commit",
+    "pr",
+    "branch",
+    "file",
+    "directory"
+  ],
+  "check_types": [
+    "security",
+    "performance",
+    "style",
+    "maintainability",
+    "testing",
+    "documentation",
+    "accessibility",
+    "best-practices"
+  ],
+  "author": "Alireza Rezvani",
+  "version": "1.0.0",
+  "created": "2025-09-16"
+}

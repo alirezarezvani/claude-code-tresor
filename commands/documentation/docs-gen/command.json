@@ -1,0 +1,46 @@
+{
+  "name": "docs-gen",
+  "description": "Generate comprehensive documentation from code, including API docs, README files, and user guides",
+  "category": "documentation",
+  "parameters": {
+    "required": [],
+    "optional": ["type", "format", "output", "include", "template", "auto-deploy"]
+  },
+  "examples": [
+    {
+      "usage": "/docs-gen api --format openapi",
+      "description": "Generate OpenAPI specification from code"
+    },
+    {
+      "usage": "/docs-gen readme --sections all --badges",
+      "description": "Generate comprehensive README with all sections and badges"
+    },
+    {
+      "usage": "/docs-gen guide --type user --format gitbook",
+      "description": "Create user guide in GitBook format"
+    }
+  ],
+  "supported_types": [
+    "api",
+    "readme",
+    "guide",
+    "reference",
+    "changelog",
+    "contributing",
+    "security",
+    "deployment"
+  ],
+  "supported_formats": [
+    "markdown",
+    "html",
+    "pdf",
+    "openapi",
+    "swagger",
+    "gitbook",
+    "docusaurus",
+    "vuepress"
+  ],
+  "author": "Alireza Rezvani",
+  "version": "1.0.0",
+  "created": "2025-09-16"
+}
