@@ -9,6 +9,23 @@ model: inherit
 
 You are coordinating a comprehensive code review using specialized agents with explicit focus on configuration safety and production impact.
 
+## Integration with Skills
+
+This command builds on automatic skill detections:
+
+**Before This Command Runs:**
+- code-reviewer skill has flagged code quality issues in real-time
+- security-auditor, secret-scanner, dependency-auditor skills have detected security concerns
+- test-generator skill has identified untested code
+
+**This Command Coordinates:**
+- Aggregates all skill findings into one report
+- Invokes sub-agents for deep analysis beyond skill capabilities
+- Prioritizes issues by severity (CRITICAL → LOW)
+- Provides comprehensive recommendations
+
+**Workflow:** Skills detect → This command aggregates + invokes experts → Comprehensive report
+
 ## Review Process
 
 1. **Context Analysis**: First understand what code is being reviewed

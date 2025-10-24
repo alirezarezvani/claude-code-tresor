@@ -5,29 +5,37 @@
 ## 🎯 Repository Purpose
 
 Claude Code Tresor is a comprehensive collection of professional-grade utilities for Claude Code:
-- **4 Essential Slash Commands**: `/scaffold`, `/review`, `/test-gen`, `/docs-gen`
-- **5 Specialized Agents**: `@code-reviewer`, `@test-engineer`, `@docs-writer`, `@architect`, `@debugger`
+- **8 Autonomous Skills**: Automatic background helpers (NEW in v2.0!)
+- **8 Specialized Agents**: Expert sub-agents for deep analysis
+- **4 Essential Slash Commands**: Workflow automation and orchestration
 - **20+ Prompt Templates**: Production-ready prompts for common development scenarios
 - **Development Standards**: Style guides, Git workflows, and team collaboration guidelines
 
-**Author**: Alireza Rezvani | **License**: MIT | **Created**: September 16, 2025
+**Author**: Alireza Rezvani | **License**: MIT | **Created**: September 16, 2025 | **Updated**: October 24, 2025 (v2.0.0)
 
 ## 🏗️ Architecture
 
 ```
 claude-code-tresor/
-├── commands/                   # Slash Commands (.json + README.md)
-│   ├── development/scaffold/   # Project/component scaffolding
-│   ├── workflow/review/        # Code review automation
-│   ├── testing/test-gen/       # Test generation
-│   └── documentation/docs-gen/ # Documentation generation
-├── agents/                     # Specialized Agents (.json + README.md)
+├── skills/                     # 8 Autonomous Skills (NEW v2.0!)
+│   ├── development/            # code-reviewer, test-generator, git-commit-helper
+│   ├── security/               # security-auditor, secret-scanner, dependency-auditor
+│   └── documentation/          # api-documenter, readme-updater
+├── agents/                     # 8 Specialized Agents (.md + README.md)
 │   ├── code-reviewer/          # Code quality expert
 │   ├── test-engineer/          # Testing specialist
 │   ├── docs-writer/            # Documentation expert
 │   ├── architect/              # System design expert
-│   └── debugger/               # Debugging specialist
-├── prompts/                    # Prompt templates
+│   ├── debugger/               # Debugging specialist
+│   ├── security-auditor/       # Security expert
+│   ├── performance-tuner/      # Performance optimization
+│   └── refactor-expert/        # Code refactoring
+├── commands/                   # 4 Slash Commands (.md + README.md)
+│   ├── development/scaffold/   # Project/component scaffolding
+│   ├── workflow/review/        # Code review automation
+│   ├── testing/test-gen/       # Test generation
+│   └── documentation/docs-gen/ # Documentation generation
+├── prompts/                    # 20+ Prompt templates
 ├── standards/                  # Development standards
 ├── examples/                   # Real-world workflows
 ├── sources/                    # Extended library (200+ components)
@@ -45,12 +53,13 @@ claude-code-tresor/
 
 ### Installation & Setup
 ```bash
-# Full installation (recommended)
+# Full installation (recommended) - installs skills + agents + commands
 ./scripts/install.sh
 
 # Selective installation
-./scripts/install.sh --commands-only
-./scripts/install.sh --agents-only
+./scripts/install.sh --skills        # 8 autonomous skills only
+./scripts/install.sh --agents        # 8 expert agents only
+./scripts/install.sh --commands      # 4 workflow commands only
 ./scripts/install.sh --resources-only
 
 # Updates
@@ -81,6 +90,56 @@ Each agent in `agents/` contains:
 - `agent.json` - Agent configuration and capabilities
 - `README.md` - Detailed usage guide and examples
 - Agents follow pattern: `@agent-name task description`
+
+### Skill Structure (NEW v2.0!)
+Each skill in `skills/` contains:
+- `SKILL.md` - Skill configuration with YAML frontmatter + comprehensive docs
+- `README.md` - Quick reference guide with examples
+- Skills activate automatically based on trigger keywords
+
+## ✨ Skills Layer (NEW v2.0!)
+
+### What Are Skills?
+**Skills** are autonomous background helpers that work continuously without manual invocation:
+- ✅ **Automatic activation** - Triggered by code changes, file saves, commits
+- ✅ **Lightweight** - Limited tool access for safety (Read, Write, Edit, Grep, Glob)
+- ✅ **Proactive** - Detect issues and opportunities in real-time
+- ✅ **Non-blocking** - Provide suggestions without interrupting workflow
+
+### 8 Core Skills
+
+**Development Skills (3):**
+1. **code-reviewer** - Real-time code quality checks
+2. **test-generator** - Auto-suggest missing tests
+3. **git-commit-helper** - Generate conventional commit messages
+
+**Security Skills (3):**
+4. **security-auditor** - OWASP Top 10 vulnerability scanning
+5. **secret-scanner** - Detect exposed API keys/secrets
+6. **dependency-auditor** - CVE checking for dependencies
+
+**Documentation Skills (2):**
+7. **api-documenter** - Auto-generate OpenAPI specs
+8. **readme-updater** - Keep README current with changes
+
+### Skills vs Agents vs Commands
+
+| Feature | Skills | Agents | Commands |
+|---------|--------|--------|----------|
+| **Invocation** | Automatic | Manual (`@agent`) | Manual (`/command`) |
+| **Tools** | Limited (safe) | Full access | Orchestrates |
+| **Context** | Shared | Separate | Coordinates |
+| **Best For** | Quick checks | Deep analysis | Workflows |
+
+**Typical Workflow:**
+1. **Skill detects** issue automatically → suggests improvement
+2. **Developer invokes Agent** → `@code-reviewer` comprehensive analysis
+3. **Developer runs Command** → `/review --scope staged` full workflow
+
+### Sandboxing (Optional)
+All skills work **WITHOUT sandboxing by default**. Sandboxing is optional for additional security isolation.
+
+**See:** [Skills Guide](skills/README.md) | [Getting Started](GETTING-STARTED.md) | [Architecture](ARCHITECTURE.md)
 
 ## 🔧 Key Implementation Details
 
@@ -117,7 +176,7 @@ The `/docs-gen` command generates:
 ## 🎨 Prompt Template Categories
 
 Located in `prompts/` directory:
-- **Frontend Development**: React, Vue, Angular patterns
+- **Frontend Development**: React, NextJS, ReactJS, Vue, Angular patterns
 - **Backend Development**: APIs, databases, microservices
 - **Debugging & Analysis**: Error analysis, performance troubleshooting
 - **Best Practices**: Clean code, security, refactoring strategies
@@ -234,4 +293,4 @@ The `sources/` directory contains 200+ additional components:
 
 ---
 
-**Remember**: This repository provides utilities TO users, not a development project itself. Focus on helping users implement, customize, and extend these utilities for their own projects. Provide brutally honest, technically sound guidance that prevents costly mistakes while maintaining code simplicity and readability.
+**Remember**: This repository provides utilities TO users, not a development project itself. Focus on helping users implement, customize, and extend these utilities for their own projects. Provide brutally honest, technically sound guidance that prevents costly mistakes while maintaining code simplicity and readability.No technical jargons that is complicated for the user. Always use the current date,even when you create files or examples.

@@ -6,6 +6,39 @@ Expert technical documentation specialist creating comprehensive, user-friendly 
 
 The **@docs-writer** agent specializes in creating clear, actionable documentation for diverse audiences. From API references to user tutorials, it transforms complex technical information into accessible, well-structured content that helps users succeed.
 
+## ✨ Working with Skills (NEW!)
+
+This agent works in coordination with **two documentation skills** that handle automatic updates:
+
+**api-documenter Skill (Autonomous):**
+- Auto-generates OpenAPI/Swagger specs from code comments
+- Extracts endpoint documentation from framework decorators
+- Creates basic request/response examples
+- Tools: Read, Write, Grep (lightweight)
+
+**readme-updater Skill (Autonomous):**
+- Keeps README.md current with project changes
+- Updates installation steps when dependencies change
+- Adds new features to Features section automatically
+- Updates configuration docs when env vars added
+- Tools: Read, Write, Edit, Grep (lightweight)
+
+**This Agent (Manual Expert):**
+- Invoked explicitly for comprehensive documentation sites (`@docs-writer`)
+- User guides, tutorials, troubleshooting sections
+- Architecture documentation and decision records (ADRs)
+- Migration guides and deployment documentation
+- Tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch (full access)
+
+### Typical Workflow
+
+1. **Skills maintain** → API specs and README stay current automatically
+2. **You invoke this agent** → `@docs-writer Create user guide with tutorials`
+3. **Agent creates** → Comprehensive documentation building on skill-generated basics
+4. **Complementary, not duplicate** → Focus on user-facing content, architecture, guides
+
+**See:** [Skills Guide](../../skills/README.md) for more information
+
 ## 🚀 Capabilities
 
 ### Documentation Types
