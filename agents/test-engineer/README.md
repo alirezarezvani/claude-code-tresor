@@ -6,6 +6,32 @@ Expert testing specialist for comprehensive test creation, validation, and quali
 
 The **@test-engineer** agent is your dedicated testing expert that creates comprehensive, maintainable test suites. With deep knowledge of testing methodologies, frameworks, and best practices, it ensures your code is thoroughly tested and reliable.
 
+## ✨ Working with Skills (NEW!)
+
+This agent works in coordination with the **test-generator skill** which provides automatic test scaffolding:
+
+**test-generator Skill (Autonomous):**
+- Detects untested code automatically
+- Generates basic test scaffolding (3-5 tests per function)
+- Suggests obvious test cases (happy path, null checks)
+- Tools: Read, Write, Edit (lightweight)
+
+**This Agent (Manual Expert):**
+- Invoked explicitly for comprehensive test suites (`@test-engineer`)
+- Advanced test patterns (mocking, fixtures, parameterized tests)
+- Integration and E2E test design
+- Test strategy and coverage analysis
+- Tools: Read, Write, Edit, Bash, Grep, Glob, Task (full access)
+
+### Typical Workflow
+
+1. **Skill detects** → New function without tests, suggests basic scaffolding
+2. **You invoke this agent** → `@test-engineer Create comprehensive test suite`
+3. **Agent builds** → Expand skill's basic tests into full suite with edge cases
+4. **Complementary, not duplicate** → Skip basic tests skill created, focus on complex scenarios
+
+**See:** [Skills Guide](../../skills/README.md) for more information
+
 ## 🚀 Capabilities
 
 ### Test Suite Generation

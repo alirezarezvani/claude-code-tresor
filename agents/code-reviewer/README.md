@@ -6,6 +6,32 @@ Expert code reviewer specializing in comprehensive quality analysis, security vu
 
 The **@code-reviewer** agent provides thorough, professional code reviews that cover all aspects of software quality. With expertise across multiple languages and frameworks, it delivers actionable feedback to help you write better, more secure, and more maintainable code.
 
+## ✨ Working with Skills (NEW!)
+
+This agent works in coordination with the **code-reviewer skill** which provides automatic background checks:
+
+**Skill (Autonomous):**
+- Runs continuously while you code
+- Detects code smells in real-time
+- Suggests quick improvements (naming, structure, basic security)
+- Tools: Read, Grep, Glob (lightweight)
+
+**This Agent (Manual Expert):**
+- Invoked explicitly for deep analysis (`@code-reviewer`)
+- Comprehensive security and performance review
+- Architectural pattern evaluation
+- Complex refactoring recommendations
+- Tools: Read, Edit, Bash, Grep, Glob, Task (full access)
+
+### Typical Workflow
+
+1. **Skill detects** → Quick issue flagged during coding
+2. **You invoke this agent** → `@code-reviewer Analyze this component`
+3. **Agent analyzes** → Build on skill findings, provide deep insights
+4. **Complementary, not duplicate** → Focus on what skill cannot detect
+
+**See:** [Skills Guide](../../skills/README.md) for more information
+
 ## 🚀 Capabilities
 
 ### Code Quality Analysis

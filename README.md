@@ -1,16 +1,31 @@
 # Claude Code Tresor 🏆
 
-> A world-class collection of Claude Code utilities: prompts, slash commands, and subagents that supercharge your development workflow.
+> A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
+**Updated**: October 24, 2025 (v2.0.0 - Major update!)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
+
+---
+
+## 🎉 What's New in v2.0.0
+
+**Major Feature: Skills Layer** - Autonomous background helpers that work automatically!
+
+- ✨ **8 New Skills** - Automatic code quality, security scanning, test suggestions, and documentation
+- 🔄 **3-Tier Architecture** - Skills (automatic) → Agents (manual) → Commands (workflows)
+- 📚 **Comprehensive Guides** - [Getting Started](GETTING-STARTED.md), [Architecture](ARCHITECTURE.md), [Migration](MIGRATION-GUIDE.md)
+- 🛡️ **Zero Breaking Changes** - All existing agents and commands work exactly as before
+- 🎯 **Simple & Intuitive** - Skills work without configuration, sandboxing is optional
+
+**Upgrading?** See [MIGRATION-GUIDE.md](MIGRATION-GUIDE.md) for seamless upgrade with zero breaking changes.
 
 ---
 
@@ -41,7 +56,7 @@ Transform your development workflow with these powerful commands:
 | **`/test-gen`** | Create comprehensive test suites automatically | `/test-gen --file utils.js --coverage 90` |
 | **`/docs-gen`** | Generate documentation from code and comments | `/docs-gen api --format openapi` |
 
-### 🤖 Specialized Agents (3 Core)
+### 🤖 Specialized Agents (8 Expert)
 Expert-level assistance for complex development tasks:
 
 | Agent | Expertise | Best For |
@@ -49,6 +64,29 @@ Expert-level assistance for complex development tasks:
 | **`@code-reviewer`** | Code quality, security, performance analysis | PR reviews, code audits, best practices |
 | **`@test-engineer`** | Testing strategies, test creation, QA | Unit tests, integration tests, coverage analysis |
 | **`@docs-writer`** | Technical documentation, user guides | API docs, README files, troubleshooting guides |
+| **`@architect`** | System design, technology evaluation | Architecture reviews, design decisions |
+| **`@debugger`** | Root cause analysis, troubleshooting | Production issues, complex bugs |
+| **`@security-auditor`** | Security assessment, OWASP compliance | Security audits, vulnerability analysis |
+| **`@performance-tuner`** | Performance optimization, profiling | Performance issues, bottleneck analysis |
+| **`@refactor-expert`** | Code refactoring, clean architecture | Technical debt, code modernization |
+
+### ✨ Skills (8 Autonomous) - **NEW!**
+Automatic background helpers that work while you code:
+
+| Skill | What It Does | Triggers On |
+|-------|--------------|-------------|
+| **`code-reviewer`** | Real-time code quality checks | File edits, saves |
+| **`test-generator`** | Suggests missing tests automatically | New functions, untested code |
+| **`git-commit-helper`** | Generates commit messages from diff | `git diff --staged` |
+| **`security-auditor`** | Detects vulnerabilities (SQL injection, XSS) | Auth code, API endpoints |
+| **`secret-scanner`** | Blocks commits with exposed secrets | Pre-commit, API keys in code |
+| **`dependency-auditor`** | Checks dependencies for CVEs | package.json changes |
+| **`api-documenter`** | Auto-generates OpenAPI specs | API routes added |
+| **`readme-updater`** | Keeps README current | Project changes, features |
+
+**Skills vs Agents:** Skills work **automatically** in the background. Agents require **manual invocation** (`@agent`) for deep analysis.
+
+**Learn more:** [Skills Guide](skills/README.md) · [Getting Started](GETTING-STARTED.md) · [Architecture](ARCHITECTURE.md)
 
 ### 📝 Curated Prompt Templates (20+)
 Ready-to-use prompts for common development scenarios:
@@ -92,19 +130,34 @@ Extensive collection of additional utilities in the `sources/` directory:
 git clone https://github.com/alirezarezvani/claude-code-tresor.git
 cd claude-code-tresor
 
-# Run the installation script
+# Run the installation script (installs skills + agents + commands)
 chmod +x scripts/install.sh
 ./scripts/install.sh
+
+# Or install selectively:
+./scripts/install.sh --skills          # Skills only (autonomous helpers)
+./scripts/install.sh --agents          # Agents only (manual experts)
+./scripts/install.sh --commands        # Commands only (workflows)
 ```
+
+**What's installed:**
+- ✅ **8 Skills** - Automatic background helpers
+- ✅ **8 Agents** - Manual expert sub-agents
+- ✅ **4 Commands** - Workflow automation
+
+**First time?** See [GETTING-STARTED.md](GETTING-STARTED.md) for 5-minute quick start.
 
 ### Option 2: Manual Installation
 
 ```bash
+# Copy skills to Claude Code directory
+cp -r skills/* ~/.claude/skills/
+
 # Copy commands to Claude Code directory
-cp -r commands/* ~/.config/claude-code/commands/
+cp -r commands/* ~/.claude/commands/
 
 # Copy agents to Claude Code directory
-cp -r agents/* ~/.config/claude-code/agents/
+cp -r agents/* ~/.claude/agents/
 
 # Copy resources for reference
 cp -r prompts standards examples ~/claude-code-resources/
@@ -182,17 +235,32 @@ claude-code-tresor/
 ├── 📖 README.md                    # This file - complete overview
 ├── ⚖️ LICENSE                      # MIT License
 ├── 🤝 CONTRIBUTING.md              # Contribution guidelines
+├── 📚 GETTING-STARTED.md           # 5-minute quick start guide
+├── 🏗️ ARCHITECTURE.md              # 3-tier system explanation
+├── 🔄 MIGRATION-GUIDE.md           # Upgrade guide for existing users
 ├──
-├── ⚡ commands/                     # Slash Commands
+├── ✨ skills/                      # 8 Autonomous Skills (NEW v2.0!)
+│   ├── development/                # code-reviewer, test-generator, git-commit-helper
+│   ├── security/                   # security-auditor, secret-scanner, dependency-auditor
+│   ├── documentation/              # api-documenter, readme-updater
+│   ├── README.md                   # Skills guide
+│   └── TEMPLATES.md                # Custom skill templates
+├──
+├── 🤖 agents/                      # 8 Specialized Agents
+│   ├── code-reviewer/              # Code quality expert
+│   ├── test-engineer/              # Testing specialist
+│   ├── docs-writer/                # Documentation expert
+│   ├── architect/                  # System design expert
+│   ├── debugger/                   # Debugging specialist
+│   ├── security-auditor/           # Security expert
+│   ├── performance-tuner/          # Performance optimization
+│   └── refactor-expert/            # Code refactoring
+├──
+├── ⚡ commands/                     # 4 Slash Commands
 │   ├── development/                # Project scaffolding and tools
 │   ├── testing/                    # Test generation and analysis
 │   ├── documentation/              # Doc generation utilities
 │   └── workflow/                   # PR reviews and automation
-├──
-├── 🤖 agents/                      # Specialized Agents
-│   ├── code-reviewer/              # Code quality expert
-│   ├── test-engineer/              # Testing specialist
-│   └── docs-writer/                # Documentation expert
 ├──
 ├── 📝 prompts/                     # Prompt Templates
 │   ├── code-generation/            # Frontend & backend prompts
@@ -224,16 +292,17 @@ claude-code-tresor/
 ## 🎯 Getting Started Paths
 
 ### 👶 New to Claude Code?
-1. **Install**: Run `./scripts/install.sh`
-2. **Try**: `/scaffold react-component TestComponent --tests`
-3. **Learn**: Browse `examples/workflows/react-app-setup.md`
-4. **Explore**: Check out prompt templates in `prompts/`
+1. **Install**: Run `./scripts/install.sh` (installs skills + agents + commands)
+2. **Observe**: Skills work automatically - start coding and watch them detect issues
+3. **Try Command**: `/scaffold react-component TestComponent --tests`
+4. **Invoke Agent**: `@code-reviewer` for deep analysis
+5. **Learn**: Browse [GETTING-STARTED.md](GETTING-STARTED.md) for 5-min quick start
 
 ### 🏃‍♂️ Ready to Build?
-1. **Full Setup**: Follow `examples/workflows/react-app-setup.md`
-2. **Code Review**: Use `@code-reviewer` for quality analysis
-3. **Testing**: Generate tests with `@test-engineer`
-4. **Documentation**: Create docs with `/docs-gen`
+1. **Skills monitor**: Automatic background checks (code quality, security, tests)
+2. **Agent analysis**: `@code-reviewer`, `@test-engineer` for deep dives
+3. **Command workflows**: `/review --scope staged`, `/test-gen --file utils.js`
+4. **Full workflow**: Skills detect → Agents analyze → Commands orchestrate
 
 ### 👥 Team Lead?
 1. **Standards**: Implement `standards/style-guides/javascript.md`
@@ -300,13 +369,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 📊 Project Stats
 
-- **🏗️ Core Utilities**: 10 (commands + agents)
+- **✨ Skills**: 8 autonomous background helpers (NEW v2.0!)
+- **🤖 Agents**: 8 expert sub-agents for deep analysis
+- **⚡ Commands**: 4 workflow orchestration commands
 - **📝 Prompt Templates**: 20+ battle-tested prompts
 - **📏 Standards**: 5 comprehensive style guides
 - **💡 Examples**: 10+ real-world workflows
 - **📦 Source Library**: 200+ additional components
-- **⚡ Installation Time**: < 2 minutes
-- **📈 Active Development**: Continuously updated
+- **⏱️ Installation Time**: < 2 minutes
+- **📈 Version**: 2.0.0 (Major update: Skills layer!)
+- **🔄 Active Development**: Continuously updated
 
 ---
 
