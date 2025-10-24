@@ -6,6 +6,7 @@ allowed-tools: Read, Grep, Glob
 
 # Code Reviewer Skill
 
+
 Lightweight automatic code quality checks while you code.
 
 ## When I Activate
