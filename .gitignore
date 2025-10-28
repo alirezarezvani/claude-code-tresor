@@ -115,3 +115,5 @@ temp/
 dist/
 build/
 out/
+scripts/publish-gist.sh
+documentation/external/gist-complete-guide.md

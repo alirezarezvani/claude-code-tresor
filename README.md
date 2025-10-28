@@ -43,6 +43,8 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 - **📖 Well-Documented**: Every component includes detailed examples and usage guides
 
 > **💡 Ecosystem Tip:** Looking for more? Check out the [Claude Code Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory) to build custom skills, or browse the [Claude Skills Library](https://github.com/alirezarezvani/claude-skills) for pre-built professional domain packages. See [Related Projects](#-related-projects--ecosystem) for details.
+>
+> **📖 [Complete Augmentation Guide](https://gist.github.com/alirezarezvani/a0f6e0a984d4a4adc4842bbe124c5935)** - Comprehensive guide with FAQs, use cases, and installation instructions
 
 ---
 
@@ -165,6 +167,24 @@ A curated collection of specialized skill packages combining best practices, ana
 **Best For:** Teams needing enterprise-grade expertise packages, professionals seeking domain-specific guidance, or organizations standardizing workflows across multiple roles.
 
 **Use Case:** "I need comprehensive product management workflows with templates and frameworks" → Use Claude Skills Library
+
+---
+
+### 📖 Complete Ecosystem Guide
+
+**New to Claude Code augmentation?** Read the comprehensive guide with FAQs, installation instructions, and detailed use cases:
+
+**[📖 Complete Augmentation Guide](https://gist.github.com/alirezarezvani/a0f6e0a984d4a4adc4842bbe124c5935)** (GitHub Gist)
+
+This guide answers:
+- What is Claude Code augmentation and why should I use it?
+- How do Skills, Agents, Commands, and Hooks work?
+- Which repository should I use for my needs?
+- Step-by-step installation for all three repositories
+- 20+ FAQs covering installation, usage, and troubleshooting
+- 5+ detailed use cases with code examples
+
+---
 
 ### 🎯 How These Projects Work Together
 
