@@ -115,5 +115,9 @@ temp/
 dist/
 build/
 out/
-scripts/publish-gist.sh
-documentation/external/gist-complete-guide.md
+
+# Internal working documents (not for users)
+CLAUDE.md
+
+# External marketing and workflow documentation (not for users)
+documentation/external/
