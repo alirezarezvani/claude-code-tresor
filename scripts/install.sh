@@ -69,6 +69,7 @@ create_directories() {
     # Create subdirectories
     mkdir -p "$CLAUDE_CODE_DIR/commands"
     mkdir -p "$CLAUDE_CODE_DIR/agents"
+    mkdir -p "$CLAUDE_CODE_DIR/skills"
     mkdir -p "$CLAUDE_CODE_DIR/templates"
 
     log "Directory structure ready"
@@ -149,6 +150,35 @@ install_agents() {
         log "Agents installed successfully"
     else
         warn "Agents directory not found in repository"
+    fi
+}
+
+install_skills() {
+    header "Installing Autonomous Skills"
+
+    local skills_src="$TRESOR_DIR/skills"
+    local skills_dest="$CLAUDE_CODE_DIR/skills"
+
+    if [ -d "$skills_src" ]; then
+        log "Installing skills to: $skills_dest"
+
+        # Copy all skill directories (maintaining category structure)
+        find "$skills_src" -mindepth 2 -maxdepth 2 -type d | while read -r skill_dir; do
+            local skill_name=$(basename "$skill_dir")
+            local category=$(basename "$(dirname "$skill_dir")")
+            local dest_dir="$skills_dest/${category}/${skill_name}"
+
+            # Check if SKILL.md exists
+            if [ -f "$skill_dir/SKILL.md" ]; then
+                log "Installing skill: ${category}/${skill_name}"
+                mkdir -p "$skills_dest/$category"
+                cp -r "$skill_dir" "$dest_dir"
+            fi
+        done
+
+        log "Skills installed successfully"
+    else
+        warn "Skills directory not found in repository"
     fi
 }
 
@@ -299,6 +329,7 @@ show_help() {
     echo
     echo "Options:"
     echo "  --help              Show this help message"
+    echo "  --skills-only       Install only autonomous skills (v2.0+)"
     echo "  --commands-only     Install only slash commands"
     echo "  --agents-only       Install only agents"
     echo "  --resources-only    Install only resources (prompts, standards, examples)"
@@ -308,13 +339,16 @@ show_help() {
     echo
     echo "Examples:"
     echo "  $0                    # Full installation"
+    echo "  $0 --skills-only      # Install only skills"
     echo "  $0 --commands-only    # Install only commands"
+    echo "  $0 --agents-only      # Install only agents"
     echo "  $0 --update           # Update existing installation"
     echo
     echo "For more information, visit: $REPO_URL"
 }
 
 # Parse command line arguments
+SKILLS_ONLY=false
 COMMANDS_ONLY=false
 AGENTS_ONLY=false
 RESOURCES_ONLY=false
@@ -326,6 +360,10 @@ while [[ $# -gt 0 ]]; do
         --help)
             show_help
             exit 0
+            ;;
+        --skills-only)
+            SKILLS_ONLY=true
+            shift
             ;;
         --commands-only)
             COMMANDS_ONLY=true
@@ -374,19 +412,23 @@ main() {
 
     clone_repository
 
-    if [ "$COMMANDS_ONLY" = true ]; then
+    if [ "$SKILLS_ONLY" = true ]; then
+        install_skills
+    elif [ "$COMMANDS_ONLY" = true ]; then
         install_commands
     elif [ "$AGENTS_ONLY" = true ]; then
         install_agents
     elif [ "$RESOURCES_ONLY" = true ]; then
         install_resources
     elif [ "$UPDATE_ONLY" = true ]; then
+        install_skills
         install_commands
         install_agents
         install_resources
         log "Update completed successfully"
     else
         # Full installation
+        install_skills
         install_commands
         install_agents
         install_resources
