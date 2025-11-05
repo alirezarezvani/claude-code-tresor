@@ -40,21 +40,40 @@ jobs:
       - name: Validate branch naming convention
         env:
           BRANCH_NAME: ${{ steps.ref.outputs.target_ref }}
+          BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.event.repository.default_branch }}
         run: |
           echo "Validating branch name: $BRANCH_NAME"
+          echo "Target branch: $BASE_BRANCH"
+
+          # Skip validation for release PRs (dev → main) - handled by main-branch-guard
+          if [[ "$BASE_BRANCH" == "main" ]]; then
+            echo "✅ Release PR detected (→ main). Branch naming validation handled by main-branch-guard."
+            exit 0
+          fi
+
+          # Allow feature branch patterns
           if [[ "$BRANCH_NAME" =~ ^(feat|fix|docs|chore|refactor|test|build|ci|perf|style|hotfix|release)/[a-z0-9][a-z0-9-]*$ ]]; then
+            echo "✅ Feature branch pattern valid"
             exit 0
           fi
+
+          # Allow automation branches
           if [[ "$BRANCH_NAME" =~ ^(dependabot|renovate)/.+$ ]]; then
-            echo "Branch is managed by automation ($BRANCH_NAME). Allowing."
+            echo "✅ Branch is managed by automation ($BRANCH_NAME)"
             exit 0
           fi
+
+          # Allow protected branches
           if [[ "$BRANCH_NAME" =~ ^(main|dev)$ ]]; then
-            echo "Branch is protected branch ($BRANCH_NAME). Allowing."
+            echo "✅ Protected branch ($BRANCH_NAME)"
             exit 0
           fi
+
           echo "::error::Branch '$BRANCH_NAME' does not match required pattern."
-          echo "Allowed prefixes: feat/, fix/, docs/, chore/, refactor/, test/, build/, ci/, perf/, style/, hotfix/, release/, dependabot/, renovate/."
+          echo "Allowed patterns:"
+          echo "  - Feature branches: feat/, fix/, docs/, chore/, refactor/, test/, build/, ci/, perf/, style/, hotfix/, release/"
+          echo "  - Automation: dependabot/, renovate/"
+          echo "  - Protected: main, dev"
           exit 1
 
       - name: Set up Node.js
@@ -73,7 +92,17 @@ jobs:
       - name: Run commitlint
         env:
           TARGET_REF: ${{ steps.ref.outputs.target_ref }}
+          BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.event.repository.default_branch }}
         run: |
+          # Skip commitlint for release PRs (dev → main)
+          # Release PRs are squashed with clean commit messages
+          if [[ "$BASE_BRANCH" == "main" ]]; then
+            echo "✅ Release PR detected (→ main). Commitlint validation skipped."
+            echo "   Commit message will be cleaned during squash merge."
+            exit 0
+          fi
+
+          # Validate commit messages for feature PRs
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}"
           else

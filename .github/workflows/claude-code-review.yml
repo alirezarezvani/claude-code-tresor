@@ -16,6 +16,7 @@ jobs:
     # BYPASS: Add [EMERGENCY], [SKIP REVIEW], or [HOTFIX] to PR title
     # BYPASS: Or add 'emergency' or 'skip-review' label to PR
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Prevent hung runs (Claude API timeout)
     permissions:
       contents: read
       pull-requests: read
