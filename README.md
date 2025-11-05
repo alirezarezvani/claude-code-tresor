@@ -215,11 +215,6 @@ cd claude-code-tresor
 # Run the installation script (installs skills + agents + commands)
 chmod +x scripts/install.sh
 ./scripts/install.sh
-
-# Or install selectively:
-./scripts/install.sh --skills          # Skills only (autonomous helpers)
-./scripts/install.sh --agents          # Agents only (manual experts)
-./scripts/install.sh --commands        # Commands only (workflows)
 ```
 
 **What's installed:**
@@ -248,6 +243,9 @@ cp -r prompts standards examples ~/claude-code-resources/
 ### Option 3: Selective Installation
 
 ```bash
+# Install only autonomous skills (v2.0+)
+./scripts/install.sh --skills-only
+
 # Install only slash commands
 ./scripts/install.sh --commands-only
 

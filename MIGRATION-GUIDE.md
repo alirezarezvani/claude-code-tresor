@@ -132,7 +132,7 @@ cat ARCHITECTURE.md
 # (Skills work in background automatically)
 
 # Week 2: If satisfied, update agents and commands
-./scripts/install.sh --agents --commands
+./scripts/install.sh --agents-only --commands
 
 # Rollback at any time:
 rm -rf ~/.claude/skills
@@ -454,7 +454,7 @@ claude --list-skills
 **Fix:**
 ```bash
 # Reinstall skills
-./scripts/install.sh --skills --force
+./scripts/install.sh --skills-only --force
 ```
 
 ---
@@ -480,7 +480,7 @@ cat ~/.claude/agents/code-reviewer/agent.json
 cp -r ~/.claude/agents.backup/* ~/.claude/agents/
 
 # Or reinstall
-./scripts/install.sh --agents --force
+./scripts/install.sh --agents-only --force
 ```
 
 ---
@@ -505,7 +505,7 @@ cat ~/.claude/commands/review/command.json
 cp -r ~/.claude/commands.backup/* ~/.claude/commands/
 
 # Or reinstall
-./scripts/install.sh --commands --force
+./scripts/install.sh --commands-only --force
 ```
 
 ---

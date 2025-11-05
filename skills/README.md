@@ -312,7 +312,7 @@ Enable for:
 
 ```bash
 # During installation
-./scripts/install.sh --skills --sandboxing
+./scripts/install.sh --skills-only --sandboxing
 
 # Or configure manually in skill's settings
 ```

@@ -19,9 +19,9 @@ cd claude-code-tresor
 ./scripts/install.sh
 
 # Or selective installation:
-./scripts/install.sh --skills      # Skills only
-./scripts/install.sh --agents      # Sub-agents only
-./scripts/install.sh --commands    # Commands only
+./scripts/install.sh --skills-only      # Skills only
+./scripts/install.sh --agents-only      # Sub-agents only
+./scripts/install.sh --commands-only    # Commands only
 ```
 
 ### Verify Installation
@@ -81,7 +81,7 @@ claude "@code-reviewer --focus security"
 
 ```bash
 # 1. Install sub-agents and commands
-./scripts/install.sh --agents --commands
+./scripts/install.sh --agents-only --commands
 
 # 2. Stage your changes
 git add .
@@ -134,7 +134,7 @@ claude "/scaffold nextjs-app my-app --typescript --tailwind"
 
 ```bash
 # 1. Install test-focused tools
-./scripts/install.sh --skills --agents --commands
+./scripts/install.sh --skills-only --agents --commands
 
 # 2. Skills automatically suggest tests
 # (test-generator skill detects untested code)
@@ -162,7 +162,7 @@ claude "@test-engineer Create comprehensive test suite with edge cases"
 
 ```bash
 # 1. Install documentation tools
-./scripts/install.sh --skills --agents
+./scripts/install.sh --skills-only --agents
 
 # 2. Skills auto-update docs
 # - api-documenter: OpenAPI specs from code
@@ -303,7 +303,7 @@ claude "/review --scope pr --checks all"
 
 ```bash
 # During installation
-./scripts/install.sh --skills --sandboxing
+./scripts/install.sh --skills-only --sandboxing
 
 # Or configure manually per skill
 vim ~/.claude/skills/security-auditor/config.json
