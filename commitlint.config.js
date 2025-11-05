@@ -20,5 +20,11 @@ module.exports = {
     ],
     'subject-case': [0], // Disable subject case checking
     'body-max-line-length': [0], // Disable body line length (GitHub squash merges often exceed 100 chars)
+    'footer-leading-blank': [0], // Disable footer blank line requirement (allow any footer format)
+    'body-leading-blank': [1, 'always'], // Warning only for body blank line
   },
+  ignores: [
+    (commit) => commit.includes('Merge pull request'),
+    (commit) => commit.includes('Merge branch'),
+  ],
 };
