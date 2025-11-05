@@ -92,7 +92,17 @@ jobs:
       - name: Run commitlint
         env:
           TARGET_REF: ${{ steps.ref.outputs.target_ref }}
+          BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.event.repository.default_branch }}
         run: |
+          # Skip commitlint for release PRs (dev → main)
+          # Release PRs are squashed with clean commit messages
+          if [[ "$BASE_BRANCH" == "main" ]]; then
+            echo "✅ Release PR detected (→ main). Commitlint validation skipped."
+            echo "   Commit message will be cleaned during squash merge."
+            exit 0
+          fi
+
+          # Validate commit messages for feature PRs
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}"
           else
