@@ -12,6 +12,9 @@ permissions:
 
 jobs:
   audit:
+    # Skip security audit for release PRs (dev → main)
+    # Code was already audited when merging to dev
+    if: github.event.pull_request.base.ref != 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 5  # Prevent hung runs (Claude API timeout)
     concurrency:
