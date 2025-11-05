@@ -19,5 +19,6 @@ module.exports = {
       ],
     ],
     'subject-case': [0], // Disable subject case checking
+    'body-max-line-length': [0], // Disable body line length (GitHub squash merges often exceed 100 chars)
   },
 };
