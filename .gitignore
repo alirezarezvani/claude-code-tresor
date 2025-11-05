@@ -121,3 +121,6 @@ CLAUDE.md
 
 # External marketing and workflow documentation (not for users)
 documentation/external/
+
+# Internal publishing scripts (not for users)
+scripts/publish-gist.sh

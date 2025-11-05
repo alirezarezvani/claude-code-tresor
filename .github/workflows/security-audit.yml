@@ -1,0 +1,105 @@
+name: Security Audit (Claude)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: security-audit-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    steps:
+      - name: Check Workflow Kill Switch
+        run: |
+          if [ -f ".github/WORKFLOW_KILLSWITCH" ]; then
+            STATUS=$(grep "STATUS:" .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
+            if [ "$STATUS" = "DISABLED" ]; then
+              echo "🛑 Workflows disabled by kill switch"
+              exit 0
+            fi
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Claude Security Audit (PR diff)
+        id: claude-audit
+        uses: anthropics/claude-code-action@v1
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            # Security Audit - Claude Code Tresor (PR #${{ github.event.pull_request.number }})
+
+            Review this PR diff for security risks with focus on:
+
+            1. **OWASP Top 10 vulnerabilities**
+            2. **Secrets exposure** (API keys, tokens, credentials)
+            3. **Command injection** (especially in bash commands, hooks)
+            4. **Path traversal** (file operations, directory access)
+            5. **YAML injection** (frontmatter, workflow files)
+            6. **Supply chain risks** (dependencies, scripts)
+            7. **LLM-specific risks** (prompt injection, jailbreak attempts)
+
+            **Claude Code Tresor context**:
+            - Skills have limited tools (Read, Write, Edit, Grep, Glob)
+            - Agents have full tool access (including Bash)
+            - Commands orchestrate multiple agents
+            - Hooks execute on events (high risk)
+            - Standards templates should be safe
+
+            Provide concise, actionable findings with exact file:line references.
+            Only report meaningful issues (avoid noise).
+
+            Output format (post as PR comment via gh):
+            ```markdown
+            ## 🔒 Security Audit (Claude)
+
+            **Severity Summary**: Critical: X | High: Y | Medium: Z | Low: W
+
+            ---
+
+            ### Findings
+
+            #### 1. [SEVERITY] [file:line] – [title]
+            **Risk**: [description]
+            **Recommendation**: [fix]
+
+            [repeat per finding]
+
+            ---
+
+            **Scope**: PR diff only
+            **Standards**: OWASP Top 10, LLM agent hardening, Claude Code security best practices
+            ```
+
+          claude_args: '--allowed-tools "Bash(gh pr comment:*),Bash(gh pr view:*),Bash(gh pr diff:*)"'
+
+      - name: Note audit skipped (quota/timeout)
+        if: steps.claude-audit.outcome != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ⚠️ Security Audit Skipped
+
+              The automated security audit could not complete (likely quota or a transient error).
+
+              - You can retry this workflow from the Actions tab
+              - Proceed with manual security review if urgent
+              `
+            })

@@ -1,0 +1,19 @@
+STATUS: ENABLED
+REASON: Normal operation
+UPDATED: 2025-11-04
+
+# Workflow Kill Switch
+#
+# To disable workflows in case of emergency:
+# 1. Change STATUS to DISABLED
+# 2. Update REASON with explanation
+# 3. Commit and push
+#
+# Workflows affected:
+# - Claude Code Review
+# - Security Audit
+#
+# To re-enable:
+# 1. Change STATUS to ENABLED
+# 2. Update REASON to "Normal operation"
+# 3. Commit and push
