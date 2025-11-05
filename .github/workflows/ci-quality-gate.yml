@@ -62,7 +62,7 @@ jobs:
 
       - name: Validate GitHub workflow schemas
         run: |
-          check-jsonschema --builtin-schema github-workflow .github/workflows/*.yml
+          check-jsonschema --builtin-schema github-workflows .github/workflows/*.yml
 
       - name: Check SKILL.md YAML frontmatter
         run: |
