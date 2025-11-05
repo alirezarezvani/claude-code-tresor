@@ -42,6 +42,10 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 - **👥 Team-Friendly**: Includes collaboration guidelines and standards
 - **📖 Well-Documented**: Every component includes detailed examples and usage guides
 
+> **💡 Ecosystem Tip:** Looking for more? Check out the [Claude Code Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory) to build custom skills, or browse the [Claude Skills Library](https://github.com/alirezarezvani/claude-skills) for pre-built professional domain packages. See [Related Projects](#-related-projects--ecosystem) for details.
+>
+> **📖 [Complete Augmentation Guide](https://gist.github.com/alirezarezvani/a0f6e0a984d4a4adc4842bbe124c5935)** - Comprehensive guide with FAQs, use cases, and installation instructions
+
 ---
 
 ## ✨ What's Included
@@ -118,6 +122,84 @@ Extensive collection of additional utilities in the `sources/` directory:
 - **80+ Specialized Agents**: Marketing, design, operations, AI automation
 - **Advanced Slash Commands**: Tools and workflow automation
 - **Extended Templates**: Industry-specific prompts and patterns
+
+---
+
+## 🔗 Related Projects & Ecosystem
+
+Looking to extend your Claude Code capabilities further? Check out these companion repositories:
+
+### 🏭 [Claude Code Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory)
+**Build your own custom Skills and Agents at scale**
+
+A comprehensive toolkit for generating production-ready Claude Skills and Agents without starting from scratch. Perfect when you need specialized capabilities beyond what's available in pre-built collections.
+
+**Key Features:**
+- **Skills Factory**: Generate multi-file skill packages with Python code, documentation, and examples
+- **Agents Factory**: Create single-file specialist agents with enhanced YAML configuration
+- **Smart Architecture**: Automatically determines when functional code is needed vs. prompt-only approaches
+- **7 Reference Examples**: Financial analysis, AWS architecture, content research, Microsoft 365, and more
+- **Enterprise Standards**: Type-annotated code, error handling, and composable design
+
+**Best For:** Developers who need custom domain-specific capabilities, teams building proprietary workflows, or organizations requiring specialized AI tools tailored to their tech stack.
+
+**Use Case:** "I need a skill that analyzes our company's specific Terraform patterns" → Use Skill Factory to generate it
+
+### 📚 [Claude Skills Library](https://github.com/alirezarezvani/claude-skills)
+**Production-ready skill packages for professional domains**
+
+A curated collection of specialized skill packages combining best practices, analysis tools, and strategic frameworks for various professional roles. Deploy expert-level capabilities immediately.
+
+**Available Collections:**
+- **Marketing** (3 packages): Content strategy, demand generation, product marketing
+- **C-Level Advisory** (2 packages): CEO and CTO strategic guidance
+- **Product Team** (6 packages): Product management, UX research, design systems, agile delivery
+- **Project Management** (6 packages): Jira, Confluence, Scrum, PMO, Atlassian integration
+- **Engineering** (9 packages): Architecture, fullstack, QA, DevOps, security, code review
+- **AI/ML/Data** (Coming soon): Data science and machine learning workflows
+
+**Key Benefits:**
+- **40%+ time savings** through domain-specific guidance
+- **30%+ quality improvements** with built-in best practices
+- **Python CLI utilities** for automated analysis and reporting
+- **Ready-to-use templates** for immediate deployment
+
+**Best For:** Teams needing enterprise-grade expertise packages, professionals seeking domain-specific guidance, or organizations standardizing workflows across multiple roles.
+
+**Use Case:** "I need comprehensive product management workflows with templates and frameworks" → Use Claude Skills Library
+
+---
+
+### 📖 Complete Ecosystem Guide
+
+**New to Claude Code augmentation?** Read the comprehensive guide with FAQs, installation instructions, and detailed use cases:
+
+**[📖 Complete Augmentation Guide](https://gist.github.com/alirezarezvani/a0f6e0a984d4a4adc4842bbe124c5935)** (GitHub Gist)
+
+This guide answers:
+- What is Claude Code augmentation and why should I use it?
+- How do Skills, Agents, Commands, and Hooks work?
+- Which repository should I use for my needs?
+- Step-by-step installation for all three repositories
+- 20+ FAQs covering installation, usage, and troubleshooting
+- 5+ detailed use cases with code examples
+
+---
+
+### 🎯 How These Projects Work Together
+
+| Your Need | Use This Repository |
+|-----------|-------------------|
+| **Ready-to-use utilities** (scaffolding, code review, testing, docs) | **Claude Code Tresor** (this repo) |
+| **Build custom skills** for your specific domain/tech stack | [**Skill Factory**](https://github.com/alirezarezvani/claude-code-skill-factory) |
+| **Deploy pre-built expertise** for professional roles | [**Skills Library**](https://github.com/alirezarezvani/claude-skills) |
+
+**Complete Workflow Example:**
+1. **Start here** (Claude Code Tresor) → Install 8 skills + 8 agents + 4 commands for development workflows
+2. **Browse Skills Library** → Add marketing, product, or engineering domain expertise packages
+3. **Build custom with Skill Factory** → Generate proprietary skills for your company's unique needs
+
+All three repositories are **MIT licensed** and maintained by Alireza Rezvani.
 
 ---
 
@@ -313,8 +395,10 @@ claude-code-tresor/
 ### 🔧 Power User?
 1. **Customize**: Adapt templates in `prompts/` for your needs
 2. **Extend**: Explore additional utilities in `sources/`
-3. **Contribute**: Add your own utilities following `CONTRIBUTING.md`
-4. **Automate**: Build custom workflows using the utilities
+3. **Build Custom**: Use [Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory) to generate proprietary skills
+4. **Add Expertise**: Browse [Skills Library](https://github.com/alirezarezvani/claude-skills) for domain packages (marketing, product, engineering)
+5. **Contribute**: Add your own utilities following `CONTRIBUTING.md`
+6. **Automate**: Build custom workflows using the utilities
 
 ---
 
@@ -369,6 +453,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 📊 Project Stats
 
+**This Repository:**
 - **✨ Skills**: 8 autonomous background helpers (NEW v2.0!)
 - **🤖 Agents**: 8 expert sub-agents for deep analysis
 - **⚡ Commands**: 4 workflow orchestration commands
@@ -378,7 +463,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 - **📦 Source Library**: 200+ additional components
 - **⏱️ Installation Time**: < 2 minutes
 - **📈 Version**: 2.0.0 (Major update: Skills layer!)
-- **🔄 Active Development**: Continuously updated
+
+**Complete Ecosystem:**
+- **🏭 [Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory)**: Generate unlimited custom skills and agents
+- **📚 [Skills Library](https://github.com/alirezarezvani/claude-skills)**: 26+ pre-built professional domain packages (Marketing, Product, Engineering, PM, C-Level)
+- **🔄 Active Development**: All three repositories continuously updated
+- **⚖️ License**: MIT across all projects
 
 ---
 
