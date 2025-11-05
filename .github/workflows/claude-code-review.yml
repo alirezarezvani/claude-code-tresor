@@ -1,6 +1,7 @@
+---
 name: Claude Code Review
 
-on:
+'on':
   pull_request:
     types: [opened, synchronize]
 
@@ -108,7 +109,10 @@ jobs:
             Use `gh pr comment` with your Bash tool to leave your review as a comment on the PR.
 
           # Allowed tools for Claude Code review
-          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+          claude_args: >-
+            --allowed-tools "Bash(gh issue view:*),Bash(gh search:*),
+            Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),
+            Bash(gh pr view:*),Bash(gh pr list:*)"
 
       - name: Post fallback review note (quota/timeout)
         if: steps.claude-review.outcome != 'success'
