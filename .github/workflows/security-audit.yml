@@ -13,6 +13,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 5  # Prevent hung runs (Claude API timeout)
     concurrency:
       group: security-audit-${{ github.event.pull_request.number }}
       cancel-in-progress: true
