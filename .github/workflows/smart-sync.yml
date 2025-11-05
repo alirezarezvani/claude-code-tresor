@@ -219,7 +219,7 @@ jobs:
             elif echo "$LABELS" | grep -q "status: in-progress"; then
               TARGET_STATUS="In Progress"
             elif echo "$LABELS" | grep -q "status: ready"; then
-              TARGET_STATUS="Ready"
+              TARGET_STATUS="Todo"
             elif echo "$LABELS" | grep -q "status: backlog"; then
               TARGET_STATUS="Backlog"
             elif echo "$LABELS" | grep -q "status: triage"; then
@@ -393,7 +393,7 @@ jobs:
             case "$STATUS" in
               "To triage") NEW_LABEL="status: triage" ;;
               "Backlog") NEW_LABEL="status: backlog" ;;
-              "Ready") NEW_LABEL="status: ready" ;;
+              "Todo") NEW_LABEL="status: ready" ;;
               "In Progress") NEW_LABEL="status: in-progress" ;;
               "In Review") NEW_LABEL="status: in-review" ;;
               "Done") NEW_LABEL="status: done" ;;
