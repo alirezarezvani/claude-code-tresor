@@ -15,7 +15,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-CLAUDE_CODE_DIR="${HOME}/.config/claude-code"
+CLAUDE_CODE_DIR="${HOME}/.claude"
 REPO_URL="https://github.com/alirezarezvani/claude-code-tresor"
 TRESOR_DIR="${CLAUDE_CODE_DIR}/tresor"
 BACKUP_DIR="${CLAUDE_CODE_DIR}/backup-$(date +%Y%m%d-%H%M%S)"
@@ -258,7 +258,7 @@ create_update_script() {
 #!/bin/bash
 # Auto-generated update script for Claude Code Tresor
 
-TRESOR_DIR="$HOME/.config/claude-code/tresor"
+TRESOR_DIR="$HOME/.claude/tresor"
 
 if [ -d "$TRESOR_DIR" ]; then
     echo "Updating Claude Code Tresor..."
