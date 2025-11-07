@@ -52,16 +52,16 @@ Not all agents should invoke all skills. Strategic pairing maximizes efficiency:
 
 ### Recommended Pairings
 
-| Agent | Should Invoke Skills | Why? |
-|-------|---------------------|------|
-| **code-reviewer** | security-auditor, test-generator | Quick security/test scan before deep review |
-| **test-engineer** | code-reviewer | Validate code structure before creating tests |
-| **security-auditor** | secret-scanner | Quick secret detection before full audit |
-| **debugger** | code-reviewer | Check code quality of proposed fixes |
-| **performance-tuner** | code-reviewer | Validate patterns before optimization |
-| **refactor-expert** | code-reviewer, test-generator | Check quality and tests before refactoring |
-| **docs-writer** | api-documenter | Get API structure before comprehensive docs |
-| **architect** | ❌ None | High-level design doesn't need quick checks |
+| Agent | Should Invoke Skills | Status | Why? |
+|-------|---------------------|--------|------|
+| **code-reviewer** | security-auditor, test-generator | ✅ Phase 1 | Quick security/test scan before deep review |
+| **test-engineer** | code-reviewer | ✅ Phase 1 | Validate code structure before creating tests |
+| **security-auditor** | secret-scanner | ✅ Phase 1 | Quick secret detection before full audit |
+| **debugger** | code-reviewer | ✅ Phase 1 | Check code quality of proposed fixes |
+| **performance-tuner** | code-reviewer | ✅ Phase 2 | Validate patterns before optimization |
+| **refactor-expert** | code-reviewer, test-generator | ✅ Phase 2 | Check quality and tests before refactoring |
+| **docs-writer** | api-documenter, readme-updater | ✅ Phase 2 | Get structure before comprehensive docs |
+| **architect** | ❌ None | N/A | High-level design doesn't need quick checks |
 
 ### Pairing Principles
 
@@ -287,21 +287,19 @@ claude
 
 - ✅ code-reviewer - security-auditor, test-generator
 - ✅ test-engineer - code-reviewer
+- ✅ security-auditor - secret-scanner
+- ✅ debugger - code-reviewer
 
-### Phase 2: Security & Performance Agents (Recommended)
+### Phase 2: Performance, Refactoring & Documentation (Complete ✅)
 
-- security-auditor - secret-scanner
-- debugger - code-reviewer
-- performance-tuner - code-reviewer
+- ✅ performance-tuner - code-reviewer
+- ✅ refactor-expert - code-reviewer, test-generator
+- ✅ docs-writer - api-documenter, readme-updater
 
-### Phase 3: Refactoring & Documentation (Optional)
-
-- refactor-expert - code-reviewer, test-generator
-- docs-writer - api-documenter
-
-### Phase 4: Extended Library (Future)
+### Phase 3: Extended Library (Future)
 
 - Apply pattern to sources/ directory agents (80+ additional agents)
+- Custom agent-skill pairings per domain
 
 ---
 
