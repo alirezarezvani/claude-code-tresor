@@ -26,7 +26,7 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
                               ▼ (User decides to investigate)
         ┌──────────────────────────────────────────┐
         │          Tier 2: SUB-AGENTS              │
-        │        (Manual Expert Analysis)           │
+        │        (Manual Expert Analysis)          │
         │  • Invoked by you (@agent)               │
         │  • Deep analysis                         │
         │  • Separate context                      │
@@ -36,7 +36,7 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
                               ▼ (User runs workflow)
         ┌──────────────────────────────────────────┐
         │          Tier 3: COMMANDS                │
-        │      (Multi-Agent Orchestration)          │
+        │      (Multi-Agent Orchestration)         │
         │  • Complex workflows (/command)          │
         │  • Coordinates multiple agents           │
         │  • Automates repetitive tasks            │
