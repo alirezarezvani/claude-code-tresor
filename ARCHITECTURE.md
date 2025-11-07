@@ -16,9 +16,9 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
                               ▼
         ┌──────────────────────────────────────────┐
         │          Tier 1: SKILLS                  │
-        │     (Autonomous Background Helpers)       │
-        │  • Always watching                       │
-        │  • Automatic activation                  │
+        │      (Contextual Conversation Helpers)    │
+        │  • Invoked by Claude automatically       │
+        │  • Context-aware activation              │
         │  • Quick checks                          │
         │  • Proactive suggestions                 │
         └──────────────────────────────────────────┘
@@ -46,35 +46,35 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
 
 ---
 
-## Tier 1: Skills (Autonomous)
+## Tier 1: Skills (Contextual Helpers)
 
 ### What Are Skills?
 
-Skills are **lightweight, autonomous helpers** that run continuously in the background, monitoring your code for opportunities to help.
+Skills are **lightweight, contextual helpers** that Claude invokes automatically during conversations when they're relevant to your discussion or task.
 
 **Key characteristics:**
-- ✅ **Model-invoked** - Claude decides when to activate based on context
-- ✅ **Shared context** - See your current conversation
+- ✅ **Claude-invoked** - Claude decides when to activate based on conversation context
+- ✅ **Shared context** - See your current conversation and understand the discussion
 - ✅ **Limited tools** - Restricted to safe operations (Read, Write, Edit, Grep, Glob, Bash)
 - ✅ **Single-purpose** - Each skill has one clear responsibility
 - ✅ **Non-blocking** - Provide suggestions without interrupting flow
 
 ### How Skills Activate
 
-Skills activate based on **trigger keywords** in their description:
+Skills are invoked by Claude based on **conversation relevance** and their description:
 
 ```yaml
 ---
 name: code-reviewer
-description: Use when files modified, saved, or committed. Analyzes code style...
+description: Use when discussing code quality, reviewing files, or analyzing patterns...
 ---
 ```
 
-**Trigger examples:**
-- File saved → `code-reviewer` activates
-- Function added without tests → `test-generator` activates
-- API endpoint created → `api-documenter` activates
-- Git diff detected → `git-commit-helper` activates
+**Invocation examples:**
+- You ask "Review this code" → `code-reviewer` is invoked
+- You discuss new function testing → `test-generator` is invoked
+- You ask about API documentation → `api-documenter` is invoked
+- You discuss commit messages → `git-commit-helper` is invoked
 
 ### Skills in Action
 

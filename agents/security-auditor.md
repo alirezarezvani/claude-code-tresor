@@ -1,7 +1,7 @@
 ---
 name: security-auditor
 description: Security specialist for vulnerability assessment, secure authentication, and OWASP compliance. Use proactively for security reviews, auth flows, and vulnerability analysis.
-tools: Read, Edit, Bash, Grep, Glob, Task
+tools: Read, Edit, Bash, Grep, Glob, Task, Skill
 model: inherit
 ---
 

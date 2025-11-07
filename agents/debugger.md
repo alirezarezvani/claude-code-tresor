@@ -1,7 +1,7 @@
 ---
 name: debugger
 description: Expert debugging specialist focused on root cause analysis, systematic problem-solving, and minimal-impact fixes. Use proactively when encountering errors, performance issues, or unexpected behavior.
-tools: Read, Edit, Bash, Grep, Glob, Task
+tools: Read, Edit, Bash, Grep, Glob, Task, Skill
 model: inherit
 ---
 

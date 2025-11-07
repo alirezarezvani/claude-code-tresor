@@ -40,38 +40,40 @@ claude "@code-reviewer Analyze this file"
 claude "/scaffold react-component Button"
 ```
 
-**✅ You're ready!** Skills now work automatically in the background.
+**✅ You're ready!** Skills are available and Claude will invoke them during conversations when relevant.
 
 ---
 
 ## 🎯 Choose Your Path
 
-### Path 1: "I want automatic code quality checks"
+### Path 1: "I want proactive code quality suggestions"
 
-**What you get:** Skills that detect issues while you code
+**What you get:** Skills that Claude invokes during code discussions
 
 ```bash
 # 1. Install skills
 ./scripts/install.sh --skills
 
-# 2. Start coding (skills activate automatically)
-# - code-reviewer: Detects code smells
-# - security-auditor: Finds vulnerabilities
-# - test-generator: Suggests missing tests
+# 2. Start Claude Code and discuss your code
+# Skills are invoked by Claude when contextually relevant:
+# - code-reviewer: Suggests improvements during code discussions
+# - security-auditor: Flags vulnerabilities when reviewing security
+# - test-generator: Suggests tests when discussing new functions
 
-# Example: Edit a file
-vim src/utils/api.ts
+# Example: Discuss code with Claude
+claude
+> "I'm working on src/utils/api.ts - any quality issues?"
 
-# Skills automatically:
-# ✅ Check code quality
-# ✅ Scan for security issues
-# ✅ Suggest tests if missing
+# Claude invokes relevant skills:
+# ✅ code-reviewer checks patterns
+# ✅ security-auditor scans for issues
+# ✅ test-generator suggests missing tests
 
 # 3. For deep analysis, invoke sub-agent
 claude "@code-reviewer --focus security"
 ```
 
-**Time investment:** 2 minutes setup, continuous benefit
+**Time investment:** 2 minutes setup, proactive assistance during conversations
 
 ---
 
@@ -136,8 +138,8 @@ claude "/scaffold nextjs-app my-app --typescript --tailwind"
 # 1. Install test-focused tools
 ./scripts/install.sh --skills-only --agents --commands
 
-# 2. Skills automatically suggest tests
-# (test-generator skill detects untested code)
+# 2. Start conversation about testing
+# Claude invokes test-generator skill when relevant
 
 # 3. Generate comprehensive test suites
 claude "/test-gen --file src/utils/api.ts --framework jest --coverage 90"
@@ -164,27 +166,29 @@ claude "@test-engineer Create comprehensive test suite with edge cases"
 # 1. Install documentation tools
 ./scripts/install.sh --skills-only --agents
 
-# 2. Skills auto-update docs
-# - api-documenter: OpenAPI specs from code
-# - readme-updater: Keep README current
+# 2. Discuss documentation with Claude
+# Skills are invoked when discussing docs:
+# - api-documenter: Suggests OpenAPI specs for APIs
+# - readme-updater: Suggests README updates
 
 # Example workflow:
-# You add API endpoint:
+claude
+> "I added this API endpoint - help me document it"
 function createUser(req, res) { /* code */ }
 
-# api-documenter skill:
-# ✅ Generates OpenAPI spec automatically
-# ✅ Creates example requests/responses
-# ✅ Updates API documentation
+# Claude invokes api-documenter skill which suggests:
+# ✅ OpenAPI spec structure
+# ✅ Example requests/responses
+# ✅ Documentation updates
 
 # 3. For comprehensive docs
 claude "/docs-gen api --format openapi"
 claude "@docs-writer Create user guide with examples"
 
-# Result: Always-current documentation
+# Result: Well-documented APIs
 ```
 
-**Time investment:** 2 minutes setup, continuous benefit
+**Time investment:** 2 minutes setup, proactive documentation suggestions
 
 ---
 
@@ -195,22 +199,29 @@ claude "@docs-writer Create user guide with examples"
 **Task:** Add user authentication feature
 
 ```bash
-# 1. Skills monitor automatically
-# Start coding - skills detect as you type
+# 1. Start Claude Code session
+claude
 
-# 2. When ready for review
+# 2. Discuss your work
+> "I'm adding user authentication - can you review as I go?"
+
+# Skills are invoked by Claude during the conversation:
+# - code-reviewer checks patterns in real-time
+# - security-auditor validates auth implementation
+# - test-generator suggests test cases
+
+# 3. Run formal review when ready
 git add src/auth/
 claude "/review --scope staged"
 
-# 3. Generate tests
+# 4. Generate comprehensive tests
 claude "/test-gen --file src/auth/login.ts --framework jest"
 
-# 4. Update documentation
+# 5. Update documentation
 claude "/docs-gen --update-readme"
 
-# 5. Commit with generated message
-# git-commit-helper skill suggests:
-# "feat(auth): add login with OAuth2"
+# 6. Commit
+git commit -m "feat(auth): add login with OAuth2"
 
 # Total time saved: 2-3 hours
 ```
@@ -225,8 +236,10 @@ claude "/docs-gen --update-readme"
 # 1. Analyze issue
 claude "@debugger Analyze this error: [stack trace]"
 
-# 2. Fix code
-# (code-reviewer skill validates fix in real-time)
+# 2. Discuss fix with Claude
+claude
+> "I'm fixing this issue - can you validate my approach?"
+# (code-reviewer skill is invoked during discussion)
 
 # 3. Add regression test
 claude "@test-engineer Create test to prevent this regression"
@@ -270,12 +283,12 @@ claude "/review --scope pr --checks all"
 
 ## 📚 Understanding the 3-Tier Architecture
 
-### Skills (Tier 1: Autonomous)
-- **What:** Automatic background helpers
-- **When:** Activate based on code changes
+### Skills (Tier 1: Contextual Helpers)
+- **What:** Helpers invoked by Claude during conversations
+- **When:** Claude activates them when contextually relevant
 - **Examples:** code-reviewer, test-generator, security-auditor
 
-**Think of skills like:** Spell-checker in your editor - always watching, always helping
+**Think of skills like:** Smart autocomplete - activates when relevant to your current discussion
 
 ### Sub-Agents (Tier 2: Manual Experts)
 - **What:** Invoked specialists for deep analysis
@@ -341,8 +354,9 @@ See [skills/TEMPLATES.md](skills/TEMPLATES.md) for copy-paste templates
 
 ### Day 1: Installation & Basics
 - ✅ Install skills (`./scripts/install.sh --skills`)
-- ✅ Code normally - observe skills in action
-- ✅ Review one file manually: `@code-reviewer Analyze this`
+- ✅ Start Claude Code session and discuss your code
+- ✅ Observe Claude invoking skills during conversations
+- ✅ Request deep analysis: `@code-reviewer Analyze this`
 
 ### Day 2: Commands
 - ✅ Try scaffolding: `/scaffold react-component TestComponent`
@@ -350,9 +364,9 @@ See [skills/TEMPLATES.md](skills/TEMPLATES.md) for copy-paste templates
 - ✅ Generate tests: `/test-gen --file utils.js`
 
 ### Week 1: Integration
-- ✅ Use skills + sub-agents together
+- ✅ Use skills + sub-agents together during conversations
 - ✅ Integrate `/review` into PR workflow
-- ✅ Let skills auto-update documentation
+- ✅ Discuss documentation updates with Claude (skills suggest improvements)
 
 ### Week 2: Customization
 - ✅ Create custom skill from template

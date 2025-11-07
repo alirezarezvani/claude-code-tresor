@@ -521,8 +521,8 @@ Special thanks to developers worldwide who believe in sharing knowledge and tool
 ### Connect
 - 🐦 **Twitter**: [@alirezarezvani](https://twitter.com/alirezarezvani)
 - 💼 **LinkedIn**: [Alireza Rezvani](https://linkedin.com/in/alirezarezvani)
-- 🌐 **Website**: [Your website if you have one]
-
+- 🌐 **Website**: [https://alirezarezvani.com] (Portfolio Website)
+- 🌐 **Claude Code Tutorials and Guides**: [https://medium.com/@alirezarezvani] (Medium Blog)
 ### Professional Support
 For professional support, custom utilities, or team training:
 - 📧 **Email**: [Your professional email]

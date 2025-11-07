@@ -1,8 +1,8 @@
 # Claude Code Skills
 
-> **Autonomous helpers that work in the background while you code**
+> **Contextual helpers that Claude invokes during conversations when relevant**
 
-Skills are Claude's newest feature for proactive, automatic assistance. They run continuously, detecting issues and opportunities without manual invocation.
+Skills are Claude Code's proactive assistance feature. Claude automatically invokes skills during conversations when they're contextually relevant to your discussion or task.
 
 ## Quick Start
 
@@ -10,32 +10,32 @@ Skills are Claude's newest feature for proactive, automatic assistance. They run
 # Install skills
 ./scripts/install.sh --skills
 
-# They work automatically - no commands needed!
-# Just code normally, skills activate when relevant
+# Skills are invoked by Claude automatically during conversations
+# Start a Claude Code session and discuss your code - skills activate when relevant
 ```
 
 ## What Are Skills?
 
-**Skills** are lightweight, autonomous helpers that:
-- ✅ **Activate automatically** when relevant code changes happen
-- ✅ **Work in the background** without interrupting your flow
-- ✅ **Detect opportunities** proactively (issues, improvements, missing tests)
-- ✅ **Suggest next steps** without being asked
+**Skills** are lightweight, contextual helpers that:
+- ✅ **Invoked by Claude** automatically when relevant to the conversation
+- ✅ **Work proactively** without manual invocation by you
+- ✅ **Detect opportunities** during code discussions (issues, improvements, missing tests)
+- ✅ **Suggest next steps** based on conversation context
 - ✅ **Complement sub-agents** by handling quick checks before deep analysis
 
 ### Skills vs Sub-Agents vs Commands
 
 | Feature | Skills | Sub-Agents | Commands |
 |---------|--------|------------|----------|
-| **Invocation** | Automatic | Manual (`@agent`) | Manual (`/command`) |
+| **Invocation** | By Claude (auto) | Manual (`@agent`) | Manual (`/command`) |
 | **Scope** | Single concern | Expert analysis | Multi-agent workflow |
 | **Context** | Shared | Separate | Orchestrates |
-| **Duration** | Continuous | Task-specific | Workflow-specific |
+| **Duration** | During conversation | Task-specific | Workflow-specific |
 | **Tools** | Limited (safe) | Full access | Coordinates agents |
 | **Best For** | Quick checks | Deep analysis | Complex workflows |
 
 **Example workflow:**
-1. **Skill** detects potential bug while you type → suggests improvement
+1. You discuss code with Claude → **Skill** is invoked automatically → suggests improvement
 2. You invoke **Sub-Agent** (`@code-reviewer`) → comprehensive analysis
 3. You run **Command** (`/review --full`) → coordinates security + performance + architecture review
 
@@ -44,24 +44,24 @@ Skills are Claude's newest feature for proactive, automatic assistance. They run
 ### Development (3 skills)
 
 #### 1. code-reviewer
-**What it does:** Automatic code quality checks while editing
+**What it does:** Code quality checks when discussing code with Claude
 - ✅ Detects code smells and anti-patterns
 - ✅ Suggests best practices (naming, structure)
 - ✅ Basic security checks
 - ✅ Style consistency validation
 
-**Triggers:** File saved, code edited, git diff
+**Invoked when:** Discussing code quality, reviewing files, asking about patterns
 **Tools:** Read, Grep, Glob
 **Complements:** `@code-reviewer` sub-agent for deep analysis
 
 **Example:**
 ```javascript
-// You write:
+// You ask Claude: "Review this function"
 function getData() {
   return fetch('/api/data').then(r => r.json())
 }
 
-// Skill suggests:
+// Claude invokes code-reviewer skill, which suggests:
 // - Missing error handling
 // - No TypeScript types
 // - Should use async/await
@@ -73,24 +73,24 @@ function getData() {
 ---
 
 #### 2. test-generator
-**What it does:** Suggests tests for new functions automatically
+**What it does:** Suggests tests during code discussions
 - ✅ Scaffolds basic test structure (3-5 tests)
 - ✅ Detects untested code
 - ✅ Framework-aware (Jest, Vitest, Pytest, JUnit)
 - ✅ Suggests edge cases
 
-**Triggers:** New function added, code without tests, test file missing
+**Invoked when:** Discussing new functions, asking about testing, reviewing code without tests
 **Tools:** Read, Write, Edit
 **Complements:** `@test-engineer` sub-agent for comprehensive test suites
 
 **Example:**
 ```javascript
-// You add new function:
+// You ask Claude: "I added this function, what tests should I write?"
 export function calculateDiscount(price, percentage) {
   return price * (percentage / 100)
 }
 
-// Skill auto-suggests test file:
+// Claude invokes test-generator skill, which suggests:
 // tests/calculateDiscount.test.js
 // - Basic calculation test
 // - Edge case: zero percentage
