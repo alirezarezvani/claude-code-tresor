@@ -50,7 +50,7 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
 
 ### What Are Skills?
 
-Skills are **lightweight, autonomous helpers** that run continuously in the background, monitoring your code for opportunities to help.
+Skills are **lightweight, autonomous helpers** that run continuously in the background, monitoring your code and other tasks for opportunities to help.
 
 **Key characteristics:**
 - ✅ **Model-invoked** - Claude decides when to activate based on context
