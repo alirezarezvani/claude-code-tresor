@@ -124,3 +124,5 @@ documentation/external/
 
 # Internal publishing scripts (not for users)
 scripts/publish-gist.sh
+
+documentation/archive/*
