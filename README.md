@@ -203,6 +203,23 @@ All three repositories are **MIT licensed** and maintained by Alireza Rezvani.
 
 ---
 
+## 📚 Documentation
+
+**[Complete Documentation →](documentation/README.md)**
+
+### Quick Links
+- **[Installation Guide →](documentation/guides/installation.md)** - Install in 5 minutes
+- **[Getting Started →](documentation/guides/getting-started.md)** - Your first workflow
+- **[FAQ →](documentation/reference/faq.md)** - Common questions answered
+- **[Troubleshooting →](documentation/guides/troubleshooting.md)** - Fix issues
+
+### Full Documentation
+- **[User Guides →](documentation/guides/)** - Installation, configuration, troubleshooting, migration, contributing
+- **[Technical Reference →](documentation/reference/)** - Complete skills, agents, and commands documentation
+- **[Workflows →](documentation/workflows/)** - Git workflow, GitHub automation, agent-skill integration
+
+---
+
 ## 🚀 Quick Start
 
 ### Option 1: Automated Installation (Recommended)
