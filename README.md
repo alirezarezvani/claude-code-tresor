@@ -9,7 +9,7 @@
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
-**Updated**: October 24, 2025 (v2.0.0 - Major update!)
+**Updated**: November 8, 2025 (v2.0.0 - Documentation & Path Fixes)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
 
