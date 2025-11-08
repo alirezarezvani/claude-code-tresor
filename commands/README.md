@@ -89,10 +89,10 @@ commands/
 ### Individual Command Installation
 ```bash
 # Install a specific command
-cp commands/development/scaffold ~/.config/claude-code/commands/
+cp commands/development/scaffold ~/.claude/commands/
 
 # Install all commands from a category
-cp -r commands/testing/* ~/.config/claude-code/commands/
+cp -r commands/testing/* ~/.claude/commands/
 ```
 
 ### Bulk Installation
@@ -169,16 +169,16 @@ Popular commands (based on community usage):
 **Command not found**
 ```bash
 # Ensure command is properly installed
-ls ~/.config/claude-code/commands/command-name/
+ls ~/.claude/commands/command-name/
 
 # Check command configuration
-cat ~/.config/claude-code/commands/command-name/command.json
+cat ~/.claude/commands/command-name/command.json
 ```
 
 **Permission errors**
 ```bash
 # Fix permissions
-chmod +x ~/.config/claude-code/commands/command-name/*
+chmod +x ~/.claude/commands/command-name/*
 ```
 
 **Configuration errors**
