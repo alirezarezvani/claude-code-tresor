@@ -30,7 +30,7 @@ After scaffolding, skills automatically monitor generated code:
 ## Scaffolding Process
 
 1. **Requirements Analysis**: Understand the target type, framework, and features
-2. **Architecture Planning**: Use Task tool to coordinate with `@architect` agent for:
+2. **Architecture Planning**: Use Task tool to coordinate with `@systems-architect` agent for:
    - Project structure optimization
    - Technology stack recommendations
    - Scalability and maintainability considerations

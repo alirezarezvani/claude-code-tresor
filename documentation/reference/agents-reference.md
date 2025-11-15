@@ -135,7 +135,7 @@ max_iterations: 75  # For complex tasks
 
 ## Development Agents
 
-### @code-reviewer
+### @config-safety-reviewer
 
 **Expertise:** Code quality analysis, best practices, architecture review
 
@@ -157,12 +157,12 @@ max_iterations: 75  # For complex tasks
 
 **Basic:**
 ```
-@code-reviewer analyze src/components/UserProfile.tsx
+@config-safety-reviewer analyze src/components/UserProfile.tsx
 ```
 
 **Specific Focus:**
 ```
-@code-reviewer analyze src/api/auth.controller.ts for:
+@config-safety-reviewer analyze src/api/auth.controller.ts for:
 1. Security vulnerabilities
 2. Error handling
 3. Input validation
@@ -171,7 +171,7 @@ max_iterations: 75  # For complex tasks
 
 **Architecture Review:**
 ```
-@code-reviewer review the architecture of src/services/ directory
+@config-safety-reviewer review the architecture of src/services/ directory
 Focus on:
 - Service boundaries
 - Dependency management
@@ -380,7 +380,7 @@ capabilities:
 
 ## Architecture & Design Agents
 
-### @architect
+### @systems-architect
 
 **Expertise:** System design, architecture patterns, scalability
 
@@ -402,7 +402,7 @@ capabilities:
 
 **System Design:**
 ```
-@architect design a scalable e-commerce platform
+@systems-architect design a scalable e-commerce platform
 Requirements:
 - 10k concurrent users
 - Real-time inventory
@@ -413,7 +413,7 @@ Include architecture diagrams and technology recommendations
 
 **Architecture Review:**
 ```
-@architect review current architecture in src/
+@systems-architect review current architecture in src/
 Assess:
 - Scalability bottlenecks
 - Single points of failure
@@ -423,7 +423,7 @@ Assess:
 
 **Migration Planning:**
 ```
-@architect plan migration from monolith to microservices
+@systems-architect plan migration from monolith to microservices
 Current: Single Rails application
 Target: Node.js microservices
 Include: phased approach, risk mitigation, rollback plan
@@ -458,7 +458,7 @@ max_iterations: 100
 
 ## Debugging & Optimization Agents
 
-### @debugger
+### @root-cause-analyzer
 
 **Expertise:** Bug analysis, root cause identification, debugging strategies
 
@@ -480,7 +480,7 @@ max_iterations: 100
 
 **Bug Analysis:**
 ```
-@debugger analyze this bug:
+@root-cause-analyzer analyze this bug:
 
 Error: TypeError: Cannot read property 'user' of undefined
 Location: src/components/Profile.tsx:45
@@ -494,7 +494,7 @@ Provide:
 
 **Production Issue:**
 ```
-@debugger investigate production crash
+@root-cause-analyzer investigate production crash
 Symptoms: API timeouts after 30 seconds
 Frequency: Every 2-3 hours
 Logs: [paste relevant logs]
@@ -743,7 +743,7 @@ max_iterations: 75
 Agents can invoke other agents using the Task tool:
 
 ```
-@architect design authentication system
+@systems-architect design authentication system
 [Invokes @security-auditor for security review]
 [Invokes @performance-tuner for optimization]
 ```
@@ -752,12 +752,12 @@ Agents can invoke other agents using the Task tool:
 
 **Sequential:**
 ```
-@code-reviewer → @test-engineer → @security-auditor
+@config-safety-reviewer → @test-engineer → @security-auditor
 ```
 
 **Parallel (through command):**
 ```
-/review → @code-reviewer + @security-auditor + @performance-tuner
+/review → @config-safety-reviewer + @security-auditor + @performance-tuner
 ```
 
 ---
@@ -768,12 +768,12 @@ Agents can invoke other agents using the Task tool:
 
 **Bad:**
 ```
-@code-reviewer review this
+@config-safety-reviewer review this
 ```
 
 **Good:**
 ```
-@code-reviewer review src/api/payment.controller.ts
+@config-safety-reviewer review src/api/payment.controller.ts
 
 Context:
 - Production API serving 5k req/min
@@ -793,12 +793,12 @@ Focus on:
 
 **Bad:**
 ```
-@architect design something scalable
+@systems-architect design something scalable
 ```
 
 **Good:**
 ```
-@architect design scalable notification system
+@systems-architect design scalable notification system
 
 Requirements:
 - 100k notifications/day
@@ -819,14 +819,14 @@ Constraints:
 
 **Instead of:**
 ```
-@code-reviewer analyze entire codebase
+@config-safety-reviewer analyze entire codebase
 ```
 
 **Do:**
 ```
-@code-reviewer analyze src/api/users.controller.ts
-@code-reviewer analyze src/api/products.controller.ts
-@code-reviewer analyze src/api/orders.controller.ts
+@config-safety-reviewer analyze src/api/users.controller.ts
+@config-safety-reviewer analyze src/api/products.controller.ts
+@config-safety-reviewer analyze src/api/orders.controller.ts
 ```
 
 ---
