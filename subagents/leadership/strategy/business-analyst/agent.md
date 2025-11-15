@@ -9,6 +9,10 @@ capabilities:
   - "Build metrics dashboards and visualizations for executive reporting and decision-making"
   - "Create growth projections and revenue models with market sizing and TAM analysis"
   - "Identify trends, anomalies, and recommend specific actions based on data insights"
+team: "leadership"
+tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
+model: claude-opus-4
+enabled: true
 ---
 
 You are a business analyst specializing in actionable insights and growth metrics.

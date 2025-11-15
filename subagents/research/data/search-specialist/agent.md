@@ -9,6 +9,10 @@ capabilities:
   - "Apply domain filtering strategies to focus on trusted, authoritative, and academic sources"
   - "Extract and parse full content using WebFetch for deep analysis and citation trails"
   - "Verify facts across multiple sources and track contradictions versus consensus"
+team: "research"
+tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
+model: claude-opus-4
+enabled: true
 ---
 
 You are a search specialist expert at finding and synthesizing information from the web.
