@@ -11,9 +11,9 @@
 ## Overall Progress
 
 ```
-Progress: 0/137 agents migrated (0%)
+Progress: 8/137 agents migrated (5.8%)
 ├─ Phase 1: Consolidation - ✅ COMPLETE (3 duplicates merged)
-├─ Phase 2: Migration - 🚧 IN PROGRESS
+├─ Phase 2: Migration - 🚧 IN PROGRESS (Core complete)
 ├─ Phase 3: Validation - ⏳ PENDING
 └─ Phase 4: Documentation - ⏳ PENDING
 ```
@@ -21,9 +21,15 @@ Progress: 0/137 agents migrated (0%)
 ### Statistics
 
 - **Total Agents**: 137
-- **Migrated**: 0
-- **Remaining**: 137
-- **Completion**: 0%
+- **Migrated**: 8 (Core agents complete)
+- **Remaining**: 129
+- **Completion**: 5.8%
+
+### Migration Timeline
+
+- **Phase 1 Complete**: November 15, 2025 - Consolidation (3 duplicates)
+- **Core Migration**: November 15, 2025 - 8 agents migrated to subagents/core/
+- **Next**: Engineering category agents (60+)
 
 ---
 
@@ -44,20 +50,23 @@ Progress: 0/137 agents migrated (0%)
 
 ## Phase 2: Migration by Category
 
-### Core Agents (0/8 migrated)
+### Core Agents (8/8 migrated) ✅ COMPLETE
 
 **Destination**: `subagents/core/`
 
-- [ ] systems-architect
-- [ ] config-safety-reviewer
-- [ ] root-cause-analyzer
-- [ ] security-auditor
-- [ ] test-engineer
-- [ ] performance-tuner
-- [ ] refactor-expert
-- [ ] docs-writer
+- [x] systems-architect (15KB)
+- [x] config-safety-reviewer (8.2KB)
+- [x] root-cause-analyzer (12KB)
+- [x] security-auditor (21KB)
+- [x] test-engineer (12KB)
+- [x] performance-tuner (20KB)
+- [x] refactor-expert (30KB)
+- [x] docs-writer (14KB)
 
-**Progress**: 0/8 (0%)
+**Progress**: 8/8 (100%) ✅
+
+**Total Size**: ~132KB
+**Status**: Complete - All core agents migrated with enhanced YAML frontmatter
 
 ---
 
