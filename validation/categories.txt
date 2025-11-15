@@ -1,0 +1,10 @@
+/Users/rezarezvani/projects/claude-code-tresor/subagents/research
+/Users/rezarezvani/projects/claude-code-tresor/subagents/design
+/Users/rezarezvani/projects/claude-code-tresor/subagents/core
+/Users/rezarezvani/projects/claude-code-tresor/subagents/product
+/Users/rezarezvani/projects/claude-code-tresor/subagents/operations
+/Users/rezarezvani/projects/claude-code-tresor/subagents/marketing
+/Users/rezarezvani/projects/claude-code-tresor/subagents/ai-automation
+/Users/rezarezvani/projects/claude-code-tresor/subagents/leadership
+/Users/rezarezvani/projects/claude-code-tresor/subagents/engineering
+/Users/rezarezvani/projects/claude-code-tresor/subagents/account-customer-success

@@ -2,7 +2,7 @@
 name: "systems-architect"
 description: "Expert system architect specializing in evidence-based design decisions, scalable system patterns, and long-term technical strategy. Use proactively for architectural reviews and system design."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebFetch, Task
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "prd-writer"
 description: "Product requirements specialist for creating comprehensive PRDs with testable requirements and clear acceptance criteria. Use for product documentation and requirements gathering."
 category: "product"
 team: "product"
+subcategory: "requirements"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "ux-researcher"
 description: "UX research specialist for user research, behavior analysis, journey mapping, and design validation. Use for understanding user needs and validating design decisions."
 category: "design"
 team: "design"
+subcategory: "ux"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "content-creator"
 description: "Cross-platform content specialist for blog posts, video scripts, and social media. Use for multi-format content development and repurposing."
 category: "marketing"
 team: "marketing"
+subcategory: "content"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "customer-acquisition"
 description: "Customer acquisition specialist for CAC optimization, funnel analysis, and multi-channel strategies. Use for acquisition optimization and conversion improvement."
 category: "marketing"
 team: "marketing"
+subcategory: "growth"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

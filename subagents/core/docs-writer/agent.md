@@ -2,7 +2,7 @@
 name: "docs-writer"
 description: "Expert technical documentation specialist for creating comprehensive, user-friendly documentation across all project types. Use proactively for API docs, user guides, and technical documentation."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Write, Edit, Grep, Glob, Bash, WebFetch, Skill]
 model: claude-opus-4

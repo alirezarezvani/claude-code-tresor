@@ -3,6 +3,7 @@ name: "project-shipper"
 description: "Launch orchestrator for release management, go-to-market execution, and stakeholder communication. PROACTIVELY use when approaching launch milestones or release deadlines."
 category: "product"
 team: "product"
+subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite, WebSearch, WebFetch]
 model: claude-opus-4

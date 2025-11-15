@@ -3,6 +3,7 @@ name: "content-writer"
 description: "Direct response copywriter for accessible content that explains complex topics to general audiences. Use for blog posts, marketing copy, and educational content."
 category: "marketing"
 team: "marketing"
+subcategory: "content"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

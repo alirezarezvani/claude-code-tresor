@@ -3,6 +3,7 @@ name: "requirements-generator"
 description: "Product requirements generator for transforming ideas into structured PRDs. Use for feature requests, product concepts, and business problem documentation."
 category: "product"
 team: "product"
+subcategory: "requirements"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "twitter-engager"
 description: "Twitter/X specialist for real-time engagement, viral tweets, and community building. Use for Twitter marketing, trending topics, and thought leadership."
 category: "marketing"
 team: "marketing"
+subcategory: "social"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "studio-producer"
 description: "Studio orchestrator for cross-team coordination, resource optimization, and workflow engineering. PROACTIVELY use when coordinating multiple teams or optimizing workflows."
 category: "product"
 team: "product"
+subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
 model: claude-opus-4

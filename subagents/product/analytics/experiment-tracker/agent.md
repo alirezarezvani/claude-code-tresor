@@ -3,6 +3,7 @@ name: "experiment-tracker"
 description: "Experiment orchestrator for A/B testing, feature experiments, and data-driven iteration. PROACTIVELY use when experiments start or results need analysis."
 category: "product"
 team: "product"
+subcategory: "analytics"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
 model: claude-opus-4

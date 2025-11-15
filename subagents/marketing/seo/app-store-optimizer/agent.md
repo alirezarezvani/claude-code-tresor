@@ -3,6 +3,7 @@ name: "app-store-optimizer"
 description: "App store optimization specialist for ASO, keyword research, and conversion optimization. Use for app store listings, metadata optimization, and organic visibility."
 category: "marketing"
 team: "marketing"
+subcategory: "seo"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -3,6 +3,7 @@ name: "content-marketer"
 description: "Marketing content specialist for blog posts, social media, email newsletters, and SEO optimization. Use proactively for marketing content creation."
 category: "marketing"
 team: "marketing"
+subcategory: "content"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

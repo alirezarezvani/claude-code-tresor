@@ -3,6 +3,7 @@ name: "reddit-community-builder"
 description: "Reddit specialist for authentic engagement, organic growth, and community-first strategies. Use for Reddit marketing, subreddit participation, and reputation building."
 category: "marketing"
 team: "marketing"
+subcategory: "social"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

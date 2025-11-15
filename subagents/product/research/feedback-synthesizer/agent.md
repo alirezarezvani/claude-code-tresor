@@ -3,6 +3,7 @@ name: "feedback-synthesizer"
 description: "User feedback analyst for synthesizing multi-source feedback into actionable insights. Use for feedback analysis, pattern recognition, and feature prioritization."
 category: "product"
 team: "product"
+subcategory: "research"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

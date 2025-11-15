@@ -2,7 +2,7 @@
 name: "test-engineer"
 description: "Specialized testing expert for comprehensive test creation, validation, and quality assurance across all testing levels. Use proactively for test generation and coverage analysis."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Write, Edit, Bash, Grep, Glob, Task, Skill]
 model: claude-opus-4

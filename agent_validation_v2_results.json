@@ -1,0 +1,533 @@
+{
+  "summary": {
+    "total_agents": 16,
+    "overall_stats": {
+      "count": 16,
+      "avg_score": 7.0,
+      "min_score": 4.0,
+      "max_score": 9.0,
+      "avg_word_count": 598,
+      "avg_code_blocks": 7.3,
+      "yaml_complete": 16
+    },
+    "core_agents": {
+      "count": 9,
+      "avg_score": 7.6,
+      "min_score": 4.0,
+      "max_score": 8.8,
+      "avg_word_count": 774,
+      "avg_code_blocks": 12.4,
+      "yaml_complete": 9
+    },
+    "specialized_agents": {
+      "count": 7,
+      "avg_score": 6.3,
+      "min_score": 4.0,
+      "max_score": 9.0,
+      "avg_word_count": 372,
+      "avg_code_blocks": 0.7,
+      "yaml_complete": 7
+    },
+    "category_stats": {
+      "core": {
+        "formats": {
+          "core": 8,
+          "specialized": 0
+        },
+        "count": 8,
+        "avg_score": 8.0
+      },
+      "engineering": {
+        "formats": {
+          "core": 0,
+          "specialized": 2
+        },
+        "count": 2,
+        "avg_score": 9.0
+      },
+      "design": {
+        "formats": {
+          "core": 1,
+          "specialized": 2
+        },
+        "count": 3,
+        "avg_score": 4.0
+      },
+      "marketing": {
+        "formats": {
+          "core": 0,
+          "specialized": 1
+        },
+        "count": 1,
+        "avg_score": 6.0
+      },
+      "research": {
+        "formats": {
+          "core": 0,
+          "specialized": 2
+        },
+        "count": 2,
+        "avg_score": 6.0
+      }
+    },
+    "top_performers": [
+      {
+        "agent_name": "frontend-developer",
+        "category": "engineering",
+        "subcategory": "frontend",
+        "file_path": "engineering/frontend/frontend-developer/agent.md",
+        "format": "specialized",
+        "line_count": 44,
+        "quality_score": 9.0,
+        "quality_issues": [],
+        "sections_count": 3,
+        "code_blocks": 0,
+        "word_count": 128,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "cloud-architect",
+        "category": "engineering",
+        "subcategory": "devops",
+        "file_path": "engineering/devops/cloud-architect/agent.md",
+        "format": "specialized",
+        "line_count": 45,
+        "quality_score": 9.0,
+        "quality_issues": [],
+        "sections_count": 3,
+        "code_blocks": 0,
+        "word_count": 121,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "performance-tuner",
+        "category": "core",
+        "subcategory": "performance-tuner",
+        "file_path": "core/performance-tuner/agent.md",
+        "format": "core",
+        "line_count": 651,
+        "quality_score": 8.8,
+        "quality_issues": [
+          "Missing sections: Methodology, Examples"
+        ],
+        "sections_count": 56,
+        "code_blocks": 15,
+        "word_count": 882,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "refactor-expert",
+        "category": "core",
+        "subcategory": "refactor-expert",
+        "file_path": "core/refactor-expert/agent.md",
+        "format": "core",
+        "line_count": 976,
+        "quality_score": 8.8,
+        "quality_issues": [
+          "Missing sections: Approach, Examples"
+        ],
+        "sections_count": 40,
+        "code_blocks": 14,
+        "word_count": 1135,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "systems-architect",
+        "category": "core",
+        "subcategory": "systems-architect",
+        "file_path": "core/systems-architect/agent.md",
+        "format": "core",
+        "line_count": 434,
+        "quality_score": 8.8,
+        "quality_issues": [
+          "Missing sections: Methodology, Examples"
+        ],
+        "sections_count": 52,
+        "code_blocks": 13,
+        "word_count": 1051,
+        "yaml_complete": true,
+        "yaml_missing": []
+      }
+    ],
+    "needs_improvement": [
+      {
+        "agent_name": "ui-designer",
+        "category": "design",
+        "subcategory": "ui",
+        "file_path": "design/ui/ui-designer/agent.md",
+        "format": "specialized",
+        "line_count": 164,
+        "quality_score": 4.0,
+        "quality_issues": [
+          "Missing typical sections (Focus Areas, Approach, Output)",
+          "Too verbose (717 words, should be 100-300)"
+        ],
+        "sections_count": 0,
+        "code_blocks": 2,
+        "word_count": 717,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "ux-researcher",
+        "category": "design",
+        "subcategory": "ux",
+        "file_path": "design/ux/ux-researcher/agent.md",
+        "format": "specialized",
+        "line_count": 197,
+        "quality_score": 4.0,
+        "quality_issues": [
+          "Missing typical sections (Focus Areas, Approach, Output)",
+          "Too verbose (722 words, should be 100-300)"
+        ],
+        "sections_count": 0,
+        "code_blocks": 3,
+        "word_count": 722,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "visual-storyteller",
+        "category": "design",
+        "subcategory": "visual",
+        "file_path": "design/visual/visual-storyteller/agent.md",
+        "format": "core",
+        "line_count": 258,
+        "quality_score": 4.0,
+        "quality_issues": [
+          "Missing sections: Expertise, Methodology, Approach, Examples, Working with Skills",
+          "Add best practices/pitfalls/patterns section"
+        ],
+        "sections_count": 0,
+        "code_blocks": 5,
+        "word_count": 756,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "growth-hacker",
+        "category": "marketing",
+        "subcategory": "growth",
+        "file_path": "marketing/growth/growth-hacker/agent.md",
+        "format": "specialized",
+        "line_count": 75,
+        "quality_score": 6.0,
+        "quality_issues": [
+          "Missing typical sections (Focus Areas, Approach, Output)"
+        ],
+        "sections_count": 3,
+        "code_blocks": 0,
+        "word_count": 222,
+        "yaml_complete": true,
+        "yaml_missing": []
+      },
+      {
+        "agent_name": "market-research-analyst",
+        "category": "research",
+        "subcategory": "market",
+        "file_path": "research/market/market-research-analyst/agent.md",
+        "format": "specialized",
+        "line_count": 53,
+        "quality_score": 6.0,
+        "quality_issues": [
+          "Missing typical sections (Focus Areas, Approach, Output)"
+        ],
+        "sections_count": 0,
+        "code_blocks": 0,
+        "word_count": 299,
+        "yaml_complete": true,
+        "yaml_missing": []
+      }
+    ],
+    "all_issues": {
+      "Missing typical sections (Focus Areas, Approach, Output)": 5,
+      "Missing sections: Methodology, Examples": 4,
+      "Add best practices/pitfalls/patterns section": 2,
+      "Missing sections: Methodology, Approach": 1,
+      "Insufficient content (493 words, need 800+ for excellent)": 1,
+      "Missing sections: Approach, Examples": 1,
+      "Missing sections: Methodology": 1,
+      "Too verbose (717 words, should be 100-300)": 1,
+      "Too verbose (722 words, should be 100-300)": 1,
+      "Missing sections: Expertise, Methodology, Approach, Examples, Working with Skills": 1
+    }
+  },
+  "detailed_results": [
+    {
+      "agent_name": "performance-tuner",
+      "category": "core",
+      "subcategory": "performance-tuner",
+      "file_path": "core/performance-tuner/agent.md",
+      "format": "core",
+      "line_count": 651,
+      "quality_score": 8.8,
+      "quality_issues": [
+        "Missing sections: Methodology, Examples"
+      ],
+      "sections_count": 56,
+      "code_blocks": 15,
+      "word_count": 882,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "config-safety-reviewer",
+      "category": "core",
+      "subcategory": "config-safety-reviewer",
+      "file_path": "core/config-safety-reviewer/agent.md",
+      "format": "core",
+      "line_count": 226,
+      "quality_score": 6.8,
+      "quality_issues": [
+        "Missing sections: Methodology, Approach"
+      ],
+      "sections_count": 31,
+      "code_blocks": 6,
+      "word_count": 642,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "root-cause-analyzer",
+      "category": "core",
+      "subcategory": "root-cause-analyzer",
+      "file_path": "core/root-cause-analyzer/agent.md",
+      "format": "core",
+      "line_count": 404,
+      "quality_score": 8.0,
+      "quality_issues": [
+        "Insufficient content (493 words, need 800+ for excellent)"
+      ],
+      "sections_count": 47,
+      "code_blocks": 14,
+      "word_count": 493,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "refactor-expert",
+      "category": "core",
+      "subcategory": "refactor-expert",
+      "file_path": "core/refactor-expert/agent.md",
+      "format": "core",
+      "line_count": 976,
+      "quality_score": 8.8,
+      "quality_issues": [
+        "Missing sections: Approach, Examples"
+      ],
+      "sections_count": 40,
+      "code_blocks": 14,
+      "word_count": 1135,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "docs-writer",
+      "category": "core",
+      "subcategory": "docs-writer",
+      "file_path": "core/docs-writer/agent.md",
+      "format": "core",
+      "line_count": 483,
+      "quality_score": 8.4,
+      "quality_issues": [
+        "Missing sections: Methodology"
+      ],
+      "sections_count": 74,
+      "code_blocks": 19,
+      "word_count": 799,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "systems-architect",
+      "category": "core",
+      "subcategory": "systems-architect",
+      "file_path": "core/systems-architect/agent.md",
+      "format": "core",
+      "line_count": 434,
+      "quality_score": 8.8,
+      "quality_issues": [
+        "Missing sections: Methodology, Examples"
+      ],
+      "sections_count": 52,
+      "code_blocks": 13,
+      "word_count": 1051,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "security-auditor",
+      "category": "core",
+      "subcategory": "security-auditor",
+      "file_path": "core/security-auditor/agent.md",
+      "format": "core",
+      "line_count": 720,
+      "quality_score": 6.8,
+      "quality_issues": [
+        "Missing sections: Methodology, Examples",
+        "Add best practices/pitfalls/patterns section"
+      ],
+      "sections_count": 33,
+      "code_blocks": 13,
+      "word_count": 520,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "test-engineer",
+      "category": "core",
+      "subcategory": "test-engineer",
+      "file_path": "core/test-engineer/agent.md",
+      "format": "core",
+      "line_count": 396,
+      "quality_score": 7.8,
+      "quality_issues": [
+        "Missing sections: Methodology, Examples"
+      ],
+      "sections_count": 34,
+      "code_blocks": 13,
+      "word_count": 691,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "frontend-developer",
+      "category": "engineering",
+      "subcategory": "frontend",
+      "file_path": "engineering/frontend/frontend-developer/agent.md",
+      "format": "specialized",
+      "line_count": 44,
+      "quality_score": 9.0,
+      "quality_issues": [],
+      "sections_count": 3,
+      "code_blocks": 0,
+      "word_count": 128,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "cloud-architect",
+      "category": "engineering",
+      "subcategory": "devops",
+      "file_path": "engineering/devops/cloud-architect/agent.md",
+      "format": "specialized",
+      "line_count": 45,
+      "quality_score": 9.0,
+      "quality_issues": [],
+      "sections_count": 3,
+      "code_blocks": 0,
+      "word_count": 121,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "ui-designer",
+      "category": "design",
+      "subcategory": "ui",
+      "file_path": "design/ui/ui-designer/agent.md",
+      "format": "specialized",
+      "line_count": 164,
+      "quality_score": 4.0,
+      "quality_issues": [
+        "Missing typical sections (Focus Areas, Approach, Output)",
+        "Too verbose (717 words, should be 100-300)"
+      ],
+      "sections_count": 0,
+      "code_blocks": 2,
+      "word_count": 717,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "ux-researcher",
+      "category": "design",
+      "subcategory": "ux",
+      "file_path": "design/ux/ux-researcher/agent.md",
+      "format": "specialized",
+      "line_count": 197,
+      "quality_score": 4.0,
+      "quality_issues": [
+        "Missing typical sections (Focus Areas, Approach, Output)",
+        "Too verbose (722 words, should be 100-300)"
+      ],
+      "sections_count": 0,
+      "code_blocks": 3,
+      "word_count": 722,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "visual-storyteller",
+      "category": "design",
+      "subcategory": "visual",
+      "file_path": "design/visual/visual-storyteller/agent.md",
+      "format": "core",
+      "line_count": 258,
+      "quality_score": 4.0,
+      "quality_issues": [
+        "Missing sections: Expertise, Methodology, Approach, Examples, Working with Skills",
+        "Add best practices/pitfalls/patterns section"
+      ],
+      "sections_count": 0,
+      "code_blocks": 5,
+      "word_count": 756,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "growth-hacker",
+      "category": "marketing",
+      "subcategory": "growth",
+      "file_path": "marketing/growth/growth-hacker/agent.md",
+      "format": "specialized",
+      "line_count": 75,
+      "quality_score": 6.0,
+      "quality_issues": [
+        "Missing typical sections (Focus Areas, Approach, Output)"
+      ],
+      "sections_count": 3,
+      "code_blocks": 0,
+      "word_count": 222,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "market-research-analyst",
+      "category": "research",
+      "subcategory": "market",
+      "file_path": "research/market/market-research-analyst/agent.md",
+      "format": "specialized",
+      "line_count": 53,
+      "quality_score": 6.0,
+      "quality_issues": [
+        "Missing typical sections (Focus Areas, Approach, Output)"
+      ],
+      "sections_count": 0,
+      "code_blocks": 0,
+      "word_count": 299,
+      "yaml_complete": true,
+      "yaml_missing": []
+    },
+    {
+      "agent_name": "deep-research-specialist",
+      "category": "research",
+      "subcategory": "data",
+      "file_path": "research/data/deep-research-specialist/agent.md",
+      "format": "specialized",
+      "line_count": 93,
+      "quality_score": 6.0,
+      "quality_issues": [
+        "Missing typical sections (Focus Areas, Approach, Output)"
+      ],
+      "sections_count": 6,
+      "code_blocks": 0,
+      "word_count": 394,
+      "yaml_complete": true,
+      "yaml_missing": []
+    }
+  ]
+}

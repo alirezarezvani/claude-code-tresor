@@ -3,6 +3,7 @@ name: "ui-designer"
 description: "UI design specialist for creating beautiful, functional interfaces that can be implemented quickly. Use for interface design, component systems, and visual aesthetics."
 category: "design"
 team: "design"
+subcategory: "ui"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

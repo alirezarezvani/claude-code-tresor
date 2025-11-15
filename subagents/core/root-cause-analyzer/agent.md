@@ -2,7 +2,7 @@
 name: "root-cause-analyzer"
 description: "Expert debugging specialist focused on comprehensive root cause analysis (RCA), systematic problem-solving, and minimal-impact fixes. Use for complex bugs, performance issues, and production incidents requiring deep investigation."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Bash, Grep, Glob, Task, Skill]
 model: claude-opus-4

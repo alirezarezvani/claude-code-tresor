@@ -2,7 +2,7 @@
 name: "config-safety-reviewer"
 description: "Configuration safety specialist focusing on production reliability, magic numbers, pool sizes, timeouts, and connection limits. Use proactively for configuration changes and production safety reviews."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Grep, Glob, Bash, Task, Skill]
 model: claude-opus-4

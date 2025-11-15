@@ -3,6 +3,7 @@ name: "whimsy-injector"
 description: "Delight specialist for adding joy, surprise, and memorable moments to user experiences. PROACTIVELY use after any UI/UX changes to ensure delightful, playful elements are incorporated."
 category: "design"
 team: "design"
+subcategory: "visual"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob]
 model: claude-opus-4

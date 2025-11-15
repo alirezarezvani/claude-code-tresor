@@ -3,6 +3,7 @@ name: "brand-guardian"
 description: "Brand identity specialist for establishing guidelines, ensuring consistency, managing assets, and evolving brand identity. Use for brand standards and visual cohesion."
 category: "design"
 team: "design"
+subcategory: "brand"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

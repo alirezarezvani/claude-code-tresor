@@ -3,6 +3,7 @@ name: "visual-storyteller"
 description: "Visual narrative specialist for creating visual stories, infographics, presentations, and communicating complex ideas through imagery. Use for data visualization and visual communication."
 category: "design"
 team: "design"
+subcategory: "visual"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

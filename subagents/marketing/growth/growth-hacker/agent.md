@@ -3,6 +3,7 @@ name: "growth-hacker"
 description: "Growth specialist for rapid user acquisition, viral loops, and data-driven experiments. Use for growth strategy, A/B testing, and conversion optimization."
 category: "marketing"
 team: "marketing"
+subcategory: "growth"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

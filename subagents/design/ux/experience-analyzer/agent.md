@@ -3,6 +3,7 @@ name: "experience-analyzer"
 description: "Customer experience analyst for analyzing feedback data, identifying friction points, and optimizing user journeys. Use for support ticket analysis and customer journey mapping."
 category: "design"
 team: "design"
+subcategory: "ux"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

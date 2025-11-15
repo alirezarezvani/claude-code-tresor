@@ -3,6 +3,7 @@ name: "tiktok-strategist"
 description: "TikTok specialist for viral content creation, trend leverage, and algorithm optimization. Use for TikTok marketing strategies and influencer collaborations."
 category: "marketing"
 team: "marketing"
+subcategory: "social"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

@@ -2,7 +2,7 @@
 name: "refactor-expert"
 description: "Code refactoring specialist focused on clean architecture, SOLID principles, and technical debt reduction. Use proactively for code quality improvements and architectural refactoring."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Grep, Glob, Bash, Task, Skill]
 model: claude-opus-4

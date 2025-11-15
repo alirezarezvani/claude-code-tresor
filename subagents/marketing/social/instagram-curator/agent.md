@@ -3,6 +3,7 @@ name: "instagram-curator"
 description: "Instagram specialist for visual content strategy, Stories, Reels, and platform growth. Use for Instagram marketing, engagement optimization, and visual aesthetics."
 category: "marketing"
 team: "marketing"
+subcategory: "social"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

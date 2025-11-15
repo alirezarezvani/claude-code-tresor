@@ -3,6 +3,7 @@ name: "trend-researcher"
 description: "Market trend analyst for identifying viral opportunities and emerging behaviors. Use for trend detection, market opportunities, and competitive analysis."
 category: "product"
 team: "product"
+subcategory: "research"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

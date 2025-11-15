@@ -2,7 +2,7 @@
 name: "performance-tuner"
 description: "Performance engineering specialist for application profiling, optimization, and scalability. Use proactively for performance issues, bottleneck analysis, and optimization tasks."
 category: "core"
-team: "engineering"
+team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Bash, Grep, Glob, Task, Skill]
 model: claude-opus-4

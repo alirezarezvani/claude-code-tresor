@@ -3,6 +3,7 @@ name: "ui-ux-analyst"
 description: "UI/UX analysis specialist for design feedback, strategic guidance, and improving user interfaces. Use for design reviews, usability analysis, and UX strategy."
 category: "design"
 team: "design"
+subcategory: "ui"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

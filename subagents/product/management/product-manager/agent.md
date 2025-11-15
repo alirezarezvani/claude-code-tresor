@@ -3,6 +3,7 @@ name: "product-manager"
 description: "Product management orchestrator for coordinating specialized agents to deliver complete features. Use for cross-functional development work and complex initiatives."
 category: "product"
 team: "product"
+subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch, Task, Skill]
 model: claude-opus-4

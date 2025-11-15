@@ -3,6 +3,7 @@ name: "tutorial-engineer"
 description: "Educational content specialist for step-by-step tutorials, onboarding guides, and concept explanations. Use proactively for transforming complex concepts into progressive learning experiences."
 category: "marketing"
 team: "marketing"
+subcategory: "content"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: claude-opus-4

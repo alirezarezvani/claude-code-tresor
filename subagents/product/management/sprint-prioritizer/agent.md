@@ -3,6 +3,7 @@ name: "sprint-prioritizer"
 description: "Sprint planning specialist for maximizing value delivery in 6-day cycles. Use for feature prioritization, roadmap planning, and trade-off decisions."
 category: "product"
 team: "product"
+subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
 model: claude-opus-4
