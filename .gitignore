@@ -126,4 +126,4 @@ documentation/external/
 scripts/publish-gist.sh
 
 documentation/archive/*
-docs/
+# docs/ - NOW TRACKED: Technical documentation for agent system (v2.5.0+)
