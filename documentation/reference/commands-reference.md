@@ -94,7 +94,7 @@ Command usage syntax shown in help.
 
 ### agents (optional)
 **Type:** Array of strings
-**Example:** `["@code-reviewer", "@security-auditor"]`
+**Example:** `["@config-safety-reviewer", "@security-auditor"]`
 
 Agents invoked by this command.
 
@@ -283,7 +283,7 @@ Creates:
    - Prioritize critical files
 
 2. **Quality Checks**
-   - **Code Quality:** @code-reviewer analyzes structure, patterns, maintainability
+   - **Code Quality:** @config-safety-reviewer analyzes structure, patterns, maintainability
    - **Security:** @security-auditor scans for OWASP Top 10
    - **Performance:** @performance-tuner identifies bottlenecks
    - **Configuration:** Validates environment configs, checks risky changes
@@ -324,7 +324,7 @@ Critical Issues:
 ```
 
 **Agents Used:**
-- `@code-reviewer` - Code quality analysis
+- `@config-safety-reviewer` - Code quality analysis
 - `@security-auditor` - Security vulnerability scanning
 - `@performance-tuner` - Performance analysis
 
@@ -355,7 +355,7 @@ Critical Issues:
     }
   },
   "agents": [
-    "@code-reviewer",
+    "@config-safety-reviewer",
     "@security-auditor",
     "@performance-tuner"
   ],
@@ -608,7 +608,7 @@ Updates README.md with:
 
 **Agents Used:**
 - `@docs-writer` - Documentation generation
-- `@architect` - Architecture diagrams (if needed)
+- `@systems-architect` - Architecture diagrams (if needed)
 
 **Configuration:**
 ```json
@@ -634,7 +634,7 @@ Updates README.md with:
       "default": true
     }
   },
-  "agents": ["@docs-writer", "@architect"],
+  "agents": ["@docs-writer", "@systems-architect"],
   "enabled": true,
   "timeout": 300
 }

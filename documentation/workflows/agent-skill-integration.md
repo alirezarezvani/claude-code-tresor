@@ -24,7 +24,7 @@ User Conversation
     │
     └─> Tier 2: Agents (Deep analysis with skill support - 2-5 min)
         │
-        ├─> @code-reviewer agent invoked
+        ├─> @config-safety-reviewer agent invoked
         │   └─> Agent invokes: security-auditor skill (quick scan)
         │   └─> Agent performs: Deep security analysis
         │   └─> Agent invokes: test-generator skill (coverage check)
@@ -323,7 +323,7 @@ This is NON-NEGOTIABLE for safe refactoring!
 claude
 
 # Invoke agent
-@code-reviewer Review src/api/auth.ts
+@config-safety-reviewer Review src/api/auth.ts
 
 # Expected behavior:
 # 1. Agent invokes security-auditor skill (quick scan)
