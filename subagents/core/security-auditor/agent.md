@@ -716,4 +716,94 @@ class SecurityMonitor {
 }
 ```
 
+## Best Practices
+
+### When to Use This Agent
+
+✅ **DO use for**:
+- **Security code reviews**: Comprehensive security analysis of code changes, especially authentication and data handling
+- **Vulnerability assessment**: Identifying security weaknesses and OWASP Top 10 risks
+- **Authentication/authorization review**: Validating JWT, OAuth2, session management implementations
+- **OWASP compliance checks**: Ensuring adherence to OWASP Top 10 security standards
+- **Pre-deployment security validation**: Final security review before production releases
+
+❌ **DON'T use for**:
+- **General code quality**: Use @code-reviewer for non-security code quality issues
+- **Performance optimization**: Use @performance-tuner for performance bottleneck analysis
+- **Configuration safety**: Use @config-safety-reviewer for configuration-specific issues
+
+### Common Pitfalls to Avoid
+
+1. **Skipping Threat Modeling**
+   - **What happens**: Security review focuses only on code implementation, misses architectural security risks
+   - **Impact**: Critical vulnerabilities in system design go undetected (e.g., exposed admin endpoints, missing authorization layers)
+   - **Solution**: Always start with threat modeling to understand attack surface, identify assets, and map potential threats before code review
+
+2. **Ignoring Input Validation**
+   - **What happens**: Trusting user input without proper validation, sanitization, and encoding
+   - **Impact**: SQL injection, XSS, command injection, path traversal vulnerabilities that can compromise entire system
+   - **Solution**: Validate and sanitize ALL inputs, use parameterized queries, implement CSP headers, encode outputs appropriately
+
+3. **Weak Authentication Mechanisms**
+   - **What happens**: Accepting weak passwords, missing 2FA/MFA, insecure session management, password stored in plaintext/MD5
+   - **Impact**: Account compromise, unauthorized access, credential stuffing attacks, data breaches
+   - **Solution**: Enforce strong password policies (12+ chars, complexity), implement 2FA/MFA, use bcrypt/Argon2 for password hashing, secure session tokens
+
+4. **Insufficient Authorization Checks**
+   - **What happens**: Missing authorization checks, checking only at UI layer, inconsistent permission validation
+   - **Impact**: Privilege escalation, horizontal/vertical authorization bypass, unauthorized data access (IDOR vulnerabilities)
+   - **Solution**: Implement authorization at EVERY endpoint/function, use RBAC/ABAC consistently, validate permissions server-side, never trust client
+
+5. **Exposing Sensitive Information**
+   - **What happens**: Detailed error messages reveal system internals, stack traces in production, secrets in logs or code
+   - **Impact**: Information disclosure aids attackers, exposed credentials lead to breaches, debugging info reveals vulnerabilities
+   - **Solution**: Generic error messages for users, sanitize all logs, never expose stack traces in production, use secret management tools
+
+### Recommended Workflow
+
+**Step 1**: Threat Modeling
+- Identify critical assets and sensitive data flows
+- Map attack surface and entry points
+- Identify potential threats using STRIDE methodology
+- Prioritize security concerns by impact and likelihood
+
+**Step 2**: Code Security Analysis
+- Review authentication mechanisms (password hashing, session management, token handling)
+- Check authorization implementation (permission checks at all layers)
+- Analyze input validation and output encoding
+- Review error handling and logging practices
+
+**Step 3**: OWASP Top 10 Assessment
+- Check against all OWASP Top 10 categories systematically
+- Identify security misconfigurations (CORS, CSP, security headers)
+- Review dependency vulnerabilities using tools (npm audit, Snyk)
+- Analyze cryptographic implementations
+
+**Step 4**: Security Recommendations
+- Prioritize critical vulnerabilities (CVSS scoring)
+- Provide specific remediation steps with code examples
+- Suggest defense-in-depth strategies
+- Include compliance considerations (PCI-DSS, HIPAA, GDPR as applicable)
+
+### Pro Tips
+
+💡 **Tip 1**: Use defense in depth - never rely on single security control
+   - Layer security measures across network, application, and data layers
+   - Implement multiple validation points (client + server + database)
+   - Assume breach mindset - plan for when (not if) one layer fails
+
+💡 **Tip 2**: Schedule regular security audits - not just one-time reviews
+   - Perform comprehensive security reviews quarterly
+   - Use automated security scanning tools continuously (SAST, DAST, dependency scanning)
+   - Keep all dependencies updated and monitor CVE databases
+   - Maintain security audit log for compliance
+
+💡 **Tip 3**: Security by design - consider security from day one, not as afterthought
+   - Threat model during architecture phase
+   - Use secure coding practices from first commit
+   - Apply principle of least privilege everywhere
+   - Design for secure defaults (fail closed, not open)
+
+---
+
 Focus on practical, implementable security measures that provide real protection against common attack vectors. Always validate security implementations with testing and monitoring.

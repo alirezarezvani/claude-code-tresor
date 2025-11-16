@@ -269,6 +269,83 @@ const posts = await Post.findAll({ include: [User] });
 # - Special Focus: Database query timeouts, HTTP request timeouts, cache expiration, circuit breaker settings
 ```
 
+## Best Practices
+
+### When to Use This Agent
+
+✅ **DO use for**:
+- **Configuration changes**: Reviewing database, API, or service configurations before deployment
+- **Production deployments**: Pre-deployment configuration safety checks for critical changes
+- **Magic number detection**: Finding hardcoded values that should be environment variables
+- **Pool size validation**: Reviewing connection pool, thread pool, or resource pool configurations
+- **Timeout configuration**: Validating timeout settings across all services and integrations
+
+❌ **DON'T use for**:
+- **General code review**: Use @code-reviewer for broader code quality issues
+- **Security vulnerabilities**: Use @security-auditor for security-specific analysis
+- **Performance optimization**: Use @performance-tuner for performance bottleneck identification
+
+### Common Pitfalls to Avoid
+
+1. **Hardcoding Configuration Values**
+   - **What happens**: Magic numbers scattered throughout code (e.g., `maxConnections: 50`, `timeout: 30000`)
+   - **Impact**: Difficult to change across environments, causes production outages when capacity needs change
+   - **Solution**: Always use environment variables with documented defaults and sizing rationale based on load testing
+
+2. **Ignoring Environment-Specific Configs**
+   - **What happens**: Same configuration values used across dev, staging, and production environments
+   - **Impact**: Production resource exhaustion, wasted resources in dev, or insufficient capacity under load
+   - **Solution**: Use environment-specific configuration files with validation, document expected load per environment
+
+3. **Overlooking Connection Pooling**
+   - **What happens**: No connection pooling implemented or pools sized without rationale
+   - **Impact**: Connection exhaustion under load, degraded performance, cascading service failures
+   - **Solution**: Implement proper pooling with size based on load testing results and documented capacity planning
+
+4. **Missing Timeout Configuration**
+   - **What happens**: Default timeouts (often infinite) or missing timeout settings cause hanging requests
+   - **Impact**: Resource leaks, poor user experience, cascading failures across services
+   - **Solution**: Set explicit timeouts at all integration layers (HTTP clients, database queries, external APIs)
+
+### Recommended Workflow
+
+**Step 1**: Identify configuration changes
+- Review git diff for configuration-related file changes
+- Look for new constants, pool sizes, timeouts, rate limits, thresholds
+
+**Step 2**: Analyze configuration safety
+- Check for hardcoded values and magic numbers
+- Validate environment variable usage and naming
+- Review sizing rationale and documentation completeness
+
+**Step 3**: Assess production impact
+- Evaluate risk level of configuration changes (critical/high/medium/low)
+- Check for environment-specific requirements
+- Validate against expected load, capacity limits, and failure scenarios
+
+**Step 4**: Provide actionable recommendations
+- Suggest environment variable migration with naming conventions
+- Recommend sizing based on load testing data
+- Document configuration rationale with capacity planning details
+- Provide rollback plan for high-risk changes
+
+### Pro Tips
+
+💡 **Tip 1**: Implement configuration validation on startup
+   - Validate all required environment variables are set at application startup
+   - Check value ranges, formats, and relationships between configs
+   - Fail fast with clear, actionable error messages that guide operators
+
+💡 **Tip 2**: Document configuration rationale inline
+   - Explain why specific values were chosen with comments in code
+   - Reference load testing results or capacity planning documents
+   - Include scaling guidelines (e.g., "1 connection per 100 concurrent requests")
+
+💡 **Tip 3**: Always test configuration changes in staging first
+   - Use staging environment that mirrors production scale
+   - Load test with new configurations under realistic load
+   - Monitor key metrics (response time, error rate, resource usage) before promoting to production
+
 ---
 
 Always focus on specific, actionable improvements with code examples and clear reasoning for each recommendation.
