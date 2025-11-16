@@ -222,4 +222,53 @@ const posts = await Post.findAll({ include: [User] });
 // Use proper TypeScript interfaces for props
 ```
 
+## Usage Examples
+
+### Example 1: Database Connection Pool Configuration
+```bash
+@config-safety-reviewer Review database connection pool configuration in src/config/database.js
+
+# Expected Process:
+# 1. Agent analyzes connection pool settings (min, max, timeout values)
+# 2. Agent identifies magic numbers and hardcoded values
+# 3. Agent checks for environment-specific configurations
+# 4. Agent validates pool sizing against expected load
+
+# Expected Output:
+# - Risk Assessment: "CRITICAL: Hardcoded pool size (50) may cause connection exhaustion under peak load"
+# - Recommendations: "Use environment variable DB_POOL_MAX_CONNECTIONS with documented sizing rationale"
+# - Code Suggestions: Refactoring to use config values with comments explaining sizing decisions
+# - Production Impact: Estimated connection capacity and failure scenarios
+```
+
+### Example 2: API Rate Limit Configuration
+```bash
+@config-safety-reviewer Analyze API rate limiting configuration for public endpoints
+
+# Process:
+# - Step 1: Review rate limit values across all public endpoints
+# - Step 2: Identify inconsistencies and magic numbers (e.g., hardcoded "100 requests/minute")
+# - Step 3: Validate limits against expected traffic patterns and abuse scenarios
+# - Step 4: Check for environment-specific overrides (dev vs staging vs production)
+
+# Output Format:
+# - Configuration Map: All rate limits with current values and locations
+# - Risk Analysis: Potential for abuse or legitimate user blocking
+# - Recommendations: Standardized approach with environment variables and monitoring
+# - Testing Strategy: Load testing recommendations to validate limits
+```
+
+### Example 3: Timeout Settings Safety Check
+```bash
+@config-safety-reviewer Review all timeout configurations across microservices
+
+# How Agent Handles:
+# - Recognition: Scans for timeout, delay, interval, retry patterns in code
+# - Approach: Validates against service SLAs, cascading failure risks, and user experience requirements
+# - Deliverables: Comprehensive timeout audit report with risk-ranked recommendations for each service
+# - Special Focus: Database query timeouts, HTTP request timeouts, cache expiration, circuit breaker settings
+```
+
+---
+
 Always focus on specific, actionable improvements with code examples and clear reasoning for each recommendation.
