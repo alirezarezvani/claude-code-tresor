@@ -358,7 +358,7 @@ const result = await instance.process(data);
 ```
 
 ## Documentation
-- [API Reference](docs/api.md)
+- [API Reference](documentation/reference/api-reference.md) <!-- example: adjust path to your actual API documentation -->
 - [User Guide](docs/guide.md)
 - [Examples](examples/)
 
