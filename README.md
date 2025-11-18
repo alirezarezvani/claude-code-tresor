@@ -17,7 +17,21 @@
 
 ---
 
-## 🎉 What's New in v2.6.0
+## 🎉 What's New in v2.6.5
+
+**TÂCHES Integration** - Advanced workflow management system!
+
+- 🔄 **Meta-Prompting** - `/create-prompt` and `/run-prompt` for complex task orchestration
+- ✅ **Todo Management** - `/add-to-todos` and `/check-todos` for capturing ideas without losing focus
+- 📋 **Context Handoff** - `/whats-next` for seamless work continuation in fresh contexts
+- 🔗 **Tresor Integration** - TÂCHES commands detect and suggest Tresor's 141 agents
+- 💡 **Workflow Enhancement** - Meta-prompting combined with Tresor's agent ecosystem
+
+**Credit**: TÂCHES framework by [glittercowboy](https://github.com/glittercowboy/taches-cc-prompts)
+
+---
+
+### Previous: v2.6.0 - Quality Excellence
 
 **Quality Excellence Release** - Achieved 9.7/10 exceptional quality rating!
 
@@ -68,8 +82,9 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 
 ## ✨ What's Included
 
-### 🚀 Slash Commands (4 Essential)
-Transform your development workflow with these powerful commands:
+### 🚀 Slash Commands (9 Total)
+
+**Core Workflow Commands** (4):
 
 | Command | Purpose | Example Usage |
 |---------|---------|---------------|
@@ -77,6 +92,16 @@ Transform your development workflow with these powerful commands:
 | **`/review`** | Automated code review with security and performance analysis | `/review --scope staged --checks security,performance` |
 | **`/test-gen`** | Create comprehensive test suites automatically | `/test-gen --file utils.js --coverage 90` |
 | **`/docs-gen`** | Generate documentation from code and comments | `/docs-gen api --format openapi` |
+
+**TÂCHES Workflow Commands** (5) - **NEW in v2.6.5!**
+
+| Command | Purpose | Example Usage |
+|---------|---------|---------------|
+| **`/create-prompt`** | Generate optimized prompts for complex tasks | `/create-prompt Build user authentication system` |
+| **`/run-prompt`** | Execute generated prompts in sub-agents | `/run-prompt 001 --parallel` |
+| **`/add-to-todos`** | Capture ideas mid-conversation | `/add-to-todos Fix performance issue in API` |
+| **`/check-todos`** | Review and work on captured todos | `/check-todos` |
+| **`/whats-next`** | Generate context handoff document | `/whats-next` |
 
 ### 🤖 Core Agents (8 Production-Ready)
 Expert-level assistance for complex development tasks:
