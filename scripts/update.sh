@@ -178,17 +178,28 @@ update_agents() {
             find "$agents_dest" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} +
         fi
 
-        # Install updated agents
+        # Install updated agents (support both agent.json and agent.md)
         find "$agents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
             local agent_name=$(basename "$agent_dir")
 
-            # Skip README-only directories
-            if [ -f "$agent_dir/agent.json" ]; then
-                log "Updating agent: $agent_name"
+            # Check for agent.json (old format) or agent.md (new format)
+            if [ -f "$agent_dir/agent.json" ] || [ -f "$agent_dir/${agent_name}.md" ] || [ -f "$agent_dir/agent.md" ]; then
+                log "Updating core agent: $agent_name"
                 mkdir -p "$agents_dest"
                 cp -r "$agent_dir" "$agents_dest/$agent_name"
             fi
         done
+
+        # Also update subagents if they exist
+        local subagents_src="$TRESOR_DIR/subagents"
+        if [ -d "$subagents_src" ]; then
+            log "Updating subagents directory..."
+            local subagents_dest="$CLAUDE_CODE_DIR/subagents"
+            rm -rf "$subagents_dest"  # Remove old to ensure clean update
+            cp -r "$subagents_src" "$subagents_dest"
+            local subagent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
+            log "Updated $subagent_count subagents"
+        fi
 
         log "Agents updated successfully"
     else

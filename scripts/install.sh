@@ -128,28 +128,51 @@ install_commands() {
 }
 
 install_agents() {
-    header "Installing Specialized Agents"
+    header "Installing Core Agents"
 
     local agents_src="$TRESOR_DIR/agents"
     local agents_dest="$CLAUDE_CODE_DIR/agents"
 
     if [ -d "$agents_src" ]; then
-        log "Installing agents to: $agents_dest"
+        log "Installing core agents to: $agents_dest"
 
-        # Copy all agent directories
+        # Copy all agent directories (now look for agent.md instead of agent.json)
         find "$agents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
             local agent_name=$(basename "$agent_dir")
 
-            # Skip README-only directories
-            if [ -f "$agent_dir/agent.json" ]; then
-                log "Installing agent: $agent_name"
+            # Skip if just README, check for .md files (agent.json for backward compat)
+            if [ -f "$agent_dir/agent.json" ] || [ -f "$agent_dir/${agent_name}.md" ] || [ -f "$agent_dir/agent.md" ]; then
+                log "Installing core agent: $agent_name"
+                mkdir -p "$agents_dest"
                 cp -r "$agent_dir" "$agents_dest/$agent_name"
             fi
         done
 
-        log "Agents installed successfully"
+        log "Core agents installed successfully"
     else
         warn "Agents directory not found in repository"
+    fi
+}
+
+install_subagents() {
+    header "Installing Extended Subagents"
+
+    local subagents_src="$TRESOR_DIR/subagents"
+    local subagents_dest="$CLAUDE_CODE_DIR/subagents"
+
+    if [ -d "$subagents_src" ]; then
+        log "Installing subagents to: $subagents_dest"
+
+        # Copy entire subagents directory structure
+        cp -r "$subagents_src" "$subagents_dest"
+
+        # Count installed agents
+        local agent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
+        log "Installed $agent_count subagents across 10 categories"
+
+        log "Subagents installed successfully"
+    else
+        warn "Subagents directory not found in repository"
     fi
 }
 
@@ -289,10 +312,21 @@ print_summary() {
     echo "   /test-gen    - Generate comprehensive test suites"
     echo "   /docs-gen    - Create documentation from code"
     echo
-    echo "🤖 Available Agents:"
-    echo "   @code-reviewer  - Expert code quality analysis"
-    echo "   @test-engineer  - Testing and QA specialist"
-    echo "   @docs-writer    - Technical documentation expert"
+    echo "🤖 Core Agents (8):"
+    echo "   @systems-architect        - System design and architecture"
+    echo "   @config-safety-reviewer   - Configuration safety specialist"
+    echo "   @root-cause-analyzer      - Comprehensive debugging and RCA"
+    echo "   @security-auditor         - Security and OWASP compliance"
+    echo "   @test-engineer            - Testing and QA specialist"
+    echo "   @performance-tuner        - Performance optimization"
+    echo "   @refactor-expert          - Code refactoring specialist"
+    echo "   @docs-writer              - Technical documentation expert"
+    echo
+    echo "🌍 Extended Subagents (133+):"
+    echo "   Browse: $CLAUDE_CODE_DIR/subagents/"
+    echo "   Categories: Engineering, Design, Marketing, Product, Leadership,"
+    echo "               Operations, Research, AI/Automation, Account/CS"
+    echo "   Complete catalog: $CLAUDE_CODE_DIR/subagents/AGENT-INDEX.md"
     echo
     echo "📚 Resources Available:"
     echo "   Prompt Templates: $CLAUDE_CODE_DIR/tresor-resources/prompts"
@@ -431,6 +465,7 @@ main() {
         install_skills
         install_commands
         install_agents
+        install_subagents
         install_resources
         create_config
         create_update_script
