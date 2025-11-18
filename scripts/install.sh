@@ -170,9 +170,9 @@ install_subagents() {
         local agent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
         log "Installed $agent_count subagents across 10 categories"
 
-        log "Subagents installed successfully"
+        log "Claude Code Tresor Subagents installed successfully"
     else
-        warn "Subagents directory not found in repository"
+        warn "Claude Code Tresor Subagents directory not found in repository"
     fi
 }
 
@@ -199,7 +199,7 @@ install_skills() {
             fi
         done
 
-        log "Skills installed successfully"
+        log "Claude Code Tresor Skills installed successfully"
     else
         warn "Skills directory not found in repository"
     fi
@@ -306,11 +306,18 @@ print_summary() {
     echo "📍 Installation Location:"
     echo "   $CLAUDE_CODE_DIR"
     echo
-    echo "🚀 Available Commands:"
+    echo "🚀 Core Workflow Commands (4):"
     echo "   /scaffold    - Generate project structures and components"
     echo "   /review      - Automated code review with best practices"
     echo "   /test-gen    - Generate comprehensive test suites"
     echo "   /docs-gen    - Create documentation from code"
+    echo
+    echo "🔄 TÂCHES Workflow Commands (5) - NEW in v2.6.5:"
+    echo "   /create-prompt  - Generate optimized prompts for complex tasks"
+    echo "   /run-prompt     - Execute prompts in sub-agents (parallel/sequential)"
+    echo "   /add-to-todos   - Capture ideas with full context"
+    echo "   /check-todos    - Resume work on todos (suggests Tresor agents)"
+    echo "   /whats-next     - Create comprehensive context handoff document"
     echo
     echo "🤖 Core Agents (8):"
     echo "   @systems-architect        - System design and architecture"
@@ -459,7 +466,7 @@ main() {
         install_commands
         install_agents
         install_resources
-        log "Update completed successfully"
+        log "Claude Code Tresor Update completed successfully"
     else
         # Full installation
         install_skills
