@@ -9,7 +9,7 @@ Common questions about Claude Code Tresor.
 Claude Code Tresor is a comprehensive collection of professional-grade utilities for Claude Code CLI, including:
 
 - **8 Autonomous Skills** - Automatic background helpers (code-reviewer, security-auditor, etc.)
-- **8 Specialized Agents** - Expert sub-agents for deep analysis (@code-reviewer, @test-engineer, etc.)
+- **8 Specialized Agents** - Expert sub-agents for deep analysis (@config-safety-reviewer, @test-engineer, etc.)
 - **4 Essential Commands** - Workflow automation (/scaffold, /review, /test-gen, /docs-gen)
 - **20+ Prompt Templates** - Production-ready prompts for common scenarios
 - **Development Standards** - Style guides, Git workflows, collaboration guidelines
@@ -47,7 +47,7 @@ Yes! Claude Code Tresor is **open source** under the MIT License:
 | **When to use** | Continuous monitoring | Deep analysis | Workflows |
 | **Tool access** | Limited (safe) | Full access | Orchestrates |
 | **Context** | Shared | Separate | Coordinates |
-| **Examples** | code-reviewer (skill) | @code-reviewer (agent) | /review (command) |
+| **Examples** | code-reviewer (skill) | @config-safety-reviewer (agent) | /review (command) |
 
 **Simple explanation:**
 - **Skills** = Automatic helpers (always watching)
@@ -73,7 +73,7 @@ Yes! Claude Code Tresor is **open source** under the MIT License:
 - ✅ You need expert guidance on architecture/design
 - ✅ You're debugging a complex issue
 
-**Example:** `@architect design a scalable microservices architecture`
+**Example:** `@systems-architect design a scalable microservices architecture`
 
 ---
 
@@ -117,7 +117,7 @@ Suggestion: Add try-catch block to handle API failures."
 Use `@agent-name` syntax:
 
 ```
-@code-reviewer analyze src/api/users.controller.ts for security issues
+@config-safety-reviewer analyze src/api/users.controller.ts for security issues
 ```
 
 **Tips for better results:**
@@ -127,7 +127,7 @@ Use `@agent-name` syntax:
 
 **Example:**
 ```
-@architect design user authentication system
+@systems-architect design user authentication system
 
 Requirements:
 - 10k concurrent users
@@ -468,7 +468,7 @@ rr-code-reviewer analyze this
 
 **v2.0 (new):**
 ```
-@code-reviewer analyze this
+@config-safety-reviewer analyze this
 ```
 
 ---
@@ -570,7 +570,7 @@ coordination:
 **Yes**, using the Task tool:
 
 ```
-@architect design system
+@systems-architect design system
 [Invokes @security-auditor for security review]
 [Invokes @performance-tuner for optimization]
 ```

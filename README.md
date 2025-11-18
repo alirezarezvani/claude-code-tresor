@@ -3,29 +3,35 @@
 > A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
+[![Version](https://img.shields.io/badge/version-2.5.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
-**Updated**: November 8, 2025 (v2.0.0 - Documentation & Path Fixes)
+**Updated**: November 15, 2025 (v2.5.0 - Agent Reorganization & Extension)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
 
 ---
 
-## 🎉 What's New in v2.0.0
+## 🎉 What's New in v2.5.0
 
-**Major Feature: Skills Layer** - Autonomous background helpers that work automatically!
+**Major Update: Agent Reorganization & Extension** - 137+ agents organized by team and function!
 
-- ✨ **8 New Skills** - Automatic code quality, security scanning, test suggestions, and documentation
-- 🔄 **3-Tier Architecture** - Skills (automatic) → Agents (manual) → Commands (workflows)
-- 📚 **Comprehensive Guides** - [Getting Started](GETTING-STARTED.md), [Architecture](ARCHITECTURE.md), [Migration](MIGRATION-GUIDE.md)
-- 🛡️ **Zero Breaking Changes** - All existing agents and commands work exactly as before
-- 🎯 **Simple & Intuitive** - Skills work without configuration, sandboxing is optional
+- 🏗️ **New Structure** - Organized `subagents/` directory with 9 team categories
+- 📦 **137+ Extended Agents** - Comprehensive coverage for all development domains
+- 🔄 **Core Agent Renaming** - Clearer specializations (see migration notes below)
+- 🎨 **Color Coding System** - Visual team identification
+- 📚 **Enhanced Documentation** - Complete categorization and dependency mapping
+- 🛡️ **Production Safety Focus** - Configuration safety specialist added
 
-**Upgrading?** See [MIGRATION-GUIDE.md](MIGRATION-GUIDE.md) for seamless upgrade with zero breaking changes.
+**BREAKING CHANGES**: Core agents renamed for clarity:
+- `@architect` → `@systems-architect`
+- `@code-reviewer` → `@config-safety-reviewer`
+- `@debugger` → `@root-cause-analyzer`
+
+**Previous v2.0.0**: Skills Layer - Autonomous background helpers that work automatically!
 
 ---
 
@@ -60,19 +66,34 @@ Transform your development workflow with these powerful commands:
 | **`/test-gen`** | Create comprehensive test suites automatically | `/test-gen --file utils.js --coverage 90` |
 | **`/docs-gen`** | Generate documentation from code and comments | `/docs-gen api --format openapi` |
 
-### 🤖 Specialized Agents (8 Expert)
+### 🤖 Core Agents (8 Production-Ready)
 Expert-level assistance for complex development tasks:
 
 | Agent | Expertise | Best For |
 |-------|-----------|----------|
-| **`@code-reviewer`** | Code quality, security, performance analysis | PR reviews, code audits, best practices |
+| **`@config-safety-reviewer`** | Configuration safety, production reliability | Pool sizes, timeouts, connection limits, magic numbers |
 | **`@test-engineer`** | Testing strategies, test creation, QA | Unit tests, integration tests, coverage analysis |
 | **`@docs-writer`** | Technical documentation, user guides | API docs, README files, troubleshooting guides |
-| **`@architect`** | System design, technology evaluation | Architecture reviews, design decisions |
-| **`@debugger`** | Root cause analysis, troubleshooting | Production issues, complex bugs |
-| **`@security-auditor`** | Security assessment, OWASP compliance | Security audits, vulnerability analysis |
-| **`@performance-tuner`** | Performance optimization, profiling | Performance issues, bottleneck analysis |
-| **`@refactor-expert`** | Code refactoring, clean architecture | Technical debt, code modernization |
+| **`@systems-architect`** | System design, technology evaluation | Architecture reviews, design decisions, scalability |
+| **`@root-cause-analyzer`** | Comprehensive RCA, systematic debugging | Production incidents, complex bugs, performance issues |
+| **`@security-auditor`** | Security assessment, OWASP compliance | Security audits, vulnerability analysis, compliance |
+| **`@performance-tuner`** | Performance optimization, profiling | Performance issues, bottleneck analysis, optimization |
+| **`@refactor-expert`** | Code refactoring, clean architecture | Technical debt, code modernization, SOLID principles |
+
+### 🌍 Extended Agents (137+ Specialists)
+Organized by team and function in `subagents/` directory:
+
+- **🔵 Engineering** (60+) - Backend, frontend, mobile, DevOps, security, testing, languages
+- **🎨 Design** (10) - UI/UX design, visual design, branding
+- **🌱 Marketing** (15+) - Content, social media, growth, SEO
+- **💜 Product** (10+) - Product management, requirements, research
+- **🏆 Leadership** (15+) - Finance, strategy, risk, compliance
+- **🌊 Operations** (10+) - Analytics, support, project management
+- **🔶 Research** (10+) - Market research, competitive intelligence
+- **🧠 AI/Automation** (10+) - AI/ML engineering, automation, prompts
+- **💙 Account/CS** (8+) - Account management, customer success, sales
+
+**See:** [Complete Agent Catalog](subagents/README.md) for full list and navigation
 
 ### ✨ Skills (8 Autonomous) - **NEW!**
 Automatic background helpers that work while you code:
@@ -288,15 +309,21 @@ cp -r prompts standards examples ~/claude-code-resources/
 
 ### 🔍 Code Review
 ```bash
-# Comprehensive code review
-@code-reviewer Please review this component for:
-- React best practices
-- Performance optimization
-- Security considerations
-- Accessibility compliance
+# Configuration safety review
+@config-safety-reviewer Review database connection pool settings for:
+- Pool size limits
+- Timeout configurations
+- Connection limit safety
+- Magic numbers
+
+# Security audit
+@security-auditor Please review this component for:
+- OWASP Top 10 vulnerabilities
+- Authentication/authorization
+- Input validation
 
 # Automated PR review
-/review --scope pr --checks security,performance,style
+/review --scope pr --checks security,performance,configuration
 ```
 
 ### 🧪 Testing
@@ -392,12 +419,12 @@ claude-code-tresor/
 1. **Install**: Run `./scripts/install.sh` (installs skills + agents + commands)
 2. **Observe**: Skills work automatically - start coding and watch them detect issues
 3. **Try Command**: `/scaffold react-component TestComponent --tests`
-4. **Invoke Agent**: `@code-reviewer` for deep analysis
+4. **Invoke Agent**: `@config-safety-reviewer` for configuration safety, `@security-auditor` for security analysis
 5. **Learn**: Browse [GETTING-STARTED.md](GETTING-STARTED.md) for 5-min quick start
 
 ### 🏃‍♂️ Ready to Build?
 1. **Skills monitor**: Automatic background checks (code quality, security, tests)
-2. **Agent analysis**: `@code-reviewer`, `@test-engineer` for deep dives
+2. **Agent analysis**: `@config-safety-reviewer`, `@security-auditor`, `@test-engineer` for deep dives
 3. **Command workflows**: `/review --scope staged`, `/test-gen --file utils.js`
 4. **Full workflow**: Skills detect → Agents analyze → Commands orchestrate
 

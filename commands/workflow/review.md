@@ -30,9 +30,9 @@ This command builds on automatic skill detections:
 
 1. **Context Analysis**: First understand what code is being reviewed
 2. **Multi-Agent Coordination**: Use Task tool to delegate to specialized agents:
-   - `@code-reviewer` for general quality and best practices
+   - `@config-safety-reviewer` for configuration safety and production reliability
    - `@security-auditor` for security vulnerabilities
-   - `@architect` for architectural concerns
+   - `@systems-architect` for architectural concerns
    - `@performance-tuner` for performance optimization
 
 3. **Configuration Safety Priority**: Pay special attention to:

@@ -91,15 +91,15 @@ code-reviewer skill: "⚠️ Security issue detected: User input not sanitized"
 
 **Example:**
 ```
-@code-reviewer analyze this component for React best practices and security issues
+@config-safety-reviewer analyze this component for React best practices and security issues
 ```
 
 **8 Available Agents:**
-1. @code-reviewer - Code quality expert
+1. @config-safety-reviewer - Code quality expert
 2. @test-engineer - Testing specialist
 3. @docs-writer - Documentation expert
-4. @architect - System design expert
-5. @debugger - Debugging specialist
+4. @systems-architect - System design expert
+5. @root-cause-analyzer - Debugging specialist
 6. @security-auditor - Security expert
 7. @performance-tuner - Performance optimization
 8. @refactor-expert - Code refactoring
@@ -147,9 +147,9 @@ test-generator skill: "Missing tests for UserProfile component"
 
 **Step 2: Use Agent for Deep Analysis (Manual)**
 ```
-You: @code-reviewer analyze UserProfile.tsx for production readiness
+You: @config-safety-reviewer analyze UserProfile.tsx for production readiness
 
-@code-reviewer:
+@config-safety-reviewer:
 ✅ Code structure follows React best practices
 ⚠️ Missing error boundaries
 ⚠️ No accessibility attributes
@@ -231,9 +231,9 @@ test-generator skill: "📋 Suggested tests:"
 
 **Step 4: Deep Analysis with Agent**
 ```
-You: @code-reviewer provide complete analysis with fixes
+You: @config-safety-reviewer provide complete analysis with fixes
 
-@code-reviewer:
+@config-safety-reviewer:
 Here's a production-ready version:
 
 [Provides complete refactored code with:]
@@ -293,9 +293,9 @@ echo "const x = 1; x = 2;" > test.js
 ### Task 2: Test an Agent (Manual)
 
 ```
-You: @architect design a microservices architecture for an e-commerce platform
+You: @systems-architect design a microservices architecture for an e-commerce platform
 
-@architect:
+@systems-architect:
 I'll design a scalable microservices architecture...
 
 [Provides detailed architecture with:]
@@ -335,7 +335,7 @@ Follow this recommended learning path:
 ### Week 2: Agents
 1. 📖 Read [Agents Reference](../reference/agents-reference.md)
 2. 🎯 Practice: Use each agent once
-3. 🎯 Project: Analyze existing codebase with @code-reviewer
+3. 🎯 Project: Analyze existing codebase with @config-safety-reviewer
 
 ### Week 3: Commands
 1. 📖 Read [Commands Reference](../reference/commands-reference.md)
@@ -357,7 +357,7 @@ Follow this recommended learning path:
 ```
 1. Write code normally
 2. Skills provide real-time feedback (automatic)
-3. For deeper review: @code-reviewer analyze
+3. For deeper review: @config-safety-reviewer analyze
 4. For complete audit: /review --scope staged
 5. Fix issues
 6. Commit with /review --pre-commit
