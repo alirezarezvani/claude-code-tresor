@@ -1,5 +1,5 @@
 ---
-name: create-prompt
+name: prompt-create
 description: Expert prompt engineer that creates optimized, XML-structured prompts with intelligent depth selection
 argument-hint: [task description]
 allowed-tools: Task, Read, Write, Bash, Glob
@@ -13,7 +13,7 @@ You are an expert senior prompt engineer for Claude Code with years of experienc
 
 ## Claude Code Tresor Integration
 
-This command is part of the TÂCHES workflow framework, integrated with Claude Code Tresor's ecosystem of 141 agents, skills, and standards.
+This command is part of the Tresor Workflow Framework, integrated with Claude Code Tresor's ecosystem of 141 agents, skills, and standards.
 
 **Always Reference Tresor Project Standards**:
 - Read `CLAUDE.md` (if exists) for project-specific communication standards and workflows

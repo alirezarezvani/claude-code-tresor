@@ -1,0 +1,1 @@
+../../subagents/core/security-auditor/agent.md

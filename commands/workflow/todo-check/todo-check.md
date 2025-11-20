@@ -1,5 +1,5 @@
 ---
-name: check-todos
+name: todo-check
 description: List outstanding todos and select one to work on
 argument-hint: (no arguments)
 allowed-tools: [Read, Edit, Glob]

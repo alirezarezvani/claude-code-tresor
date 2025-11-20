@@ -1,5 +1,5 @@
 ---
-name: run-prompt
+name: prompt-run
 description: Delegate one or more prompts to fresh sub-task contexts with parallel or sequential execution
 argument-hint: <prompt-number(s)-or-name> [--parallel|--sequential]
 allowed-tools: Task, Read, Bash, Glob

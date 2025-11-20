@@ -1,5 +1,5 @@
 ---
-name: whats-next
+name: handoff-create
 description: Analyze the current conversation and create a handoff document for continuing this work in a fresh context
 argument-hint: (no arguments)
 allowed-tools: [Read, Write, Bash, WebSearch, WebFetch, Glob]
@@ -18,12 +18,12 @@ This command complements Tresor's memory bank system for comprehensive context m
 - `productContext.md` - Tech stack, architectural decisions, conventions
 - `activeContext.md` - Current state, priorities, next steps (updated regularly)
 
-**TÂCHES Context Handoff** (Session-specific):
+**Tresor Context Handoff** (Session-specific):
 - `whats-next.md` - Detailed session handoff (created by this command)
 
 **Usage Pattern**:
 - Use Tresor's `activeContext.md` for ongoing daily/weekly work tracking
-- Use `/whats-next` for complex task pauses or when context is full
+- Use `/handoff-create` for complex task pauses or when context is full
 - Reference both in next session for complete continuity
 
 ## Instructions

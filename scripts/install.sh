@@ -312,12 +312,12 @@ print_summary() {
     echo "   /test-gen    - Generate comprehensive test suites"
     echo "   /docs-gen    - Create documentation from code"
     echo
-    echo "🔄 TÂCHES Workflow Commands (5) - NEW in v2.6.5:"
-    echo "   /create-prompt  - Generate optimized prompts for complex tasks"
-    echo "   /run-prompt     - Execute prompts in sub-agents (parallel/sequential)"
-    echo "   /add-to-todos   - Capture ideas with full context"
-    echo "   /check-todos    - Resume work on todos (suggests Tresor agents)"
-    echo "   /whats-next     - Create comprehensive context handoff document"
+    echo "🔄 Tresor Workflow Commands (5) - NEW in v2.7.0:"
+    echo "   /prompt-create  - Generate optimized prompts for complex tasks"
+    echo "   /prompt-run     - Execute prompts in sub-agents (parallel/sequential)"
+    echo "   /todo-add       - Capture ideas with full context"
+    echo "   /todo-check     - Resume work on todos (suggests Tresor agents)"
+    echo "   /handoff-create - Create comprehensive context handoff document"
     echo
     echo "🤖 Core Agents (8):"
     echo "   @systems-architect        - System design and architecture"
