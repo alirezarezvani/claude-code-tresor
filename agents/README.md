@@ -1,331 +1,162 @@
-# Claude Code Specialized Agents
+# Claude Code Tresor - Core Agents (Backward Compatibility)
 
-This directory contains a collection of specialized subagents designed to handle specific aspects of software development with expert-level knowledge and capabilities.
+> **⚠️ NOTICE:** This directory is maintained for backward compatibility only.
+> **Primary Location:** All agents are now organized in `/subagents/` (v2.7.0+)
+> **Migration Path:** The `agent.md` files in this directory are symlinks to `/subagents/core/`
 
-## 📁 Agent Categories
+---
+
+## 📦 Directory Structure (v2.7.0)
+
+As of v2.7.0, Claude Code Tresor uses a unified agent structure:
 
 ```
-agents/
-├── code-reviewer/        # Comprehensive code quality analysis
-├── security-auditor/     # Security vulnerability scanning and fixes
-├── test-engineer/        # Test creation, validation, and quality assurance
-├── docs-writer/          # Technical documentation specialist
-├── refactor-expert/      # Code refactoring and clean code transformations
-├── performance-tuner/    # Performance optimization and benchmarking
-├── debugger/             # Advanced debugging and troubleshooting
-└── architect/            # System design and architectural patterns
+subagents/                     # PRIMARY LOCATION (133 total agents)
+├── core/                      # 8 core production agents
+│   ├── config-safety-reviewer/
+│   ├── systems-architect/
+│   ├── root-cause-analyzer/
+│   ├── security-auditor/
+│   ├── test-engineer/
+│   ├── performance-tuner/
+│   ├── refactor-expert/
+│   └── docs-writer/
+├── engineering/               # 54 engineering specialists
+├── design/                    # 7 design specialists
+├── marketing/                 # 11 marketing specialists
+├── product/                   # 9 product specialists
+├── leadership/                # 14 leadership specialists
+├── operations/                # 6 operations specialists
+├── research/                  # 7 research specialists
+├── ai-automation/             # 9 AI/ML specialists
+└── account-customer-success/  # 8 account & CS specialists
 ```
 
-## 🤖 Available Agents
+**See:** [Complete Agent Catalog →](../subagents/README.md) | [Agent Index →](../subagents/AGENT-INDEX.md)
 
-### Code Quality & Review
-- **@code-reviewer** - Comprehensive code quality analysis with best practices validation
-- **@refactor-expert** - Intelligent code refactoring with clean code principles
-- **@security-auditor** - Security vulnerability detection and remediation
+---
 
-### Testing & Quality Assurance
-- **@test-engineer** - Test creation, validation, and quality assurance specialist
-- **@performance-tuner** - Performance optimization and benchmarking expert
+## 🤖 Core Agents (8 Total)
 
-### Documentation & Architecture
-- **@docs-writer** - Technical documentation and user guide specialist
-- **@architect** - System design and architectural pattern expert
+These 8 agents are duplicated here for backward compatibility. The authoritative versions are in `/subagents/core/`.
 
-### Development Support
-- **@debugger** - Advanced debugging and troubleshooting specialist
+| Agent | Expertise | Location |
+|-------|-----------|----------|
+| **@config-safety-reviewer** | Configuration safety & production reliability | [subagents/core/config-safety-reviewer](../subagents/core/config-safety-reviewer/) |
+| **@systems-architect** | System design & technology evaluation | [subagents/core/systems-architect](../subagents/core/systems-architect/) |
+| **@root-cause-analyzer** | Comprehensive RCA & systematic debugging | [subagents/core/root-cause-analyzer](../subagents/core/root-cause-analyzer/) |
+| **@security-auditor** | Security assessment & OWASP compliance | [subagents/core/security-auditor](../subagents/core/security-auditor/) |
+| **@test-engineer** | Testing strategies & QA | [subagents/core/test-engineer](../subagents/core/test-engineer/) |
+| **@performance-tuner** | Performance optimization & profiling | [subagents/core/performance-tuner](../subagents/core/performance-tuner/) |
+| **@refactor-expert** | Code refactoring & clean architecture | [subagents/core/refactor-expert](../subagents/core/refactor-expert/) |
+| **@docs-writer** | Technical documentation & user guides | [subagents/core/docs-writer](../subagents/core/docs-writer/) |
+
+---
 
 ## 🚀 Quick Usage Examples
 
-### Code Review
+### Invoke Agents
 ```bash
-@code-reviewer Please review this React component for best practices:
-[paste your component code]
-
-# Agent analyzes:
-# - Code structure and organization
-# - Performance implications
-# - Security considerations
-# - React best practices
-# - Accessibility compliance
+# Works from either location (thanks to symlinks)
+@systems-architect Design scalable e-commerce architecture for 100k users
+@config-safety-reviewer Review database connection pool configuration
+@security-auditor Analyze this authentication module for vulnerabilities
 ```
 
-### Test Generation
+### Discover Extended Agents
 ```bash
-@test-engineer Create comprehensive tests for this API endpoint:
-[paste your endpoint code]
-
-# Agent generates:
-# - Unit tests with edge cases
-# - Integration tests
-# - Mock configurations
-# - Error scenario tests
-# - Performance tests
+# Browse 125 additional specialists in /subagents/
+@database-optimizer   # Engineering team
+@ui-designer          # Design team
+@content-strategist   # Marketing team
+@product-analyst      # Product team
+@cto                  # Leadership team
 ```
 
-### Documentation Writing
+**See:** [Complete List of 133 Agents →](../subagents/AGENT-INDEX.md)
+
+---
+
+## 🔧 Technical Details
+
+### Symlink Structure (v2.7.0)
+
+Each agent directory in `/agents/` contains:
+- `README.md` - Original documentation (preserved for reference)
+- `agent.md` - **Symlink** to `../../subagents/core/[agent-name]/agent.md`
+
+**Example:**
 ```bash
-@docs-writer Create user documentation for this feature:
-[describe your feature or paste code]
-
-# Agent creates:
-# - User-friendly documentation
-# - Code examples
-# - Troubleshooting guides
-# - API reference
-# - Getting started guides
+agents/systems-architect/
+├── README.md       # Original documentation
+└── agent.md        # Symlink → ../../subagents/core/systems-architect/agent.md
 ```
 
-### Performance Optimization
+This ensures:
+- ✅ Backward compatibility for existing installations
+- ✅ Single source of truth in `/subagents/core/`
+- ✅ No duplication of agent logic
+- ✅ Seamless updates via symlinks
+
+### Installation
+
+The installation script (`scripts/install.sh`) automatically:
+1. Installs agents from `/subagents/core/` (primary location)
+2. Creates symlinks in `/agents/` for backward compatibility
+3. Updates Claude Code's agent registry
+
 ```bash
-@performance-tuner Analyze and optimize this database query:
-[paste your query or code]
-
-# Agent provides:
-# - Performance analysis
-# - Optimization suggestions
-# - Benchmarking strategies
-# - Caching recommendations
-# - Scalability improvements
-```
-
-## 🎯 Agent Capabilities
-
-### Intelligence Features
-- **Context Awareness**: Understands your project structure and conventions
-- **Technology Recognition**: Adapts to your tech stack and frameworks
-- **Best Practices**: Applies industry standards and modern patterns
-- **Code Analysis**: Deep understanding of code structure and dependencies
-
-### Specialization Benefits
-- **Expert Knowledge**: Each agent specializes in specific domains
-- **Consistent Quality**: Follows established patterns and standards
-- **Time Saving**: Automates complex analysis and generation tasks
-- **Learning Integration**: Learns from your codebase patterns
-
-## 🛠️ Agent Configuration
-
-### Global Agent Settings
-Create `.agentsrc` in your project root:
-
-```json
-{
-  "defaultAgents": {
-    "review": "code-reviewer",
-    "test": "test-engineer",
-    "docs": "docs-writer"
-  },
-  "agentSettings": {
-    "code-reviewer": {
-      "strictness": "high",
-      "includePerformance": true,
-      "includeSecurity": true,
-      "followFrameworkRules": true
-    },
-    "test-engineer": {
-      "framework": "jest",
-      "coverage": 85,
-      "includeE2E": true,
-      "mockStrategy": "auto"
-    },
-    "docs-writer": {
-      "style": "technical",
-      "includeExamples": true,
-      "format": "markdown",
-      "audience": "developer"
-    }
-  }
-}
-```
-
-### Project-Specific Configuration
-```json
-{
-  "project": {
-    "type": "react-app",
-    "framework": "next.js",
-    "testing": "jest",
-    "styling": "tailwind",
-    "state": "redux"
-  },
-  "standards": {
-    "eslint": ".eslintrc.json",
-    "prettier": ".prettierrc",
-    "typescript": "strict"
-  }
-}
-```
-
-## 📋 Agent Standards
-
-All agents in this collection follow these standards:
-
-### Agent Structure
-```
-agent-name/
-├── agent.json           # Agent configuration and capabilities
-├── README.md            # Agent documentation and usage
-├── prompts/             # Specialized prompts for the agent
-│   ├── system.md        # Core system prompt
-│   ├── examples.md      # Example interactions
-│   └── templates/       # Response templates
-└── tools/               # Agent-specific tools and utilities
-```
-
-### Configuration Format
-```json
-{
-  "name": "agent-name",
-  "description": "Brief description of agent capabilities",
-  "category": "analysis|development|documentation|testing",
-  "capabilities": [
-    "Primary capability 1",
-    "Primary capability 2",
-    "Primary capability 3"
-  ],
-  "specializations": [
-    "Technology 1",
-    "Framework 2",
-    "Domain 3"
-  ],
-  "prompts": {
-    "system": "Core system prompt defining agent behavior",
-    "examples": ["Example usage 1", "Example usage 2"]
-  },
-  "tools": [
-    "tool1",
-    "tool2"
-  ],
-  "author": "Author Name",
-  "version": "1.0.0",
-  "created": "2025-09-16"
-}
-```
-
-## 🔄 Agent Workflows
-
-### Code Review Workflow
-1. **@code-reviewer** analyzes code for quality issues
-2. **@security-auditor** checks for vulnerabilities
-3. **@performance-tuner** identifies optimization opportunities
-4. **@refactor-expert** suggests improvements
-
-### Development Workflow
-1. **@architect** designs system structure
-2. **@code-reviewer** validates implementation
-3. **@test-engineer** creates comprehensive tests
-4. **@docs-writer** documents features
-
-### Quality Assurance Workflow
-1. **@test-engineer** creates test scenarios
-2. **@debugger** identifies and fixes issues
-3. **@performance-tuner** optimizes performance
-4. **@security-auditor** validates security
-
-## 🎨 Customization
-
-### Custom Agent Creation
-```bash
-# Create a new custom agent
-cp -r agents/template agents/my-custom-agent
-
-# Edit configuration
-{
-  "name": "my-custom-agent",
-  "description": "Custom agent for specific needs",
-  "capabilities": ["Custom capability"],
-  "prompts": {
-    "system": "Your custom system prompt"
-  }
-}
-```
-
-### Agent Enhancement
-```json
-// Extend existing agent capabilities
-{
-  "extends": "code-reviewer",
-  "additionalCapabilities": [
-    "Custom framework analysis"
-  ],
-  "customPrompts": {
-    "frameworkSpecific": "Analyze this custom framework code..."
-  }
-}
-```
-
-## 📊 Agent Analytics
-
-### Usage Patterns
-- **Most Popular**: @code-reviewer (40%), @test-engineer (25%), @docs-writer (20%)
-- **Success Rate**: Average 92% satisfaction across all agents
-- **Time Savings**: Average 60% reduction in manual tasks
-
-### Performance Metrics
-- **Response Accuracy**: 95% accurate suggestions
-- **Context Understanding**: 88% correct context interpretation
-- **Code Quality Impact**: 40% improvement in code quality scores
-
-## 🚨 Best Practices
-
-### Agent Usage Guidelines
-1. **Be Specific**: Provide clear context and requirements
-2. **Use Appropriate Agent**: Choose the right agent for the task
-3. **Iterate**: Use multiple agents for comprehensive coverage
-4. **Verify Results**: Always review and validate agent suggestions
-
-### Common Patterns
-```bash
-# Sequential agent usage
-@code-reviewer Review this component
-@test-engineer Create tests based on the review feedback
-@docs-writer Document the component and tests
-
-# Parallel analysis
-@security-auditor Check for vulnerabilities
-@performance-tuner Analyze performance implications
-# Run these simultaneously for comprehensive analysis
-```
-
-## 🤝 Contributing
-
-Help expand our agent collection:
-
-### Add New Agents
-1. **Identify Need**: Find gaps in current agent coverage
-2. **Design Capabilities**: Define specific agent skills
-3. **Create Prompts**: Develop specialized prompts
-4. **Test Thoroughly**: Validate agent performance
-5. **Document Usage**: Provide clear examples
-
-### Improve Existing Agents
-1. **Enhance Prompts**: Improve response quality
-2. **Add Capabilities**: Expand agent skills
-3. **Update Tools**: Add new analysis tools
-4. **Optimize Performance**: Improve response speed
-
-### Agent Development Template
-```markdown
-# Agent Name
-
-## Purpose
-Brief description of what this agent does.
-
-## Capabilities
-- Capability 1
-- Capability 2
-- Capability 3
-
-## Usage Examples
-```bash
-@agent-name [example usage]
-```
-
-## Configuration Options
-[Configuration details]
+./scripts/install.sh --agents  # Installs all 8 core agents
 ```
 
 ---
 
-**Ready to supercharge your development workflow? 🚀**
+## 📚 Documentation
 
-Choose the right agent for your task and experience expert-level assistance tailored to your specific needs!
+### Quick Links
+- **[Agent Catalog →](../subagents/README.md)** - Complete list of all 133 agents
+- **[Agent Index →](../subagents/AGENT-INDEX.md)** - Searchable catalog with descriptions
+- **[Getting Started →](../documentation/guides/getting-started.md)** - First-time user guide
+- **[Technical Reference →](../documentation/reference/agents.md)** - Agent architecture details
+
+### Migration Guide (for v2.4/v2.5 users)
+
+**Agent Naming Changes (v2.5.0)**:
+| Old Name (v2.4) | New Name (v2.5+) | Status |
+|-----------------|------------------|--------|
+| `@code-reviewer` | `@config-safety-reviewer` | ⚠️ Breaking |
+| `@debugger` | `@root-cause-analyzer` | ⚠️ Breaking |
+| `@architect` | `@systems-architect` | ⚠️ Breaking |
+
+**Location Changes (v2.7.0)**:
+- Primary location: `/agents/` → `/subagents/core/` (backward compatible via symlinks)
+
+**No Action Required:** Symlinks ensure existing scripts and workflows continue to work.
+
+---
+
+## ⚠️ Deprecation Timeline
+
+| Version | Status | Action |
+|---------|--------|--------|
+| **v2.7.0** (Current) | `/agents/` maintained with symlinks | ✅ Fully backward compatible |
+| **v2.8.x** (2026 Q1) | `/agents/` marked deprecated | ⚠️ Migration warnings added |
+| **v3.0.0** (2026 Q2) | `/agents/` removed | ❌ Breaking change |
+
+**Recommendation:** Update your workflows to reference `/subagents/core/` to prepare for v3.0.0.
+
+---
+
+## 🆘 Support
+
+- **[FAQ →](../documentation/reference/faq.md)** - Common questions
+- **[Troubleshooting →](../documentation/guides/troubleshooting.md)** - Fix common issues
+- **[GitHub Issues](https://github.com/alirezarezvani/claude-code-tresor/issues)** - Report bugs
+- **[GitHub Discussions](https://github.com/alirezarezvani/claude-code-tresor/discussions)** - Ask questions
+
+---
+
+**Version:** 2.7.0
+**Last Updated:** November 19, 2025
+**License:** MIT
+**Author:** Alireza Rezvani

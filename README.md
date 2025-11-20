@@ -3,31 +3,34 @@
 > A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.6.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
+[![Version](https://img.shields.io/badge/version-2.7.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
 [![Quality](https://img.shields.io/badge/quality-9.7%2F10-brightgreen.svg)](docs/VALIDATION-REPORT-CONTENT.md)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
-**Updated**: November 15, 2025 (v2.6.0 - Quality Excellence Release)
+**Updated**: November 19, 2025 (v2.7.0 - Tresor Workflow Framework)
 **Quality**: 9.7/10 (Exceptional)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
 
 ---
 
-## 🎉 What's New in v2.6.5
+## 🎉 What's New in v2.7.0
 
-**TÂCHES Integration** - Advanced workflow management system!
+**Major Release** - 10 New Orchestration Commands + Tresor Workflow Framework!
 
-- 🔄 **Meta-Prompting** - `/create-prompt` and `/run-prompt` for complex task orchestration
-- ✅ **Todo Management** - `/add-to-todos` and `/check-todos` for capturing ideas without losing focus
-- 📋 **Context Handoff** - `/whats-next` for seamless work continuation in fresh contexts
-- 🔗 **Tresor Integration** - TÂCHES commands detect and suggest Tresor's 141 agents
-- 💡 **Workflow Enhancement** - Meta-prompting combined with Tresor's agent ecosystem
-
-**Credit**: TÂCHES framework by [glittercowboy](https://github.com/glittercowboy/taches-cc-prompts)
+- 🚀 **10 Orchestration Commands** - Production-grade intelligent orchestration (12,682 lines of code)
+  - 🔒 **Security**: `/audit`, `/vulnerability-scan`, `/compliance-check`
+  - ⚡ **Performance**: `/profile`, `/benchmark`
+  - 🔧 **Operations**: `/deploy-validate`, `/health-check`, `/incident-response`
+  - 📊 **Quality**: `/code-health`, `/debt-analysis`
+- 🤖 **Intelligent Agent Selection** - Auto-selects from 141 agents based on tech stack
+- 🔄 **Multi-Phase Orchestration** - 3-4 phases with parallel & sequential execution
+- 🛡️ **Dependency Verification** - Ensures safe parallel agent execution
+- 🔄 **Tresor Workflow Framework** - Meta-prompting, todo management, context handoff
+- 📦 **Consolidated Structure** - Unified agent directory in `/subagents/` (133 total agents)
 
 ---
 
@@ -82,9 +85,9 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 
 ## ✨ What's Included
 
-### 🚀 Slash Commands (9 Total)
+### 🚀 Slash Commands (19 Total)
 
-**Core Workflow Commands** (4):
+**Development Commands** (4):
 
 | Command | Purpose | Example Usage |
 |---------|---------|---------------|
@@ -93,15 +96,59 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 | **`/test-gen`** | Create comprehensive test suites automatically | `/test-gen --file utils.js --coverage 90` |
 | **`/docs-gen`** | Generate documentation from code and comments | `/docs-gen api --format openapi` |
 
-**TÂCHES Workflow Commands** (5) - **NEW in v2.6.5!**
+**Tresor Workflow Commands** (5):
 
 | Command | Purpose | Example Usage |
 |---------|---------|---------------|
-| **`/create-prompt`** | Generate optimized prompts for complex tasks | `/create-prompt Build user authentication system` |
-| **`/run-prompt`** | Execute generated prompts in sub-agents | `/run-prompt 001 --parallel` |
-| **`/add-to-todos`** | Capture ideas mid-conversation | `/add-to-todos Fix performance issue in API` |
-| **`/check-todos`** | Review and work on captured todos | `/check-todos` |
-| **`/whats-next`** | Generate context handoff document | `/whats-next` |
+| **`/prompt-create`** | Generate optimized prompts for complex tasks | `/prompt-create Build user authentication system` |
+| **`/prompt-run`** | Execute generated prompts in sub-agents | `/prompt-run 001 --parallel` |
+| **`/todo-add`** | Capture ideas mid-conversation | `/todo-add Fix performance issue in API` |
+| **`/todo-check`** | Review and work on captured todos | `/todo-check` |
+| **`/handoff-create`** | Generate context handoff document | `/handoff-create` |
+
+**Orchestration Commands** (10) - **NEW in v2.7.0!**
+
+<details>
+<summary><b>🔒 Security Commands (3)</b></summary>
+
+| Command | Purpose | Duration | Key Features |
+|---------|---------|----------|--------------|
+| **`/audit`** | Comprehensive security audit | 2-4 hours | OWASP Top 10, pentesting, infrastructure review, RCA |
+| **`/vulnerability-scan`** | CVE & dependency scanning | 30-60 min | NVD correlation, SAST, exploit detection, auto-fix |
+| **`/compliance-check`** | Regulatory compliance validation | 1-2 hours | GDPR, SOC2, HIPAA, PCI-DSS, ISO 27001, CCPA |
+
+</details>
+
+<details>
+<summary><b>⚡ Performance Commands (2)</b></summary>
+
+| Command | Purpose | Duration | Key Features |
+|---------|---------|----------|--------------|
+| **`/profile`** | Performance profiling | 15min-2h | Bottleneck analysis, Core Web Vitals, query optimization |
+| **`/benchmark`** | Load testing | 5-30 min | Scenario generation, stress testing, capacity planning |
+
+</details>
+
+<details>
+<summary><b>🔧 Operations Commands (3)</b></summary>
+
+| Command | Purpose | Duration | Key Features |
+|---------|---------|----------|--------------|
+| **`/deploy-validate`** | Pre-deployment validation | 10-20 min | Test suite, config safety, go/no-go decision |
+| **`/health-check`** | System health verification | 5-15 min | Multi-layer checks, anomaly detection, alerting |
+| **`/incident-response`** | Production incident coordination | 30min-2h | Emergency triage, RCA, blameless postmortem |
+
+</details>
+
+<details>
+<summary><b>📊 Quality Commands (2)</b></summary>
+
+| Command | Purpose | Duration | Key Features |
+|---------|---------|----------|--------------|
+| **`/code-health`** | Codebase quality assessment | 20-40 min | Quality metrics, test coverage, maintainability scoring |
+| **`/debt-analysis`** | Technical debt identification | 30-60 min | Debt quantification, ROI prioritization, refactoring roadmap |
+
+</details>
 
 ### 🤖 Core Agents (8 Production-Ready)
 Expert-level assistance for complex development tasks:
@@ -542,15 +589,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 ## 📊 Project Stats
 
 **This Repository:**
-- **✨ Skills**: 8 autonomous background helpers (NEW v2.0!)
-- **🤖 Agents**: 8 expert sub-agents for deep analysis
-- **⚡ Commands**: 4 workflow orchestration commands
+- **✨ Skills**: 8 autonomous background helpers (v2.0+)
+- **🤖 Agents**: 133 total (8 core + 125 specialized) organized by team (v2.5+)
+- **⚡ Commands**: 19 total (4 dev + 5 workflow + 10 orchestration) (v2.7+)
+  - **Development**: scaffold, review, test-gen, docs-gen
+  - **Workflow**: prompt-create, prompt-run, todo-add, todo-check, handoff-create
+  - **Orchestration**: audit, vulnerability-scan, compliance-check, profile, benchmark, deploy-validate, health-check, incident-response, code-health, debt-analysis
 - **📝 Prompt Templates**: 20+ battle-tested prompts
 - **📏 Standards**: 5 comprehensive style guides
 - **💡 Examples**: 10+ real-world workflows
 - **📦 Source Library**: 200+ additional components
 - **⏱️ Installation Time**: < 2 minutes
-- **📈 Version**: 2.0.0 (Major update: Skills layer!)
+- **📈 Version**: 2.7.0 (Major update: Orchestration Commands!)
 
 **Complete Ecosystem:**
 - **🏭 [Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory)**: Generate unlimited custom skills and agents

@@ -1,0 +1,1 @@
+../../subagents/core/config-safety-reviewer/agent.md
