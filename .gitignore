@@ -129,7 +129,7 @@ documentation/archive/*
 # docs/ - NOW TRACKED: Technical documentation for agent system (v2.5.0+)
 __pycache__/
 
-# TÂCHES workflow data files (per-project data, not commands - v2.6.5+)
+# workflow data files (per-project data, not commands - v2.6.5+)
 # These are gitignored in USER projects, not in this repository
 # Pattern: Ignore in root and subdirectories, but not in commands/
 /*/.prompts/

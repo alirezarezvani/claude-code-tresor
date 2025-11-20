@@ -7,49 +7,57 @@
 Claude Code Tresor is a comprehensive collection of professional-grade utilities for Claude Code:
 - **8 Autonomous Skills**: Automatic background helpers (NEW in v2.0!)
 - **8 Core Agents**: Production-ready expert sub-agents for deep analysis
-- **137+ Extended Agents**: Specialized agents organized by team and function (NEW in v2.5!)
-- **4 Essential Slash Commands**: Workflow automation and orchestration
+- **133 Extended Agents**: Specialized agents organized by team and function (v2.5+)
+- **19 Slash Commands**: Workflow automation and intelligent orchestration (NEW v2.7!)
+  - 4 Development commands
+  - 5 Tresor Workflow commands
+  - 10 Orchestration commands (Security, Performance, Operations, Quality)
 - **20+ Prompt Templates**: Production-ready prompts for common development scenarios
 - **Development Standards**: Style guides, Git workflows, and team collaboration guidelines
 
-**Author**: Alireza Rezvani | **License**: MIT | **Created**: September 16, 2025 | **Updated**: November 15, 2025 (v2.5.0)
+**Author**: Alireza Rezvani | **License**: MIT | **Created**: September 16, 2025 | **Updated**: November 19, 2025 (v2.7.0)
 
 ## 🏗️ Architecture
 
 ```
 claude-code-tresor/
-├── skills/                     # 8 Autonomous Skills (NEW v2.0!)
+├── skills/                     # 8 Autonomous Skills (v2.0+)
 │   ├── development/            # code-reviewer, test-generator, git-commit-helper
 │   ├── security/               # security-auditor, secret-scanner, dependency-auditor
 │   └── documentation/          # api-documenter, readme-updater
-├── agents/                     # 8 Core Production Agents (.md + README.md)
-│   ├── config-safety-reviewer/ # Configuration safety & production reliability
-│   ├── test-engineer/          # Testing specialist
-│   ├── docs-writer/            # Documentation expert
-│   ├── systems-architect/      # System design & technical strategy
-│   ├── root-cause-analyzer/    # Comprehensive RCA & debugging
-│   ├── security-auditor/       # Security expert & OWASP compliance
-│   ├── performance-tuner/      # Performance optimization
-│   └── refactor-expert/        # Code refactoring & clean architecture
-├── subagents/                  # 137+ Extended Agents (NEW v2.5!)
-│   ├── engineering/            # 60+ engineering specialists
-│   ├── design/                 # 10 design specialists
-│   ├── marketing/              # 15+ marketing specialists
-│   ├── product/                # 10+ product specialists
-│   ├── leadership/             # 15+ leadership & strategy
-│   ├── operations/             # 10+ operations specialists
-│   ├── research/               # 10+ research specialists
-│   ├── ai-automation/          # 10+ AI/ML & automation
-│   └── account-customer-success/ # 8+ account & CS specialists
-├── commands/                   # 4 Slash Commands (.md + README.md)
+├── subagents/                  # 133 Agents - PRIMARY LOCATION (v2.7+)
+│   ├── core/                   # 8 core production agents
+│   ├── engineering/            # 54 engineering specialists
+│   ├── design/                 # 7 design specialists
+│   ├── marketing/              # 11 marketing specialists
+│   ├── product/                # 9 product specialists
+│   ├── leadership/             # 14 leadership & strategy
+│   ├── operations/             # 6 operations specialists
+│   ├── research/               # 7 research specialists
+│   ├── ai-automation/          # 9 AI/ML & automation
+│   └── account-customer-success/ # 8 account & CS specialists
+├── agents/                     # [Deprecated v2.7] Symlinks to subagents/core/
+├── commands/                   # 19 Slash Commands (v2.7+)
 │   ├── development/scaffold/   # Project/component scaffolding
-│   ├── workflow/review/        # Code review automation
+│   ├── workflow/               # 6 workflow commands (review, prompt-*, todo-*, handoff-*)
 │   ├── testing/test-gen/       # Test generation
-│   └── documentation/docs-gen/ # Documentation generation
+│   ├── documentation/docs-gen/ # Documentation generation
+│   ├── security/               # 3 NEW: audit, vulnerability-scan, compliance-check
+│   ├── performance/            # 2 NEW: profile, benchmark
+│   ├── operations/             # 3 NEW: deploy-validate, health-check, incident-response
+│   └── quality/                # 2 NEW: code-health, debt-analysis
 ├── prompts/                    # 20+ Prompt templates
 ├── standards/                  # Development standards
 ├── examples/                   # Real-world workflows
 ├── sources/                    # Extended library (200+ components)
+├── documentation/              # Comprehensive documentation
+│   ├── guides/                 # Installation, getting-started, troubleshooting
+│   ├── reference/              # Technical reference docs
+│   ├── workflows/              # Workflow examples
+│   └── plans/                  # Architecture and planning docs
+├── NAVIGATION.md               # NEW v2.7: Repository navigation guide
+├── MIGRATION.md                # NEW v2.7: Upgrade guide
+├── WORKFLOW-GUIDE.md           # NEW v2.7: Tresor Workflow Framework guide
 └── scripts/                    # Installation utilities
 ```
 
@@ -69,8 +77,9 @@ claude-code-tresor/
 
 # Selective installation
 ./scripts/install.sh --skills        # 8 autonomous skills only
-./scripts/install.sh --agents        # 8 expert agents only
-./scripts/install.sh --commands      # 4 workflow commands only
+./scripts/install.sh --agents        # 133 agents only (from /subagents/)
+./scripts/install.sh --commands      # 19 commands (4 dev + 5 workflow + 10 orchestration)
+./scripts/install.sh --orchestration # 10 orchestration commands only (NEW v2.7)
 ./scripts/install.sh --resources-only
 
 # Updates
@@ -237,7 +246,7 @@ Located in `standards/` directory:
 
 ### Agent Discovery
 ```bash
-# Core agents (8) - Production-ready in /agents/
+# Core agents (8) - Production-ready in /subagents/core/
 @systems-architect, @config-safety-reviewer, @root-cause-analyzer
 @security-auditor, @test-engineer, @performance-tuner
 @refactor-expert, @docs-writer
@@ -246,11 +255,67 @@ Located in `standards/` directory:
 # See subagents/README.md for complete catalog
 ```
 
-## TÂCHES Workflow Commands (v2.6.5)
+### Orchestration Commands (NEW v2.7.0)
+
+**Security & Compliance:**
+```bash
+# Comprehensive security audit with OWASP Top 10, infrastructure, pentesting
+/audit
+
+# Fast CVE scanning for weekly security checks
+/vulnerability-scan --depth deep
+
+# GDPR compliance validation before audit
+/compliance-check --frameworks gdpr
+
+# Auto-fix safe vulnerabilities
+/vulnerability-scan --auto-fix
+```
+
+**Performance Optimization:**
+```bash
+# Profile to find bottlenecks
+/profile --layers frontend,backend,database
+
+# Fix identified bottlenecks, then validate with load testing
+/benchmark --pattern stress --rps 500
+
+# Quick performance check for CI/CD
+/profile --depth quick --layers backend
+```
+
+**Operations & Deployment:**
+```bash
+# Pre-deployment safety checks
+/deploy-validate --env production
+
+# Post-deployment health verification
+/health-check --comprehensive
+
+# Production incident response
+/incident-response --severity p0
+
+# Weekly health monitoring
+/health-check --env production
+```
+
+**Code Quality & Technical Debt:**
+```bash
+# Assess codebase health
+/code-health
+
+# Identify and prioritize technical debt
+/debt-analysis --prioritize roi
+
+# Plan refactoring based on debt analysis
+# [Use /prompt-create for complex refactoring prompts]
+```
+
+## Tresor Workflow Framework (v2.7.0)
 
 ### Meta-Prompting System
 
-**`/create-prompt [task]`** - Expert prompt engineer
+**`/prompt-create [task]`** - Expert prompt engineer
 
 - Generates optimized, XML-structured prompts for complex tasks
 - **Automatically references Tresor's CLAUDE.md** for project standards
@@ -258,7 +323,7 @@ Located in `standards/` directory:
 - Follows Tresor's anti-overengineering and maintainability principles
 - Creates prompts optimized for Tresor's 141-agent ecosystem
 
-**`/run-prompt [number(s)] [--parallel|--sequential]`** - Execute prompts
+**`/prompt-run [number(s)] [--parallel|--sequential]`** - Execute prompts
 
 - Runs generated prompts in fresh sub-task contexts
 - Supports parallel and sequential execution
@@ -267,14 +332,14 @@ Located in `standards/` directory:
 
 ### Todo Management System
 
-**`/add-to-todos [description]`** - Capture ideas without breaking flow
+**`/todo-add [description]`** - Capture ideas without breaking flow
 
 - Structured format: Problem, Files, Solution
 - Preserves full conversation context
 - Auto-detects Tresor components (agents, skills, commands)
 - Integrates with Tresor's project structure
 
-**`/check-todos`** - Resume work with complete context
+**`/todo-check`** - Resume work with complete context
 
 - Lists all captured todos with dates and context
 - **Detects and suggests Tresor's 141 agents** based on todo content and file paths
@@ -284,23 +349,23 @@ Located in `standards/` directory:
 
 ### Context Handoff System
 
-**`/whats-next`** - Create comprehensive handoff document
+**`/handoff-create`** - Create comprehensive handoff document
 
 - Captures complete work history, decisions, and context
 - **Complements Tresor's memory bank** (projectbrief, productContext, activeContext)
 - Session-specific handoff vs long-term context
 - Enables seamless work continuation in fresh contexts
 
-### TÂCHES + Tresor Integration Examples
+### Tresor Workflow Integration Examples
 
 **Meta-Prompting with Tresor Agents**:
 ```bash
-/create-prompt Design scalable microservices architecture
+/prompt-create Design scalable microservices architecture
 # → Generates prompt referencing CLAUDE.md
 # → Suggests @systems-architect for execution
 # → Includes Tresor's maintainability principles
 
-/run-prompt 001
+/prompt-run 001
 # → Executes with fresh context
 # → Can invoke @systems-architect, @backend-architect, @security-auditor
 ```
@@ -308,10 +373,10 @@ Located in `standards/` directory:
 **Todo Management with Agent Discovery**:
 ```bash
 # During coding, spot issue
-/add-to-todos Optimize N+1 queries in user API - src/api/users.ts:45-67
+/todo-add Optimize N+1 queries in user API - src/api/users.ts:45-67
 
 # Later
-/check-todos
+/todo-check
 # → Detects backend/database work
 # → Suggests @database-optimizer or @performance-tuner
 # → One-click agent invocation
@@ -324,11 +389,135 @@ Tresor Memory Bank (long-term):
 - productContext.md (architectural decisions)
 - projectbrief.md (project vision)
 
-TÂCHES Handoff (session-specific):
-- whats-next.md (created via /whats-next command)
+Tresor Workflow Handoff (session-specific):
+- whats-next.md (created via /handoff-create command)
 - Detailed task state, exact file positions
 - Resume with zero information loss
 ```
+
+## Orchestration Commands (v2.7.0)
+
+### Overview
+
+**10 production-grade orchestration commands** with intelligent multi-phase orchestration, automatic agent selection from 141-agent ecosystem, and full Tresor Workflow integration.
+
+**Total:** 12,682 lines of orchestration code across 4 categories
+
+### Security Commands (3)
+
+**`/audit`** - Comprehensive security audit (2-4 hours, 4 phases, 4-5 agents)
+- OWASP Top 10 vulnerability scanning
+- Infrastructure security review
+- Active penetration testing
+- Comprehensive RCA for critical findings
+
+**`/vulnerability-scan`** - CVE & dependency scanning (30-60 min, 3 phases, 2-4 agents)
+- NVD/GitHub Advisories correlation
+- SAST code pattern matching
+- Exploit database correlation (Exploit-DB, Metasploit)
+- Auto-remediation (`--auto-fix` flag)
+
+**`/compliance-check`** - Regulatory compliance (1-2 hours, 4 phases, 3-6 agents)
+- Multi-framework: GDPR, SOC2, HIPAA, PCI-DSS, ISO 27001, CCPA
+- Data flow mapping (PII/PHI tracking)
+- Technical control validation
+- Auditor-ready reports (65+ pages)
+
+### Performance Commands (2)
+
+**`/profile`** - Performance profiling (15min-2h, 3 phases, 3-5 agents)
+- Multi-layer: frontend, backend, database
+- Core Web Vitals (LCP, FID, CLS)
+- Database query optimization (EXPLAIN ANALYZE)
+- Quick wins prioritization (impact × ease)
+
+**`/benchmark`** - Load testing (5-30 min, 3 phases, 2-4 agents)
+- Intelligent scenario generation (auto-detects endpoints)
+- Multiple patterns: baseline, stress, spike, soak
+- Breaking point detection
+- Capacity planning with cost analysis
+
+### Operations Commands (3)
+
+**`/deploy-validate`** - Pre-deployment validation (10-20 min, 3 phases, 3-4 agents)
+- Complete test suite execution
+- Configuration safety review
+- Security pre-deployment scan
+- Go/No-Go decision with risk scoring
+
+**`/health-check`** - System health verification (5-15 min, 3 phases, 3-4 agents)
+- Multi-layer health checks (app, database, infrastructure)
+- Anomaly detection (trend analysis)
+- Alert generation (PagerDuty/Slack integration)
+
+**`/incident-response`** - Production incident coordination (30min-2h, 4 phases, 3-5 agents)
+- Emergency triage (5-10 min response)
+- Parallel specialist investigation
+- Comprehensive RCA with timeline
+- Blameless postmortem generation
+
+### Quality Commands (2)
+
+**`/code-health`** - Codebase quality assessment (20-40 min, 3 phases, 3-4 agents)
+- Code quality metrics (complexity, duplication, smells)
+- Test coverage analysis
+- Documentation assessment
+- Maintainability scoring (0-10 rating)
+
+**`/debt-analysis`** - Technical debt identification (30-60 min, 3 phases, 3-4 agents)
+- Multi-category debt identification
+- Cost quantification (time wasted)
+- Risk assessment
+- ROI-based prioritization
+
+### Key Features Across All Orchestration Commands
+
+**1. Intelligent Agent Selection:**
+- Auto-detects tech stack (languages, frameworks, databases)
+- Selects optimal agents from 141-agent ecosystem
+- Confidence-based ranking
+
+**2. Multi-Phase Orchestration:**
+- 3-4 phases per command
+- Parallel Phase 1 (up to 3 agents)
+- Sequential Phases 2-4 (deep analysis)
+
+**3. Dependency Verification:**
+- Checks file write conflicts
+- Checks data dependencies
+- Auto-fallback to sequential if conflicts
+
+**4. Tresor Workflow Integration:**
+- Auto-calls `/todo-add` for all findings
+- Auto-calls `/prompt-create` for complex fixes
+- Supports `/handoff-create` for multi-session work
+
+### Usage Examples
+
+```bash
+# Security workflow
+/audit                          # Quarterly comprehensive audit
+/vulnerability-scan             # Weekly CVE scanning
+/compliance-check --frameworks gdpr,soc2
+
+# Performance workflow
+/profile                        # Find bottlenecks
+# [Fix bottlenecks]
+/benchmark                      # Validate under load
+
+# Operations workflow
+/deploy-validate --env production  # Before deployment
+# [Deploy]
+/health-check                   # Verify deployment
+# [If incident]
+/incident-response             # Emergency response
+
+# Quality workflow
+/code-health                    # Assess current quality
+/debt-analysis                  # Plan refactoring
+```
+
+**See:** [NAVIGATION.md](NAVIGATION.md) | [Orchestration Commands Summary](documentation/plans/ORCHESTRATION-COMMANDS-COMPLETE.md)
 
 ## 🔍 Important Context
 

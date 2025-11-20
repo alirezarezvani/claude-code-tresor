@@ -27,9 +27,9 @@ Transform slash commands from simple orchestrators into **intelligent workflow e
 
 ### Current State
 
-**Commands**: 9 total (4 core + 5 TÂCHES)
+**Commands**: 9 total (4 core + 5 Tresor)
 - Core: /scaffold, /review, /test-gen, /docs-gen
-- TÂCHES: /create-prompt, /run-prompt, /add-to-todos, /check-todos, /whats-next
+- Tresor: /prompt-create, /prompt-run, /todo-add, /todo-check, /handoff-create
 
 **Agent Integration**: Basic (manual agent mention)
 - /review uses 4 agents explicitly
@@ -770,7 +770,7 @@ function calculateConfidence(agent, context) {
 ### Phase 1: Critical Enhancements (Week 1-2, 20-25 hours)
 
 **Week 1**:
-- [x] TÂCHES integration (completed)
+- [x] Tresor integration (completed)
 - [ ] Enhance /review with intelligent selection (8 hours)
 - [ ] Add quality gates system (4 hours)
 - [ ] Create /diagnose command (6 hours)
