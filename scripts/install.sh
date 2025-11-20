@@ -127,6 +127,34 @@ install_commands() {
     fi
 }
 
+install_orchestration_commands() {
+    header "Installing Orchestration Commands (v2.7+)"
+
+    local commands_src="$TRESOR_DIR/commands"
+    local commands_dest="$CLAUDE_CODE_DIR/commands"
+
+    if [ -d "$commands_src" ]; then
+        log "Installing orchestration commands to: $commands_dest"
+
+        # Install only orchestration commands (security, performance, operations, quality)
+        for category in security performance operations quality; do
+            if [ -d "$commands_src/$category" ]; then
+                find "$commands_src/$category" -mindepth 1 -maxdepth 1 -type d | while read -r cmd_dir; do
+                    local cmd_name=$(basename "$cmd_dir")
+                    local dest_dir="$commands_dest/${category}-${cmd_name}"
+
+                    log "Installing orchestration command: ${category}/${cmd_name}"
+                    cp -r "$cmd_dir" "$dest_dir"
+                done
+            fi
+        done
+
+        log "Orchestration commands installed successfully (10 commands)"
+    else
+        warn "Commands directory not found in repository"
+    fi
+}
+
 install_agents() {
     header "Installing Core Agents"
 
@@ -312,12 +340,19 @@ print_summary() {
     echo "   /test-gen    - Generate comprehensive test suites"
     echo "   /docs-gen    - Create documentation from code"
     echo
-    echo "🔄 Tresor Workflow Commands (5) - NEW in v2.7.0:"
+    echo "🔄 Tresor Workflow Commands (5):"
     echo "   /prompt-create  - Generate optimized prompts for complex tasks"
     echo "   /prompt-run     - Execute prompts in sub-agents (parallel/sequential)"
     echo "   /todo-add       - Capture ideas with full context"
     echo "   /todo-check     - Resume work on todos (suggests Tresor agents)"
     echo "   /handoff-create - Create comprehensive context handoff document"
+    echo
+    echo "🎯 Orchestration Commands (10) - NEW in v2.7.0:"
+    echo "   Security:      /audit, /vulnerability-scan, /compliance-check"
+    echo "   Performance:   /profile, /benchmark"
+    echo "   Operations:    /deploy-validate, /health-check, /incident-response"
+    echo "   Quality:       /code-health, /debt-analysis"
+    echo "   Total: 12,682 lines of intelligent multi-phase orchestration"
     echo
     echo "🤖 Core Agents (8):"
     echo "   @systems-architect        - System design and architecture"
@@ -372,7 +407,8 @@ show_help() {
     echo "  --help              Show this help message"
     echo "  --skills-only       Install only autonomous skills (v2.0+)"
     echo "  --commands-only     Install only slash commands"
-    echo "  --agents-only       Install only agents"
+    echo "  --agents-only       Install only agents (133 total)"
+    echo "  --orchestration     Install only orchestration commands (v2.7+, 10 commands)"
     echo "  --resources-only    Install only resources (prompts, standards, examples)"
     echo "  --update            Update existing installation"
     echo "  --backup-dir DIR    Use custom backup directory"
@@ -381,8 +417,9 @@ show_help() {
     echo "Examples:"
     echo "  $0                    # Full installation"
     echo "  $0 --skills-only      # Install only skills"
-    echo "  $0 --commands-only    # Install only commands"
-    echo "  $0 --agents-only      # Install only agents"
+    echo "  $0 --commands-only    # Install only commands (all 19)"
+    echo "  $0 --agents-only      # Install only agents (133 total)"
+    echo "  $0 --orchestration    # Install only orchestration commands (10)"
     echo "  $0 --update           # Update existing installation"
     echo
     echo "For more information, visit: $REPO_URL"
@@ -412,6 +449,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --agents-only)
             AGENTS_ONLY=true
+            shift
+            ;;
+        --orchestration)
+            ORCHESTRATION_ONLY=true
             shift
             ;;
         --resources-only)
@@ -459,12 +500,16 @@ main() {
         install_commands
     elif [ "$AGENTS_ONLY" = true ]; then
         install_agents
+        install_subagents
+    elif [ "$ORCHESTRATION_ONLY" = true ]; then
+        install_orchestration_commands
     elif [ "$RESOURCES_ONLY" = true ]; then
         install_resources
     elif [ "$UPDATE_ONLY" = true ]; then
         install_skills
         install_commands
         install_agents
+        install_subagents
         install_resources
         log "Claude Code Tresor Update completed successfully"
     else
