@@ -429,6 +429,7 @@ show_help() {
 SKILLS_ONLY=false
 COMMANDS_ONLY=false
 AGENTS_ONLY=false
+ORCHESTRATION_ONLY=false
 RESOURCES_ONLY=false
 UPDATE_ONLY=false
 NO_BACKUP=false
