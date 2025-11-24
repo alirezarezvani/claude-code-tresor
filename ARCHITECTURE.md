@@ -10,13 +10,13 @@ Claude Code Tresor uses a carefully designed 3-tier architecture that provides t
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     Your Development Flow                    │
+│                     Your Development Flow                   │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
         ┌──────────────────────────────────────────┐
         │          Tier 1: SKILLS                  │
-        │      (Contextual Conversation Helpers)    │
+        │      (Contextual Conversation Helpers)   │
         │  • Invoked by Claude automatically       │
         │  • Context-aware activation              │
         │  • Quick checks                          │
