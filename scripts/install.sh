@@ -158,27 +158,59 @@ install_orchestration_commands() {
 install_agents() {
     header "Installing Core Agents"
 
-    local agents_src="$TRESOR_DIR/agents"
+    local subagents_src="$TRESOR_DIR/subagents/core"
     local agents_dest="$CLAUDE_CODE_DIR/agents"
 
-    if [ -d "$agents_src" ]; then
+    if [ -d "$subagents_src" ]; then
         log "Installing core agents to: $agents_dest"
+        mkdir -p "$agents_dest"
 
-        # Copy all agent directories (now look for agent.md instead of agent.json)
-        find "$agents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
+        # Claude Code expects flat .md files: .claude/agents/agent-name.md
+        # Our repo has: subagents/core/agent-name/agent.md
+        # Convert: directory/agent.md → flat agent-name.md with cleaned YAML
+        find "$subagents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
             local agent_name=$(basename "$agent_dir")
+            local agent_file="$agent_dir/agent.md"
 
-            # Skip if just README, check for .md files (agent.json for backward compat)
-            if [ -f "$agent_dir/agent.json" ] || [ -f "$agent_dir/${agent_name}.md" ] || [ -f "$agent_dir/agent.md" ]; then
+            if [ -f "$agent_file" ]; then
                 log "Installing core agent: $agent_name"
-                mkdir -p "$agents_dest"
-                cp -r "$agent_dir" "$agents_dest/$agent_name"
+
+                # Strip unsupported YAML fields and create flat file
+                # Supported fields: name, description, tools, model, enabled
+                # Remove: category, team, color, subcategory, capabilities, max_iterations
+                awk '
+                BEGIN { in_frontmatter=0; frontmatter_done=0; }
+                /^---$/ {
+                    if (frontmatter_done == 0) {
+                        if (in_frontmatter == 0) {
+                            in_frontmatter = 1;
+                            print;
+                        } else {
+                            in_frontmatter = 0;
+                            frontmatter_done = 1;
+                            print;
+                        }
+                    } else {
+                        print;
+                    }
+                    next;
+                }
+                in_frontmatter == 1 {
+                    # Only keep supported fields
+                    if ($0 ~ /^(name|description|tools|model|enabled):/) {
+                        print;
+                    }
+                    # Skip unsupported fields: category, team, color, subcategory, capabilities, max_iterations
+                    next;
+                }
+                { print }
+                ' "$agent_file" > "$agents_dest/${agent_name}.md"
             fi
         done
 
-        log "Core agents installed successfully"
+        log "Core agents installed successfully (flat .md files)"
     else
-        warn "Agents directory not found in repository"
+        warn "Subagents core directory not found in repository"
     fi
 }
 
@@ -212,18 +244,19 @@ install_skills() {
 
     if [ -d "$skills_src" ]; then
         log "Installing skills to: $skills_dest"
+        mkdir -p "$skills_dest"
 
-        # Copy all skill directories (maintaining category structure)
+        # Flatten skills: skills/category/skill-name → .claude/skills/skill-name
+        # Claude Code expects skills at one level: .claude/skills/{skill-name}/SKILL.md
         find "$skills_src" -mindepth 2 -maxdepth 2 -type d | while read -r skill_dir; do
             local skill_name=$(basename "$skill_dir")
             local category=$(basename "$(dirname "$skill_dir")")
-            local dest_dir="$skills_dest/${category}/${skill_name}"
 
             # Check if SKILL.md exists
             if [ -f "$skill_dir/SKILL.md" ]; then
-                log "Installing skill: ${category}/${skill_name}"
-                mkdir -p "$skills_dest/$category"
-                cp -r "$skill_dir" "$dest_dir"
+                log "Installing skill: ${skill_name} (from ${category})"
+                # Copy directly to skills_dest (flatten, remove category layer)
+                cp -r "$skill_dir" "$skills_dest/$skill_name"
             fi
         done
 
