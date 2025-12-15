@@ -166,44 +166,73 @@ update_commands() {
 update_agents() {
     header "Updating Agents"
 
-    local agents_src="$TRESOR_DIR/agents"
+    local subagents_src="$TRESOR_DIR/subagents/core"
     local agents_dest="$CLAUDE_CODE_DIR/agents"
 
-    if [ -d "$agents_src" ]; then
+    if [ -d "$subagents_src" ]; then
         log "Updating agents..."
 
-        # Remove old agents that might have been renamed or removed
+        # Remove old agents (both directories and flat files)
         if [ -d "$agents_dest" ]; then
             log "Cleaning old agents..."
-            find "$agents_dest" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} +
+            rm -rf "$agents_dest"/*
         fi
 
-        # Install updated agents (support both agent.json and agent.md)
-        find "$agents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
-            local agent_name=$(basename "$agent_dir")
+        mkdir -p "$agents_dest"
 
-            # Check for agent.json (old format) or agent.md (new format)
-            if [ -f "$agent_dir/agent.json" ] || [ -f "$agent_dir/${agent_name}.md" ] || [ -f "$agent_dir/agent.md" ]; then
+        # Claude Code expects flat .md files: .claude/agents/agent-name.md
+        # Convert from subagents/core/agent-name/agent.md → agents/agent-name.md
+        find "$subagents_src" -mindepth 1 -maxdepth 1 -type d | while read -r agent_dir; do
+            local agent_name=$(basename "$agent_dir")
+            local agent_file="$agent_dir/agent.md"
+
+            if [ -f "$agent_file" ]; then
                 log "Updating core agent: $agent_name"
-                mkdir -p "$agents_dest"
-                cp -r "$agent_dir" "$agents_dest/$agent_name"
+
+                # Strip unsupported YAML fields (same as install.sh)
+                awk '
+                BEGIN { in_frontmatter=0; frontmatter_done=0; }
+                /^---$/ {
+                    if (frontmatter_done == 0) {
+                        if (in_frontmatter == 0) {
+                            in_frontmatter = 1;
+                            print;
+                        } else {
+                            in_frontmatter = 0;
+                            frontmatter_done = 1;
+                            print;
+                        }
+                    } else {
+                        print;
+                    }
+                    next;
+                }
+                in_frontmatter == 1 {
+                    # Only keep supported fields
+                    if ($0 ~ /^(name|description|tools|model|enabled):/) {
+                        print;
+                    }
+                    next;
+                }
+                { print }
+                ' "$agent_file" > "$agents_dest/${agent_name}.md"
             fi
         done
 
-        # Also update subagents if they exist
-        local subagents_src="$TRESOR_DIR/subagents"
-        if [ -d "$subagents_src" ]; then
+        # Also update subagents directory (for repository reference)
+        local subagents_full_src="$TRESOR_DIR/subagents"
+        if [ -d "$subagents_full_src" ]; then
             log "Updating subagents directory..."
             local subagents_dest="$CLAUDE_CODE_DIR/subagents"
             rm -rf "$subagents_dest"  # Remove old to ensure clean update
-            cp -r "$subagents_src" "$subagents_dest"
+            cp -r "$subagents_full_src" "$subagents_dest"
             local subagent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
             log "Updated $subagent_count subagents"
         fi
 
-        log "Agents updated successfully"
+        log "Agents updated successfully (flat .md files)"
     else
-        warn "Agents directory not found in repository"
+        warn "Subagents core directory not found in repository"
     fi
 }
 
