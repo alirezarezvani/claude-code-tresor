@@ -1,8 +1,5 @@
 # Claude Code Tresor 🏆
 
-[![Run in Smithery](https://smithery.ai/badge/skills/alirezarezvani)](https://smithery.ai/skills?ns=alirezarezvani&utm_source=github&utm_medium=badge)
-
-
 > A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,6 +7,9 @@
 [![Quality](https://img.shields.io/badge/quality-9.7%2F10-brightgreen.svg)](docs/VALIDATION-REPORT-CONTENT.md)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+## Also available on Smithery:
+[![Run in Smithery](https://smithery.ai/badge/skills/alirezarezvani)](https://smithery.ai/skills?ns=alirezarezvani&utm_source=github&utm_medium=badge)
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
