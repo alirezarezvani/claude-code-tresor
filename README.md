@@ -11,6 +11,9 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+## Also available on Smithery:
+[![Run in Smithery](https://smithery.ai/badge/skills/alirezarezvani)](https://smithery.ai/skills?ns=alirezarezvani&utm_source=github&utm_medium=badge)
+
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
 **Updated**: November 19, 2025 (v2.7.0 - Tresor Workflow Framework)
