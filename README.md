@@ -1,8 +1,5 @@
 # Claude Code Tresor 🏆
 
-[![Run in Smithery](https://smithery.ai/badge/skills/alirezarezvani)](https://smithery.ai/skills?ns=alirezarezvani&utm_source=github&utm_medium=badge)
-
-
 > A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -16,7 +13,7 @@
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
-**Updated**: November 19, 2025 (v2.7.0 - Tresor Workflow Framework)
+**Updated**: December 17, 2025 (v2.7.0 - Tresor Workflow Framework)
 **Quality**: 9.7/10 (Exceptional)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
