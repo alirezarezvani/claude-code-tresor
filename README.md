@@ -86,8 +86,8 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 >
 > ## 📚 Deep Dive
 
-Want to understand the architecture behind this 141-agent setup?
-- [141 Claude Code Agents: The Setup That Actually Works](MEDIUM_URL)
+### Want to understand the architecture behind this 141-agent setup?
+- [141 Claude Code Agents: The Setup That Actually Works](https://medium.com/@alirezarezvani/141-claude-code-agents-the-setup-that-actually-works-a-complete-guide-98c2c79bf867?sk=73d5be97f9bd81a18edbcc0394e44b95)
 
 ---
 
