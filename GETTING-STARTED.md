@@ -37,7 +37,7 @@ ls ~/.claude/commands/        # 4 commands
 claude "@code-reviewer Analyze this file"
 
 # Test a command
-claude "/scaffold react-component Button"
+claude "/development-scaffold react-component Button"
 ```
 
 **✅ You're ready!** Skills are available and Claude will invoke them during conversations when relevant.
@@ -89,7 +89,7 @@ claude "@code-reviewer --focus security"
 git add .
 
 # 3. Run comprehensive review
-claude "/review --scope staged --checks all"
+claude "/workflow-review --scope staged --checks all"
 
 # This coordinates:
 # - @code-reviewer: Code quality and patterns
@@ -113,9 +113,9 @@ claude "/review --scope staged --checks all"
 ./scripts/install.sh --commands
 
 # 2. Scaffold components/projects
-claude "/scaffold react-component UserProfile --hooks --tests"
-claude "/scaffold express-api user-service --auth --database"
-claude "/scaffold nextjs-app my-app --typescript --tailwind"
+claude "/development-scaffold react-component UserProfile --hooks --tests"
+claude "/development-scaffold express-api user-service --auth --database"
+claude "/development-scaffold nextjs-app my-app --typescript --tailwind"
 
 # 3. Generated structure:
 # - Component files with boilerplate
@@ -142,7 +142,7 @@ claude "/scaffold nextjs-app my-app --typescript --tailwind"
 # Claude invokes test-generator skill when relevant
 
 # 3. Generate comprehensive test suites
-claude "/test-gen --file src/utils/api.ts --framework jest --coverage 90"
+claude "/testing-test-gen --file src/utils/api.ts --framework jest --coverage 90"
 
 # 4. For complex testing needs
 claude "@test-engineer Create comprehensive test suite with edge cases"
@@ -182,7 +182,7 @@ function createUser(req, res) { /* code */ }
 # ✅ Documentation updates
 
 # 3. For comprehensive docs
-claude "/docs-gen api --format openapi"
+claude "/documentation-docs-gen api --format openapi"
 claude "@docs-writer Create user guide with examples"
 
 # Result: Well-documented APIs
@@ -212,13 +212,13 @@ claude
 
 # 3. Run formal review when ready
 git add src/auth/
-claude "/review --scope staged"
+claude "/workflow-review --scope staged"
 
 # 4. Generate comprehensive tests
-claude "/test-gen --file src/auth/login.ts --framework jest"
+claude "/testing-test-gen --file src/auth/login.ts --framework jest"
 
 # 5. Update documentation
-claude "/docs-gen --update-readme"
+claude "/documentation-docs-gen --update-readme"
 
 # 6. Commit
 git commit -m "feat(auth): add login with OAuth2"
@@ -264,7 +264,7 @@ git commit -m "fix(api): resolve memory leak in WebSocket"
 gh pr checkout 123
 
 # 2. Comprehensive review
-claude "/review --scope pr --checks all"
+claude "/workflow-review --scope pr --checks all"
 
 # Review covers:
 # ✅ Code quality (patterns, smells)
@@ -300,7 +300,7 @@ claude "/review --scope pr --checks all"
 ### Commands (Tier 3: Workflows)
 - **What:** Multi-agent orchestrated workflows
 - **When:** You run a command (`/command`)
-- **Examples:** /review, /scaffold, /test-gen
+- **Examples:** /workflow-review, /development-scaffold, /testing-test-gen
 
 **Think of commands like:** Running a script - automates complex multi-step processes
 
@@ -359,13 +359,13 @@ See [skills/TEMPLATES.md](skills/TEMPLATES.md) for copy-paste templates
 - ✅ Request deep analysis: `@code-reviewer Analyze this`
 
 ### Day 2: Commands
-- ✅ Try scaffolding: `/scaffold react-component TestComponent`
-- ✅ Run code review: `/review --scope staged`
-- ✅ Generate tests: `/test-gen --file utils.js`
+- ✅ Try scaffolding: `/development-scaffold react-component TestComponent`
+- ✅ Run code review: `/workflow-review --scope staged`
+- ✅ Generate tests: `/testing-test-gen --file utils.js`
 
 ### Week 1: Integration
 - ✅ Use skills + sub-agents together during conversations
-- ✅ Integrate `/review` into PR workflow
+- ✅ Integrate `/workflow-review` into PR workflow
 - ✅ Discuss documentation updates with Claude (skills suggest improvements)
 
 ### Week 2: Customization
