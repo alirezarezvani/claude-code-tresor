@@ -1,0 +1,29 @@
+# Agent/skill names referenced via @name in docs but not present.
+# Maintained by scripts/check_agent_references.py.
+# CI fails on any NEW name not in this list.
+anomaly-detection-specialist
+api-load-test-generator
+architect
+backend-performance-tuner
+code-vulnerability-scanner
+compliance-report-writer
+cve-deep-analyzer
+database-security-auditor
+debugger
+deployment-safety-officer
+devops-engineer
+exploit-correlation-agent
+frontend-performance-expert
+gdpr-compliance-officer
+incident-coordinator
+kubernetes-pro
+kubernetes-security-expert
+npm-security-scanner
+penetration-tester
+performance-analyst
+performance-optimization-specialist
+postmortem-writer
+privacy-counsel
+react-security-specialist
+react-specialist
+soc2-auditor
