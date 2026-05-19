@@ -1,0 +1,33 @@
+---
+name: Release
+
+'on':
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: release-please
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Honor workflow kill switch
+        run: |
+          if [ -f .github/WORKFLOW_KILLSWITCH ]; then
+            status=$(grep -E '^STATUS:' .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
+            if [ "$status" = "DISABLED" ]; then
+              echo "::notice::release disabled by kill switch"
+              exit 0
+            fi
+          fi
+
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json

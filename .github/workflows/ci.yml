@@ -1,0 +1,119 @@
+---
+name: CI
+
+'on':
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Honor workflow kill switch
+        run: |
+          if [ -f .github/WORKFLOW_KILLSWITCH ]; then
+            status=$(grep -E '^STATUS:' .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
+            if [ "$status" = "DISABLED" ]; then
+              echo "::notice::Workflows disabled by .github/WORKFLOW_KILLSWITCH"
+              exit 0
+            fi
+          fi
+
+      - name: Validate branch name
+        if: github.event_name == 'pull_request'
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          # Allow conventional types, automation bots, AI-session branches,
+          # and the protected branches themselves.
+          pattern='^(feat|fix|docs|chore|refactor|test|build|ci|perf|style|hotfix|release|claude|dependabot|renovate)/[a-z0-9][a-z0-9._/-]*$'
+          if [[ "$BRANCH" =~ $pattern || "$BRANCH" == "main" ]]; then
+            echo "::notice::branch '$BRANCH' OK"
+          else
+            echo "::error::branch '$BRANCH' must match $pattern"
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install yamllint==1.35.1 check-jsonschema==0.28.4 \
+            PyYAML==6.0.2 jsonschema==4.23.0
+          shellcheck --version
+
+      - name: Validate commit messages
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          npm install --no-save --silent \
+            @commitlint/cli@18.6.0 @commitlint/config-conventional@18.6.0
+          npx commitlint --from "$BASE_SHA" --to "$HEAD_SHA"
+
+      - name: yamllint .github/workflows
+        run: |
+          yamllint -d '{extends: default, rules: {line-length: {max: 160}}}' \
+            .github/workflows
+
+      - name: Validate GitHub workflow schemas
+        run: |
+          for file in .github/workflows/*.yml; do
+            # smart-sync uses projects_v2_item which isn't in the public schema
+            if [[ "$file" != *"smart-sync.yml" ]]; then
+              check-jsonschema --builtin-schema github-workflows "$file"
+            fi
+          done
+
+      - name: Validate skill / agent / command frontmatter
+        run: python3 scripts/validate_frontmatter.py all
+
+      - name: Verify @agent and @skill cross-references
+        run: python3 scripts/check_agent_references.py
+
+      - name: Verify documented counts match repo state
+        run: python3 scripts/check_doc_counts.py
+
+      - name: ShellCheck install/update/smoke scripts
+        run: |
+          # Severity=error blocks real bugs. SC2155/SC2115 style warnings
+          # are tracked separately; bump severity after cleanup.
+          shellcheck --severity=error \
+            scripts/install.sh scripts/update.sh scripts/smoke_install.sh
+
+      - name: Smoke-test install and update
+        run: bash scripts/smoke_install.sh
+
+      - name: Markdown internal-link check
+        run: |
+          npx --yes markdown-link-check@3.12.2 \
+            --config .markdown-link-check.json \
+            README.md CLAUDE.md NAVIGATION.md
