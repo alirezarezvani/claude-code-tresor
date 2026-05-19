@@ -5,7 +5,7 @@ name: CI
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   push:
-    branches: [main]
+    branches: [dev, main]
   workflow_dispatch:
 
 concurrency:
@@ -38,19 +38,24 @@ jobs:
           fi
 
       - name: Validate branch name
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref != 'main'
         env:
           BRANCH: ${{ github.head_ref }}
         run: |
-          # Allow conventional types, automation bots, AI-session branches,
-          # and the protected branches themselves.
+          # Feature branches PR into dev. Allowed prefixes cover conventional
+          # types, automation bots, and Claude AI sessions.
           pattern='^(feat|fix|docs|chore|refactor|test|build|ci|perf|style|hotfix|release|claude|dependabot|renovate)/[a-z0-9][a-z0-9._/-]*$'
-          if [[ "$BRANCH" =~ $pattern || "$BRANCH" == "main" ]]; then
+          if [[ "$BRANCH" =~ $pattern || "$BRANCH" == "dev" ]]; then
             echo "::notice::branch '$BRANCH' OK"
           else
             echo "::error::branch '$BRANCH' must match $pattern"
             exit 1
           fi
+
+      - name: Note release PR (skip naming + commitlint)
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'
+        run: |
+          echo "::notice::release PR (dev → main); branch naming and commitlint skipped"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -70,11 +75,14 @@ jobs:
           shellcheck --version
 
       - name: Validate commit messages
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref != 'main'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
+          # Release PRs (dev → main) are squash-merged with a single clean
+          # message, so commitlint is skipped above. Feature PRs to dev get
+          # full validation.
           npm install --no-save --silent \
             @commitlint/cli@18.6.0 @commitlint/config-conventional@18.6.0
           npx commitlint --from "$BASE_SHA" --to "$HEAD_SHA"

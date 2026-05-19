@@ -1,9 +1,16 @@
 ---
-name: Release
+name: Release Please (dev)
+
+# Watches `dev` (the integration branch under Git Flow). On every merge
+# into dev, opens or updates a single release PR that bumps version.txt
+# and the manifest, plus adds a CHANGELOG entry based on conventional
+# commits. Merging that release PR is the version-bump event on dev.
+# The next dev → main PR then carries the version into main, where
+# release-tag.yml creates the tag and GitHub Release.
 
 'on':
   push:
-    branches: [main]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:
@@ -21,7 +28,7 @@ jobs:
           if [ -f .github/WORKFLOW_KILLSWITCH ]; then
             status=$(grep -E '^STATUS:' .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
             if [ "$status" = "DISABLED" ]; then
-              echo "::notice::release disabled by kill switch"
+              echo "::notice::release-please disabled by kill switch"
               exit 0
             fi
           fi
@@ -29,5 +36,6 @@ jobs:
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          target-branch: dev
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json

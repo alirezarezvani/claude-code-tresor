@@ -1,0 +1,156 @@
+---
+name: Main Branch Protection Guard
+
+'on':
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  enforce-dev-only:
+    name: Enforce dev → main Only
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.ref != 'dev'
+
+    steps:
+      - name: Check source branch
+        id: check
+        run: |
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+
+          echo "::error::Direct PRs to 'main' are only allowed from 'dev' branch"
+          echo "::error::Current source branch: $SOURCE_BRANCH"
+          echo "::error::Please create PR to 'dev' instead, then 'dev' → 'main' for releases"
+
+          exit 1
+
+      - name: Comment on PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = `## ⛔ Branch Protection Violation
+
+            **Error**: Direct PRs to \`main\` are only allowed from \`dev\` branch.
+
+            **Current**: \`${{ github.event.pull_request.head.ref }}\` → \`main\` ❌
+            **Required**: \`dev\` → \`main\` ✅
+
+            ### Git Flow Strategy
+
+            Our repository follows Git Flow branching strategy:
+
+            \`\`\`
+            main (production releases)
+              └─ dev (integration branch)
+                  ├─ feat/* → dev ✅
+                  ├─ fix/*  → dev ✅
+                  ├─ docs/* → dev ✅
+                  └─ ... → dev ✅
+            \`\`\`
+
+            ### How to Fix
+
+            1. **Close this PR**
+            2. **Create PR to dev instead**:
+               \`\`\`bash
+               gh pr create --base dev --title "${{ github.event.pull_request.title }}"
+               \`\`\`
+            3. **After merging to dev**, create release PR:
+               \`\`\`bash
+               gh pr create --base main --head dev --title "chore: release vX.Y.Z"
+               \`\`\`
+
+            ### Documentation
+
+            - [Branching Strategy](../documentation/BRANCHING-STRATEGY.md)
+            - [Quick Reference](../documentation/QUICK-REFERENCE.md)
+
+            ---
+
+            🤖 This check is automated and cannot be bypassed. Please follow the correct workflow.`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
+
+  allow-dev-to-main:
+    name: Allow dev → main
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.ref == 'dev'
+
+    steps:
+      - name: Approve source branch
+        run: |
+          echo "✅ Source branch is 'dev' - allowed to merge to main"
+          echo "This is a release PR following Git Flow strategy"
+
+      - name: Comment on release PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = `## ✅ Release PR Approved
+
+            This PR follows the correct Git Flow strategy: \`dev\` → \`main\`
+
+            ### Pre-Release Checklist
+
+            Before merging this release PR:
+
+            - [ ] All features tested in \`dev\` branch
+            - [ ] Version number updated (if applicable)
+            - [ ] CHANGELOG.md updated with release notes
+            - [ ] All CI checks passing
+            - [ ] Documentation updated
+            - [ ] Team notified of upcoming release
+
+            ### Post-Release Actions
+
+            After merging:
+
+            1. **Tag the release**:
+               \`\`\`bash
+               git tag -a v2.1.0 -m "Release v2.1.0"
+               git push origin v2.1.0
+               \`\`\`
+
+            2. **Create GitHub Release**:
+               \`\`\`bash
+               gh release create v2.1.0 --notes "Release notes here"
+               \`\`\`
+
+            3. **Verify deployment** (if automated)
+
+            ---
+
+            🚀 Ready for production release!`;
+
+            // Only comment once
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const alreadyCommented = comments.some(comment =>
+              comment.body.includes('Release PR Approved')
+            );
+
+            if (!alreadyCommented) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
