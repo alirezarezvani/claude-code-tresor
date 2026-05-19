@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alirezarezvani/coderezz/claude-code-tresor/validation/schemas/skill.schema.json",
+  "title": "Claude Code Tresor Skill Frontmatter",
+  "description": "Schema for SKILL.md YAML frontmatter. Skills are autonomous helpers with limited tool access.",
+  "type": "object",
+  "required": ["name", "description", "allowed-tools"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Skill identifier, kebab-case. Must match directory name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 40,
+      "description": "Triggers and use cases. Read by Claude to decide when to activate."
+    },
+    "allowed-tools": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Comma-separated tool names. Recommended set per CLAUDE.md: Read, Write, Edit, Grep, Glob. Bash is broader access and should be justified."
+    }
+  }
+}

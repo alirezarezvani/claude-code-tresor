@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/coderezz/claude-code-tresor/validation/schemas/agent.schema.json",
+  "title": "Claude Code Tresor Agent Frontmatter",
+  "description": "Schema for agent.md YAML frontmatter. Agents are manually invoked specialists with broader tool access.",
+  "type": "object",
+  "required": ["name", "description", "category", "team", "tools", "model"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Agent identifier, kebab-case. Must match parent directory name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 40
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "core",
+        "engineering",
+        "design",
+        "marketing",
+        "product",
+        "leadership",
+        "operations",
+        "research",
+        "ai-automation",
+        "account-customer-success"
+      ]
+    },
+    "team": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subcategory": {
+      "type": "string",
+      "minLength": 1
+    },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "tools": {
+      "description": "Tool list. Array form is preferred; comma-separated string is accepted for legacy agents.",
+      "oneOf": [
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "specialization": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1
+    },
+    "examples": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": {} }
+      ]
+    },
+    "created": {
+      "type": ["string", "number"]
+    },
+    "updated": {
+      "type": ["string", "number"]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "max_iterations": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    }
+  }
+}
