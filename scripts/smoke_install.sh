@@ -18,9 +18,23 @@ trap 'if [ -z "${KEEP:-}" ]; then rm -rf "$TMP_ROOT"; else echo "kept: $TMP_ROOT
 export CLAUDE_CODE_DIR="$TMP_ROOT/.claude"
 export TRESOR_DIR="$CLAUDE_CODE_DIR/tresor"
 
-# Prepare a bare local clone the installer can pull from
+# Build the upstream repo the installer pulls from. install.sh runs
+# `git pull origin main`, so the bare repo must have a `main` branch.
+# In CI, actions/checkout only creates the PR branch locally — origin/main
+# exists as a remote-tracking ref but not as refs/heads/main, and bare clones
+# only copy refs/heads/. Stage in a working clone where we can materialize
+# main from origin/main (or HEAD as a self-test fallback).
+WORK_CLONE="$TMP_ROOT/work"
 LOCAL_BARE="$TMP_ROOT/repo.git"
-git clone --quiet --bare "$REPO_ROOT" "$LOCAL_BARE"
+git clone --quiet "$REPO_ROOT" "$WORK_CLONE"
+if ! git -C "$WORK_CLONE" show-ref --verify --quiet refs/heads/main; then
+  if git -C "$WORK_CLONE" show-ref --verify --quiet refs/remotes/origin/main; then
+    git -C "$WORK_CLONE" branch main origin/main
+  else
+    git -C "$WORK_CLONE" branch main HEAD
+  fi
+fi
+git clone --quiet --bare "$WORK_CLONE" "$LOCAL_BARE"
 export TRESOR_REPO_URL="$LOCAL_BARE"
 
 echo "=== smoke: install (fresh) ==="
