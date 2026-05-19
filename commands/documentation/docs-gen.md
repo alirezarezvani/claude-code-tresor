@@ -1,6 +1,6 @@
 ---
 allowed-tools: Task, Read, Write, Edit, Bash, Grep, Glob, WebFetch
-argument-hint: [api|readme|guide|reference] [--format markdown|html|openapi|docusaurus] [--output path] [--include examples,diagrams] [--template custom] [--auto-deploy]
+argument-hint: "[api|readme|guide|reference] [--format markdown|html|openapi|docusaurus] [--output path] [--include examples,diagrams] [--template custom] [--auto-deploy]"
 description: Generate comprehensive documentation from code including API docs, user guides, and interactive documentation with deployment automation
 model: inherit
 ---

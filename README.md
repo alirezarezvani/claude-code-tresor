@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.7.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
-[![Quality](https://img.shields.io/badge/quality-9.7%2F10-brightgreen.svg)](docs/VALIDATION-REPORT-CONTENT.md)
+[![Quality](https://img.shields.io/badge/quality-9.7%2F10-brightgreen.svg)](docs/archive/VALIDATION-REPORT-CONTENT.md)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 

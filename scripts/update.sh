@@ -14,9 +14,9 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Configuration
-CLAUDE_CODE_DIR="${HOME}/.claude"
-TRESOR_DIR="${CLAUDE_CODE_DIR}/tresor"
+# Configuration (env-overridable for tests and custom layouts)
+CLAUDE_CODE_DIR="${CLAUDE_CODE_DIR:-${HOME}/.claude}"
+TRESOR_DIR="${TRESOR_DIR:-${CLAUDE_CODE_DIR}/tresor}"
 CONFIG_FILE="${CLAUDE_CODE_DIR}/tresor.config.json"
 BACKUP_DIR="${CLAUDE_CODE_DIR}/backup-update-$(date +%Y%m%d-%H%M%S)"
 

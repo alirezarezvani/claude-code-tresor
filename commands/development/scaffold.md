@@ -1,6 +1,6 @@
 ---
 allowed-tools: Task, Write, Edit, Bash, Read, Grep, Glob
-argument-hint: <type> <name> [--framework react|vue|angular] [--features hooks,tests,docker,auth] [--output-dir path] [--template custom]
+argument-hint: "<type> <name> [--framework react|vue|angular] [--features hooks,tests,docker,auth] [--output-dir path] [--template custom]"
 description: Generate production-ready project structures, components, and boilerplate code with modern best practices and comprehensive tooling
 model: inherit
 ---
