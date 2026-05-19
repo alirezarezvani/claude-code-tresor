@@ -14,11 +14,13 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Configuration
-CLAUDE_CODE_DIR="${HOME}/.claude"
-REPO_URL="https://github.com/alirezarezvani/claude-code-tresor"
-TRESOR_DIR="${CLAUDE_CODE_DIR}/tresor"
-BACKUP_DIR="${CLAUDE_CODE_DIR}/backup-$(date +%Y%m%d-%H%M%S)"
+# Configuration (env-overridable for tests and custom layouts)
+CLAUDE_CODE_DIR="${CLAUDE_CODE_DIR:-${HOME}/.claude}"
+REPO_URL="${TRESOR_REPO_URL:-https://github.com/alirezarezvani/claude-code-tresor}"
+TRESOR_DIR="${TRESOR_DIR:-${CLAUDE_CODE_DIR}/tresor}"
+# Backups live as a sibling of CLAUDE_CODE_DIR so the install can back up the
+# entire directory without recursive-copy issues (BACKUP_DIR inside source).
+BACKUP_DIR="${CLAUDE_CODE_DIR}.backup-$(date +%Y%m%d-%H%M%S)"
 
 # Functions
 log() {

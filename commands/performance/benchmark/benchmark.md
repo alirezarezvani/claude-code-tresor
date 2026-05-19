@@ -1,7 +1,7 @@
 ---
 name: benchmark
 description: Load testing and performance benchmarking with intelligent scenario generation
-argument-hint: [--duration 5m,10m,30m] [--rps 10,50,100] [--pattern baseline,stress,spike,soak] [--tool locust,artillery,k6]
+argument-hint: "[--duration 5m,10m,30m] [--rps 10,50,100] [--pattern baseline,stress,spike,soak] [--tool locust,artillery,k6]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true
