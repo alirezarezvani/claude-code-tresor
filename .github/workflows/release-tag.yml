@@ -1,0 +1,89 @@
+---
+name: Release Tag (main)
+
+# Tags main after a dev → main release PR lands. Reads version.txt
+# (maintained by release-please on dev). If the tag doesn't exist yet,
+# creates an annotated tag and a GitHub Release with auto-generated
+# notes. Idempotent — safe to re-run; existing tags are left alone.
+
+'on':
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    name: Tag and release if version is new
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Honor workflow kill switch
+        id: kill
+        run: |
+          if [ -f .github/WORKFLOW_KILLSWITCH ]; then
+            status=$(grep -E '^STATUS:' .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
+            if [ "$status" = "DISABLED" ]; then
+              echo "disabled=true" >> "$GITHUB_OUTPUT"
+              echo "::notice::release-tag disabled by kill switch"
+            fi
+          fi
+
+      - name: Checkout
+        if: steps.kill.outputs.disabled != 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version
+        if: steps.kill.outputs.disabled != 'true'
+        id: ver
+        run: |
+          if [ ! -f version.txt ]; then
+            echo "::error::version.txt missing"
+            exit 1
+          fi
+          version=$(tr -d '[:space:]' < version.txt)
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::version.txt content '$version' is not semver"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check tag existence
+        if: steps.kill.outputs.disabled != 'true'
+        id: tagcheck
+        env:
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          git fetch --tags --force
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::tag $TAG already exists, nothing to do"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create tag
+        if: steps.kill.outputs.disabled != 'true' && steps.tagcheck.outputs.exists == 'false'
+        env:
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+
+      - name: Create GitHub Release with auto-notes
+        if: steps.kill.outputs.disabled != 'true' && steps.tagcheck.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --title "Claude Code Tresor $TAG" \
+            --generate-notes \
+            --verify-tag

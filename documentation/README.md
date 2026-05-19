@@ -141,11 +141,11 @@ Advanced workflows and integration patterns:
 
 ### Git Workflows
 - **[Git Workflow →](workflows/git-workflow.md)** - Complete branching strategy
-  - Trunk-based (PRs → main)
+  - Git Flow (feature → dev → main)
   - Branch naming conventions
   - Conventional commits
   - PR workflow
-  - Automated releases (release-please)
+  - Automated releases (release-please on dev, tag workflow on main)
 
 - **[Quick Reference →](workflows/quick-reference.md)** - Git workflow cheat sheet
   - Daily workflow

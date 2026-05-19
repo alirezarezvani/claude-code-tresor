@@ -1,11 +1,11 @@
 # Quick Reference — Git Workflow
 
-**Strategy**: Trunk-based (PRs → `main`)
+**Strategy**: Git Flow — feature → `dev` → `main`
 
-## Start a branch
+## Start a feature branch
 
 ```bash
-git checkout main && git pull
+git checkout dev && git pull
 git checkout -b feat/your-feature
 ```
 
@@ -17,8 +17,6 @@ Allowed prefixes: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `build`, `
 git commit -m "feat(skills): add code-coverage skill"
 ```
 
-Types and what they do to the release:
-
 | Type            | Version bump |
 | --------------- | ------------ |
 | `fix:`          | patch        |
@@ -26,22 +24,29 @@ Types and what they do to the release:
 | `feat!:` or `BREAKING CHANGE:` in body | major |
 | `docs:`, `chore:`, `test:`, `ci:`, `refactor:`, `perf:`, `build:`, `style:` | none |
 
-## Open the PR
+## Open the feature PR (against `dev`)
 
 ```bash
 git push -u origin feat/your-feature
-gh pr create --base main --title "feat: your feature"
+gh pr create --base dev --title "feat: your feature"
 ```
 
-CI runs automatically. Merge once green.
+CI runs the `Validate` job. Merge once green.
 
-## Releases
+## Cut a release
 
-Automated by release-please. After merging to `main`, look for the open PR titled `chore(main): release X.Y.Z`. Merge it to cut the tag.
+1. **Wait for the release-please PR on `dev`** (auto-opened/updated after every merge). It's titled `chore(dev): release X.Y.Z`. Merge it.
+2. **Open a `dev → main` PR**:
+   ```bash
+   gh pr create --base main --head dev --title "chore(release): vX.Y.Z"
+   ```
+3. **Merge it.** `release-tag.yml` runs on main, creates the tag, and drafts a GitHub Release.
 
-## On-demand AI review
+`main` only ever receives merges from `dev` — enforced by `main-branch-guard.yml`.
 
-In any PR or issue, comment `@claude review this for security` (or any prompt). The `claude.yml` workflow picks it up.
+## On-demand AI
+
+In any PR or issue, comment `@claude review this for security` (or any prompt). Handled by `claude.yml`.
 
 ## Emergency stop
 
@@ -50,4 +55,4 @@ In any PR or issue, comment `@claude review this for security` (or any prompt). 
 STATUS: DISABLED
 ```
 
-Disables CI and release workflows until reverted.
+Disables CI, release-please, and release-tag workflows.
