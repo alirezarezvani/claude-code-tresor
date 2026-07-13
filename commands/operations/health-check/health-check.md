@@ -1,7 +1,7 @@
 ---
 name: health-check
 description: Comprehensive system health verification for production monitoring and incident detection
-argument-hint: [--env staging,production] [--comprehensive] [--alert]
+argument-hint: "[--env staging,production] [--comprehensive] [--alert]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

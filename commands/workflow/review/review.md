@@ -1,6 +1,6 @@
 ---
 allowed-tools: Task, Bash(git status:*), Bash(git diff:*), Bash(git log:*), Read, Grep, Glob
-argument-hint: [--scope staged|unstaged|pr|commit] [--checks security,performance,style] [--format detailed|json] [--severity critical|high|medium] [--output filename]
+argument-hint: "[--scope staged|unstaged|pr|commit] [--checks security,performance,style] [--format detailed|json] [--severity critical|high|medium] [--output filename]"
 description: Comprehensive code review with security, performance, and configuration safety analysis using specialized agents
 model: inherit
 ---
