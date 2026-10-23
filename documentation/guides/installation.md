@@ -29,7 +29,7 @@ Claude Code Tresor supports three installation methods:
 
 ### Method 1: Full Installation (Recommended)
 
-Installs **all components**: 8 skills + 8 agents + 4 commands
+Installs **all components**: 8 skills, 8 core agents plus the extended subagent collection, and 24 command directories
 
 ```bash
 # Clone repository
@@ -42,8 +42,8 @@ cd claude-code-tresor
 
 **What gets installed:**
 - 8 autonomous skills in `~/.claude/skills/`
-- 8 specialized agents in `~/.claude/agents/`
-- 4 slash commands in `~/.claude/commands/`
+- 8 core agents in `~/.claude/agents/` plus the extended subagents in `~/.claude/subagents/`
+- 24 category-prefixed command directories in `~/.claude/commands/` (19 featured entries plus five additional workflow directories)
 - Prompt templates and standards
 
 **Installation time:** ~2-3 minutes
@@ -57,7 +57,7 @@ Install only specific components:
 #### Skills Only (8 Autonomous Skills)
 
 ```bash
-./scripts/install.sh --skills
+./scripts/install.sh --skills-only
 ```
 
 Installs:
@@ -73,7 +73,7 @@ Installs:
 #### Agents Only (8 Expert Agents)
 
 ```bash
-./scripts/install.sh --agents
+./scripts/install.sh --agents-only
 ```
 
 Installs:
@@ -86,17 +86,13 @@ Installs:
 - @performance-tuner
 - @refactor-expert
 
-#### Commands Only (4 Workflow Commands)
+#### Commands Only (24 Command Directories)
 
 ```bash
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 ```
 
-Installs:
-- /scaffold
-- /review
-- /test-gen
-- /docs-gen
+Installs all 24 category-prefixed command directories. The root README lists 19 featured commands; five additional workflow directories are also copied by the installer.
 
 ---
 
@@ -156,11 +152,12 @@ ls ~/.claude/agents/
 # Check installed commands
 ls ~/.claude/commands/
 
-# Expected output:
-# scaffold/
-# review/
-# test-gen/
-# docs-gen/
+# Expected output includes 24 category-prefixed directories, such as:
+# development-scaffold/
+# workflow-review/
+# testing-test-gen/
+# documentation-docs-gen/
+# operations-health-check/
 ```
 
 ### 4. Test Installation

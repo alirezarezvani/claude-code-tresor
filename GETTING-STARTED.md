@@ -30,7 +30,7 @@ cd claude-code-tresor
 # Check installed components
 ls ~/.claude/skills/          # 8 skills
 ls ~/.claude/agents/          # 8 sub-agents
-ls ~/.claude/commands/        # 4 commands
+ls ~/.claude/commands/        # 24 category-prefixed command directories
 
 # Test a skill (skills work automatically when coding)
 # Test a sub-agent
@@ -52,7 +52,7 @@ claude "/development-scaffold react-component Button"
 
 ```bash
 # 1. Install skills
-./scripts/install.sh --skills
+./scripts/install.sh --skills-only
 
 # 2. Start Claude Code and discuss your code
 # Skills are invoked by Claude when contextually relevant:
@@ -82,8 +82,8 @@ claude "@code-reviewer --focus security"
 **What you get:** Multi-perspective code analysis
 
 ```bash
-# 1. Install sub-agents and commands
-./scripts/install.sh --agents-only --commands
+# Install all components; the installer accepts one selective mode per run
+./scripts/install.sh
 
 # 2. Stage your changes
 git add .
@@ -110,7 +110,7 @@ claude "/workflow-review --scope staged --checks all"
 
 ```bash
 # 1. Install commands
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 
 # 2. Scaffold components/projects
 claude "/development-scaffold react-component UserProfile --hooks --tests"
@@ -135,8 +135,8 @@ claude "/development-scaffold nextjs-app my-app --typescript --tailwind"
 **What you get:** Test generation and execution automation
 
 ```bash
-# 1. Install test-focused tools
-./scripts/install.sh --skills-only --agents --commands
+# Install all components; selective modes cannot be combined
+./scripts/install.sh
 
 # 2. Start conversation about testing
 # Claude invokes test-generator skill when relevant
@@ -163,8 +163,8 @@ claude "@test-engineer Create comprehensive test suite with edge cases"
 **What you get:** Self-updating docs from code
 
 ```bash
-# 1. Install documentation tools
-./scripts/install.sh --skills-only --agents
+# Install all components; selective modes cannot be combined
+./scripts/install.sh
 
 # 2. Discuss documentation with Claude
 # Skills are invoked when discussing docs:
@@ -314,13 +314,7 @@ claude "/workflow-review --scope pr --checks all"
 
 **Enable sandboxing** for additional security isolation:
 
-```bash
-# During installation
-./scripts/install.sh --skills-only --sandboxing
-
-# Or configure manually per skill
-vim ~/.claude/skills/security-auditor/config.json
-```
+The Tresor installer has no sandboxing option and does not configure host sandbox settings. Configure sandboxing separately through the host CLI's supported settings.
 
 **When to enable:**
 - High-security environments
@@ -353,7 +347,7 @@ See [skills/TEMPLATES.md](skills/TEMPLATES.md) for copy-paste templates
 ## 🎓 Learning Path
 
 ### Day 1: Installation & Basics
-- ✅ Install skills (`./scripts/install.sh --skills`)
+- ✅ Install skills (`./scripts/install.sh --skills-only`)
 - ✅ Start Claude Code session and discuss your code
 - ✅ Observe Claude invoking skills during conversations
 - ✅ Request deep analysis: `@code-reviewer Analyze this`
@@ -390,8 +384,8 @@ claude --list-skills
 
 **Fix:**
 ```bash
-# Reinstall skill
-./scripts/install.sh --skills
+# Reinstall skills
+./scripts/install.sh --skills-only
 ```
 
 ### Command Not Found
@@ -403,7 +397,7 @@ ls ~/.claude/commands/ | grep command-name
 
 **Fix:**
 ```bash
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 ```
 
 ### Sub-Agent Error

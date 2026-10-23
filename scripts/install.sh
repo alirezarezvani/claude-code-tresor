@@ -387,6 +387,10 @@ print_summary() {
     echo "   Quality:       /code-health, /debt-analysis"
     echo "   Total: 12,682 lines of intelligent multi-phase orchestration"
     echo
+    echo "📦 Additional Workflow Command Directories (5):"
+    echo "   add-to-todos, check-todos, create-prompt, run-prompt, whats-next"
+    echo "   Total installed command directories: 24"
+    echo
     echo "🤖 Core Agents (8):"
     echo "   @systems-architect        - System design and architecture"
     echo "   @config-safety-reviewer   - Configuration safety specialist"

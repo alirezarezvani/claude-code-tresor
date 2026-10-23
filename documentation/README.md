@@ -110,16 +110,18 @@ Complete technical documentation for skills, agents, and commands:
 ### Commands Reference
 - **[Commands Reference →](reference/commands-reference.md)** - Complete commands documentation
   - Commands configuration specification
-  - 4 essential commands documented
+  - Four core command examples are highlighted here; the root README lists 19 featured commands and the installer copies 24 command directories
   - command.json schema
   - Parameter reference
   - Workflow orchestration
 
-**4 Commands Available:**
+**Core Command Examples (4):**
 1. **/scaffold** - Project/component scaffolding
 2. **/review** - Automated code review
 3. **/test-gen** - Test generation
 4. **/docs-gen** - Documentation generation
+
+See the [root README command inventory](../README.md#-whats-included) for the 19 featured commands and five additional workflow directories included in the 24-directory installation.
 
 ---
 
