@@ -155,6 +155,12 @@ update_commands() {
             log "Updating command: ${category}/${cmd_name}"
             mkdir -p "$commands_dest"
             cp -r "$cmd_dir" "$dest_dir"
+            # Some commands keep their prompt file next to the folder (e.g. development/scaffold.md)
+            if [ -f "${cmd_dir}.md" ]; then
+                cp "${cmd_dir}.md" "$dest_dir/"
+            fi
+            # Claude Code turns every .md under commands/ into a slash command, so drop docs
+            rm -f "$dest_dir/README.md"
         done
 
         log "Commands updated successfully"

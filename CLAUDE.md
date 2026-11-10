@@ -66,8 +66,10 @@ claude-code-tresor/
 ### Building & Testing
 ```bash
 # No build process - this is a utilities collection
-# Test installation scripts
-./scripts/install.sh --check
+# Validate locally what CI checks (needs: pip install yamllint check-jsonschema)
+yamllint -d '{extends: default, rules: {line-length: {max: 160}}}' .github/workflows
+# Dry-run the installer into a throwaway home folder
+HOME=$(mktemp -d) ./scripts/install.sh --no-backup
 ```
 
 ### Installation & Setup
@@ -76,9 +78,9 @@ claude-code-tresor/
 ./scripts/install.sh
 
 # Selective installation
-./scripts/install.sh --skills        # 8 autonomous skills only
-./scripts/install.sh --agents        # 133 agents only (from /subagents/)
-./scripts/install.sh --commands      # 19 commands (4 dev + 5 workflow + 10 orchestration)
+./scripts/install.sh --skills-only   # 8 autonomous skills only
+./scripts/install.sh --agents-only   # 133 agents only (from /subagents/)
+./scripts/install.sh --commands-only # 19 commands (4 dev + 5 workflow + 10 orchestration)
 ./scripts/install.sh --orchestration # 10 orchestration commands only (NEW v2.7)
 ./scripts/install.sh --resources-only
 

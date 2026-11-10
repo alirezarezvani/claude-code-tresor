@@ -48,7 +48,7 @@ check_dependencies() {
     log "Git is available"
 
     # Check if Claude Code is installed (optional check)
-    if command -v claude-code &> /dev/null; then
+    if command -v claude &> /dev/null || command -v claude-code &> /dev/null; then
         log "Claude Code CLI detected"
     else
         warn "Claude Code CLI not found. Make sure to install it from: https://claude.ai/code"
@@ -119,6 +119,12 @@ install_commands() {
 
             log "Installing command: ${category}/${cmd_name}"
             cp -r "$cmd_dir" "$dest_dir"
+            # Some commands keep their prompt file next to the folder (e.g. development/scaffold.md)
+            if [ -f "${cmd_dir}.md" ]; then
+                cp "${cmd_dir}.md" "$dest_dir/"
+            fi
+            # Claude Code turns every .md under commands/ into a slash command, so drop docs
+            rm -f "$dest_dir/README.md"
         done
 
         log "Commands installed successfully"
@@ -145,6 +151,7 @@ install_orchestration_commands() {
 
                     log "Installing orchestration command: ${category}/${cmd_name}"
                     cp -r "$cmd_dir" "$dest_dir"
+                    rm -f "$dest_dir/README.md"
                 done
             fi
         done

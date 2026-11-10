@@ -84,10 +84,11 @@ jobs:
             fi
           done
 
-      - name: Check agent .md YAML frontmatter
+      - name: Check agent and command .md YAML frontmatter
         run: |
-          echo "Checking agent .md files for valid YAML frontmatter..."
-          find agents -name "*.md" -not -name "README.md" | while read -r file; do
+          echo "Checking agent, subagent and command .md files for valid YAML frontmatter..."
+          find agents subagents commands -name "*.md" -not -name "README.md" | while read -r file; do
+            head -n 1 "$file" | grep -q '^---$' || continue
             echo "Validating: $file"
             # Extract YAML frontmatter between --- markers
             awk '/^---$/{i++; next} i==1' "$file" > /tmp/agent-yaml.txt
