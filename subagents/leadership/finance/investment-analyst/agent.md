@@ -11,7 +11,7 @@ capabilities:
   - "Execute thorough due diligence covering financial, operational, tax, legal, and market factors"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

@@ -6,7 +6,7 @@ team: "marketing"
 subcategory: "seo"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Keyword Research & Strategy - High-volume keywords with achievable difficulty"

@@ -11,7 +11,7 @@ capabilities:
   - "Create partnership frameworks with governance, commercial terms, and performance management"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

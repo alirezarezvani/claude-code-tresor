@@ -11,7 +11,7 @@ capabilities:
   - "Identify market gaps, blue ocean opportunities, and actionable differentiation strategies"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

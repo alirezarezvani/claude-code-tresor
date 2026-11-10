@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "backend"
 specialization: "microservices"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Payment Gateway Integration"

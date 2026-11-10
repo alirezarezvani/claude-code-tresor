@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Bash, Grep, Glob, Task, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Security Vulnerability Assessment - OWASP Top 10 comprehensive analysis"

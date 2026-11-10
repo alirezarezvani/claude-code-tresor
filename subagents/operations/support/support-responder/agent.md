@@ -11,7 +11,7 @@ capabilities:
   - "Generate product insights by categorizing issues, quantifying impact, and creating feedback loops"
 team: "operations"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

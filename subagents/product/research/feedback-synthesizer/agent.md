@@ -6,7 +6,7 @@ team: "product"
 subcategory: "research"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Multi-Source Feedback Aggregation - App store reviews, support tickets, social media"

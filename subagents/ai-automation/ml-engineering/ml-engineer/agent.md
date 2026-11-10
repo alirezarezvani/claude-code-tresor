@@ -22,7 +22,7 @@ created: 2025-11-15
 updated: 2025-11-15
 team: "ai-automation"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

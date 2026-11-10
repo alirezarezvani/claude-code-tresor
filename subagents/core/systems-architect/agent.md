@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "System Design - Creating scalable, maintainable system architectures"

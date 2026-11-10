@@ -6,7 +6,7 @@ team: "engineering"
 color: "#3B82F6"
 subcategory: "mobile"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Widget composition, state management (Provider/Riverpod/Bloc/GetX)"

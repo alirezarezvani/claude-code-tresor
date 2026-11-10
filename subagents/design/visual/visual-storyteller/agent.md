@@ -6,7 +6,7 @@ team: "design"
 subcategory: "visual"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Visual Narrative Design - Transform complex ideas into captivating visual stories"

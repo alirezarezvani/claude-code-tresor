@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "go"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Go Best Practices - Idiomatic patterns and effective Go guidelines"

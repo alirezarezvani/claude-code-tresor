@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "python"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Python Best Practices - Idiomatic patterns and PEP 8 conventions"

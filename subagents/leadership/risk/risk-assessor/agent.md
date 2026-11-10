@@ -11,7 +11,7 @@ capabilities:
   - "Design early warning systems with key risk indicators, automated alerting, and mitigation strategies"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

@@ -6,7 +6,7 @@ team: "product"
 subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Sprint Planning Excellence - Clear goals, shippable increments, velocity-based estimates"

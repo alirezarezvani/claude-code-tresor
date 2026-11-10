@@ -13,7 +13,7 @@ tools:
   - Glob
   - Bash
   - Task
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - Workflow analysis and bottleneck identification
