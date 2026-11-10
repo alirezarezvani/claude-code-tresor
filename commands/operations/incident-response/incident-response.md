@@ -1,7 +1,7 @@
 ---
 name: incident-response
 description: Production incident coordination with emergency triage, RCA, and postmortem generation
-argument-hint: [--severity p0,p1,p2] [--skip-triage] [--postmortem]
+argument-hint: "[--severity p0,p1,p2] [--skip-triage] [--postmortem]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

@@ -1,7 +1,7 @@
 ---
 name: compliance-check
 description: Regulatory compliance validation for GDPR, SOC2, HIPAA, PCI-DSS, and other frameworks
-argument-hint: [--frameworks gdpr,soc2,hipaa,pci,iso27001,all] [--data-flow] [--generate-report]
+argument-hint: "[--frameworks gdpr,soc2,hipaa,pci,iso27001,all] [--data-flow] [--generate-report]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

@@ -11,7 +11,7 @@ capabilities:
   - "Implement predictive analytics using machine learning-based forecasting and statistical modeling"
 team: "operations"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

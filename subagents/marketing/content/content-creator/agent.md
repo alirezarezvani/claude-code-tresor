@@ -6,7 +6,7 @@ team: "marketing"
 subcategory: "content"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Multi-Format Content Development - Transform ideas across blog, video, and social formats"

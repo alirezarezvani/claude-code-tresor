@@ -1,138 +1,58 @@
-# Quick Reference - Git Workflow
+# Quick Reference — Git Workflow
 
-**Branching Strategy**: Git Flow (dev → main)
+**Strategy**: Git Flow — feature → `dev` → `main`
 
----
-
-## 🚀 Start New Feature
+## Start a feature branch
 
 ```bash
-git checkout dev && git pull origin dev
-git checkout -b feat/your-feature-name
+git checkout dev && git pull
+git checkout -b feat/your-feature
 ```
 
----
+Allowed prefixes: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `build`, `ci`, `perf`, `style`, `hotfix`, `release`, `claude`, `dependabot`, `renovate`.
 
-## 💾 Commit Changes
+## Commit (Conventional Commits)
 
 ```bash
-git add .
-git commit -m "feat: your change
-
-Details here.
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
+git commit -m "feat(skills): add code-coverage skill"
 ```
 
-**Commit types**: `feat`, `fix`, `docs`, `chore`, `test`, `ci`, `perf`, `style`, `refactor`, `revert`
+| Type            | Version bump |
+| --------------- | ------------ |
+| `fix:`          | patch        |
+| `feat:`         | minor        |
+| `feat!:` or `BREAKING CHANGE:` in body | major |
+| `docs:`, `chore:`, `test:`, `ci:`, `refactor:`, `perf:`, `build:`, `style:` | none |
 
----
-
-## 📤 Create PR to `dev`
+## Open the feature PR (against `dev`)
 
 ```bash
-git push -u origin feat/your-feature-name
-gh pr create --base dev --head feat/your-feature-name \
-  --title "feat: your feature" \
-  --body "## Summary
-Your description here"
+git push -u origin feat/your-feature
+gh pr create --base dev --title "feat: your feature"
 ```
 
----
+CI runs the `Validate` job. Merge once green.
 
-## ✅ Merge PR
+## Cut a release
+
+1. **Wait for the release-please PR on `dev`** (auto-opened/updated after every merge). It's titled `chore(dev): release X.Y.Z`. Merge it.
+2. **Open a `dev → main` PR**:
+   ```bash
+   gh pr create --base main --head dev --title "chore(release): vX.Y.Z"
+   ```
+3. **Merge it.** `release-tag.yml` runs on main, creates the tag, and drafts a GitHub Release.
+
+`main` only ever receives merges from `dev` — enforced by `main-branch-guard.yml`.
+
+## On-demand AI
+
+In any PR or issue, comment `@claude review this for security` (or any prompt). Handled by `claude.yml`.
+
+## Emergency stop
 
 ```bash
-# Via CLI
-gh pr merge <PR-NUMBER> --squash --delete-branch
-
-# Via GitHub UI (recommended)
-# Click "Squash and merge"
-# Branch auto-deletes
+# .github/WORKFLOW_KILLSWITCH
+STATUS: DISABLED
 ```
 
----
-
-## 🎉 Release to `main`
-
-```bash
-git checkout dev && git pull origin dev
-gh pr create --base main --head dev \
-  --title "chore(release): v1.2.3" \
-  --body "## Release Summary
-Changes included..."
-
-# After merge
-git checkout main && git pull origin main
-git tag -a v1.2.3 -m "Release 1.2.3"
-git push origin v1.2.3
-```
-
----
-
-## 🔥 Hotfix (Emergency)
-
-```bash
-git checkout main && git pull origin main
-git checkout -b hotfix/critical-fix
-
-# Make fix
-git add . && git commit -m "fix: critical issue"
-
-gh pr create --base main --head hotfix/critical-fix \
-  --title "[HOTFIX] fix: critical issue"
-
-# After merge to main, backport to dev
-git checkout dev && git merge main && git push origin dev
-```
-
----
-
-## 📋 Branch Naming
-
-- `feat/` - New features
-- `fix/` - Bug fixes
-- `docs/` - Documentation
-- `chore/` - Maintenance
-- `test/` - Tests
-- `ci/` - CI/CD changes
-- `hotfix/` - Emergency fixes
-
----
-
-## 🛡️ Branch Protection
-
-### `main` (production)
-- ✅ Require PR
-- ✅ Require checks: CI Quality Gate, Security Audit
-- ✅ Require conversation resolution
-- ❌ No direct pushes
-
-### `dev` (integration)
-- ✅ Require PR
-- ✅ Require checks: CI Quality Gate, Security Audit
-- ✅ Require conversation resolution
-- ⚠️ Force push allowed (for cleanup)
-
----
-
-## 🐛 Troubleshooting
-
-**Can't push to dev/main?**
-→ Create PR, protected branches don't allow direct pushes
-
-**Checks failing?**
-→ Wait for CI to pass or fix issues
-
-**Branch diverged?**
-```bash
-git checkout dev && git pull origin dev
-git checkout your-branch && git merge dev
-git push origin your-branch --force-with-lease
-```
-
----
-
-**Full Guide**: [BRANCHING-STRATEGY.md](BRANCHING-STRATEGY.md)
+Disables CI, release-please, and release-tag workflows.

@@ -1,7 +1,7 @@
 ---
 name: profile
 description: Comprehensive performance profiling with bottleneck identification and optimization recommendations
-argument-hint: [--layers frontend,backend,database,all] [--depth quick,standard,deep] [--threshold 500ms]
+argument-hint: "[--layers frontend,backend,database,all] [--depth quick,standard,deep] [--threshold 500ms]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

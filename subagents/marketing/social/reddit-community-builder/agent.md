@@ -6,7 +6,7 @@ team: "marketing"
 subcategory: "social"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Subreddit Strategy Development - Identify relevant communities and engagement strategies"

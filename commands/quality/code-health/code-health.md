@@ -1,7 +1,7 @@
 ---
 name: code-health
 description: Codebase health assessment with quality metrics, test coverage, documentation, and maintainability analysis
-argument-hint: [--scope quality,tests,docs,all] [--threshold 7.0] [--report]
+argument-hint: "[--scope quality,tests,docs,all] [--threshold 7.0] [--report]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

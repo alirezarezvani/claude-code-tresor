@@ -11,7 +11,7 @@ capabilities:
   - "Spot emerging trends, shifts in user priorities, and early signals of market changes"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

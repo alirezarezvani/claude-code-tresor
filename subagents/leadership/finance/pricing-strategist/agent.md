@@ -11,7 +11,7 @@ capabilities:
   - "Build A/B testing frameworks for pricing experimentation with statistical validation"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

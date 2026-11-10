@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: [Read, Write, Edit, Bash, Grep, Glob, Task, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Comprehensive Test Strategy - Unit, integration, E2E testing"

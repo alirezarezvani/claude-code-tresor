@@ -1,7 +1,7 @@
 ---
 name: audit
 description: Comprehensive security audit with intelligent multi-phase orchestration and automatic agent selection
-argument-hint: [--scope security,compliance,infrastructure,all] [--parallel-max 3] [--report-format markdown,json]
+argument-hint: "[--scope security,compliance,infrastructure,all] [--parallel-max 3] [--report-format markdown,json]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

@@ -11,10 +11,40 @@
 
 | From Version | To Version | Breaking Changes | Migration Time | Difficulty |
 |--------------|------------|------------------|----------------|------------|
+| v2.7.0 → v2.8.0 | ✅ Backward Compatible | None | 2 minutes | Easy |
 | v2.6.x → v2.7.0 | ✅ Backward Compatible | None | 5 minutes | Easy |
 | v2.5.x → v2.7.0 | ✅ Backward Compatible | None | 10 minutes | Easy |
 | v2.4.x → v2.7.0 | ⚠️ Agent Names Changed | Minor | 15 minutes | Medium |
 | v2.0-2.3 → v2.7.0 | ⚠️ Multiple Changes | Significant | 30 minutes | Medium |
+
+---
+
+## 🔄 Migrating from v2.7.0 to v2.8.0
+
+**One step:** run the installer again.
+
+```bash
+cd /path/to/claude-code-tresor
+git pull origin main
+./scripts/install.sh
+```
+
+### What Changed
+
+**1. Commands are installed as one file each**
+- Before: `~/.claude/commands/workflow-review/review.md`, which newer Claude Code versions show as `/workflow-review:review`
+- Now: `~/.claude/commands/review.md`, which is `/review` - the name used everywhere in the docs
+- The installer removes the old folders for you. If you typed the long names, switch to the short ones.
+
+**2. Three commands that were missing are now installed**
+- `/scaffold`, `/test-gen` and `/docs-gen` were skipped by the old installer
+
+**3. Updating is safe for your own files**
+- `./scripts/update.sh` used to empty `~/.claude/commands/` and `~/.claude/agents/` before copying. It now only replaces Tresor's own files.
+- If the installer replaces a command file of yours that has the same name as a Tresor command, it keeps your version next to it as `<name>.md.bak`.
+
+**4. Old workflow command names still work**
+- `/create-prompt`, `/run-prompt`, `/add-to-todos`, `/check-todos` and `/whats-next` are still installed and will be removed in v3.0.0.
 
 ---
 

@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: [Read, Write, Edit, Grep, Glob, Bash, WebFetch, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Technical Documentation - User guides, API docs, architecture docs"

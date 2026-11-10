@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "cpp"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "C++ Best Practices - Idiomatic patterns and C++ Core Guidelines"

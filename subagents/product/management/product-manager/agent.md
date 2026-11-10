@@ -6,7 +6,7 @@ team: "product"
 subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch, Task, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Team Orchestration - Coordinate technical, quality, and security specialists"

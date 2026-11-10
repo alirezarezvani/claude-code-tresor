@@ -11,7 +11,7 @@ capabilities:
   - "Build time series forecasting models and statistical arbitrage strategies with robust validation"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

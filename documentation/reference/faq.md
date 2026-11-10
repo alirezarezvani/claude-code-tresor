@@ -186,9 +186,9 @@ cd claude-code-tresor
 
 **Selective installation:**
 ```bash
-./scripts/install.sh --skills    # 8 skills only
-./scripts/install.sh --agents    # 8 agents only
-./scripts/install.sh --commands  # 4 commands only
+./scripts/install.sh --skills-only    # 8 skills only
+./scripts/install.sh --agents-only    # agents only
+./scripts/install.sh --commands-only  # 19 commands (+ 5 old names)
 ```
 
 **[Complete installation guide →](../guides/installation.md)**

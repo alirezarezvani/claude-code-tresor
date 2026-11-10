@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "java"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Minecraft Plugin Best Practices - Idiomatic Bukkit/Spigot/Paper patterns"

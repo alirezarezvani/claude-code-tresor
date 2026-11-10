@@ -11,7 +11,7 @@ capabilities:
   - "Improve operational efficiency through process automation and resource optimization"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

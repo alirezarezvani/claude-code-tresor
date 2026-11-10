@@ -6,7 +6,7 @@ team: "product"
 subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Launch Planning & Coordination - Comprehensive timelines and cross-team coordination"

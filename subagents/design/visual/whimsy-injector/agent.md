@@ -6,7 +6,7 @@ team: "design"
 subcategory: "visual"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Delight Opportunity Identification - Transform mundane interactions into joyful moments"

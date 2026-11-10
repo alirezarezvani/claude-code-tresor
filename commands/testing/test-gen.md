@@ -1,6 +1,6 @@
 ---
 allowed-tools: Task, Read, Write, Edit, Bash, Grep, Glob
-argument-hint: [--file path] [--type unit|component|integration|e2e|api] [--framework jest|vitest|playwright] [--coverage number] [--mocks auto|manual] [--output-dir path]
+argument-hint: "[--file path] [--type unit|component|integration|e2e|api] [--framework jest|vitest|playwright] [--coverage number] [--mocks auto|manual] [--output-dir path]"
 description: Generate comprehensive test suites automatically for components, functions, and APIs with multiple framework support
 model: inherit
 ---

@@ -14,9 +14,9 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Configuration
-CLAUDE_CODE_DIR="${HOME}/.claude"
-TRESOR_DIR="${CLAUDE_CODE_DIR}/tresor"
+# Configuration (env-overridable for tests and custom layouts)
+CLAUDE_CODE_DIR="${CLAUDE_CODE_DIR:-${HOME}/.claude}"
+TRESOR_DIR="${TRESOR_DIR:-${CLAUDE_CODE_DIR}/tresor}"
 CONFIG_FILE="${CLAUDE_CODE_DIR}/tresor.config.json"
 BACKUP_DIR="${CLAUDE_CODE_DIR}/backup-update-$(date +%Y%m%d-%H%M%S)"
 
@@ -105,6 +105,10 @@ create_backup() {
             cp -r "$CLAUDE_CODE_DIR/agents" "$BACKUP_DIR/"
         fi
 
+        if [ -d "$CLAUDE_CODE_DIR/skills" ]; then
+            cp -r "$CLAUDE_CODE_DIR/skills" "$BACKUP_DIR/"
+        fi
+
         if [ -d "$CLAUDE_CODE_DIR/tresor-resources" ]; then
             cp -r "$CLAUDE_CODE_DIR/tresor-resources" "$BACKUP_DIR/"
         fi
@@ -131,6 +135,9 @@ update_repository() {
     log "Updated to: ${new_commit:0:8}"
 }
 
+# Commands are installed as flat files (~/.claude/commands/<name>.md) so that
+# Claude Code names them /<name>. Only Tresor's own files are touched: personal
+# commands in the same folder are left alone. Keep in sync with install.sh.
 update_commands() {
     header "Updating Commands"
 
@@ -139,28 +146,74 @@ update_commands() {
 
     if [ -d "$commands_src" ]; then
         log "Updating commands..."
+        mkdir -p "$commands_dest"
 
-        # Remove old commands that might have been renamed or removed
-        if [ -d "$commands_dest" ]; then
-            log "Cleaning old commands..."
-            rm -rf "$commands_dest"/*
-        fi
+        find "$commands_src" -type f -name '*.md' ! -name 'README.md' | sort | while read -r cmd_file; do
+            local cmd_name
+            cmd_name=$(basename "$cmd_file" .md)
+            local rel="${cmd_file#"$commands_src"/}"
+            local category="${rel%%/*}"
+            local legacy_dir="$commands_dest/${category}-${cmd_name}"
 
-        # Install updated commands
-        find "$commands_src" -mindepth 2 -maxdepth 2 -type d | while read -r cmd_dir; do
-            local cmd_name=$(basename "$cmd_dir")
-            local category=$(basename "$(dirname "$cmd_dir")")
-            local dest_dir="$commands_dest/${category}-${cmd_name}"
+            # Releases before v2.8.0 installed "<category>-<name>/" directories
+            if [ -d "$legacy_dir" ]; then
+                log "Removing old command directory: ${category}-${cmd_name}"
+                rm -rf "$legacy_dir"
+            fi
 
-            log "Updating command: ${category}/${cmd_name}"
-            mkdir -p "$commands_dest"
-            cp -r "$cmd_dir" "$dest_dir"
+            log "Updating command: /${cmd_name}"
+            cp "$cmd_file" "$commands_dest/${cmd_name}.md"
         done
 
         log "Commands updated successfully"
     else
         warn "Commands directory not found in repository"
     fi
+}
+
+update_skills() {
+    header "Updating Skills"
+
+    local skills_src="$TRESOR_DIR/skills"
+    local skills_dest="$CLAUDE_CODE_DIR/skills"
+
+    if [ -d "$skills_src" ]; then
+        log "Updating skills..."
+
+        find "$skills_src" -mindepth 2 -maxdepth 2 -type d | while read -r skill_dir; do
+            local skill_name
+            skill_name=$(basename "$skill_dir")
+
+            if [ -f "$skill_dir/SKILL.md" ]; then
+                log "Updating skill: $skill_name"
+                mkdir -p "$skills_dest/$skill_name"
+                rm -rf "$skills_dest/$skill_name/$skill_name"  # left behind by older installers
+                cp -r "$skill_dir/." "$skills_dest/$skill_name/"
+            fi
+        done
+
+        log "Skills updated successfully"
+    else
+        warn "Skills directory not found in repository"
+    fi
+}
+
+# Write one agent as the flat .md file Claude Code loads, keeping only the
+# frontmatter fields Claude Code knows: name, description, tools, model, enabled.
+# Tresor's own fields (category, team, color, capabilities, ...) are dropped.
+install_agent_file() {
+    local src="$1" dest="$2"
+    awk '
+    BEGIN { in_fm=0; fm_done=0 }
+    /^---$/ && fm_done == 0 {
+        if (in_fm == 0) { in_fm=1 } else { in_fm=0; fm_done=1 }
+        print; next
+    }
+    # A field starts at column 1; indented lines (list items) belong to it.
+    in_fm == 1 && /^[^ \t]/ { keep = ($0 ~ /^(name|description|tools|model|enabled):/) }
+    in_fm == 1 { if (keep) print; next }
+    { print }
+    ' "$src" > "$dest"
 }
 
 update_agents() {
@@ -172,12 +225,8 @@ update_agents() {
     if [ -d "$subagents_src" ]; then
         log "Updating agents..."
 
-        # Remove old agents (both directories and flat files)
-        if [ -d "$agents_dest" ]; then
-            log "Cleaning old agents..."
-            rm -rf "$agents_dest"/*
-        fi
-
+        # Only Tresor's own agent files are replaced below; personal agents
+        # in the same folder are left alone.
         mkdir -p "$agents_dest"
 
         # Claude Code expects flat .md files: .claude/agents/agent-name.md
@@ -189,33 +238,7 @@ update_agents() {
             if [ -f "$agent_file" ]; then
                 log "Updating core agent: $agent_name"
 
-                # Strip unsupported YAML fields (same as install.sh)
-                awk '
-                BEGIN { in_frontmatter=0; frontmatter_done=0; }
-                /^---$/ {
-                    if (frontmatter_done == 0) {
-                        if (in_frontmatter == 0) {
-                            in_frontmatter = 1;
-                            print;
-                        } else {
-                            in_frontmatter = 0;
-                            frontmatter_done = 1;
-                            print;
-                        }
-                    } else {
-                        print;
-                    }
-                    next;
-                }
-                in_frontmatter == 1 {
-                    # Only keep supported fields
-                    if ($0 ~ /^(name|description|tools|model|enabled):/) {
-                        print;
-                    }
-                    next;
-                }
-                { print }
-                ' "$agent_file" > "$agents_dest/${agent_name}.md"
+                install_agent_file "$agent_file" "$agents_dest/${agent_name}.md"
             fi
         done
 
@@ -224,8 +247,9 @@ update_agents() {
         if [ -d "$subagents_full_src" ]; then
             log "Updating subagents directory..."
             local subagents_dest="$CLAUDE_CODE_DIR/subagents"
-            rm -rf "$subagents_dest"  # Remove old to ensure clean update
-            cp -r "$subagents_full_src" "$subagents_dest"
+            mkdir -p "$subagents_dest"
+            rm -rf "$subagents_dest/subagents"  # left behind by older installers
+            cp -r "$subagents_full_src/." "$subagents_dest/"
             local subagent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
             log "Updated $subagent_count subagents"
         fi
@@ -275,10 +299,10 @@ update_config() {
 
     log "Updating configuration file..."
 
-    # Get current version from repository
-    local new_version="1.0.0"
-    if [ -f "$TRESOR_DIR/package.json" ]; then
-        new_version=$(jq -r '.version' "$TRESOR_DIR/package.json" 2>/dev/null || echo "1.0.0")
+    # version.txt is the single source of truth for the release version
+    local new_version="unknown"
+    if [ -f "$TRESOR_DIR/version.txt" ]; then
+        new_version=$(tr -d '[:space:]' < "$TRESOR_DIR/version.txt")
     fi
 
     # Preserve existing config and update relevant fields
@@ -375,6 +399,7 @@ print_summary() {
     fi
 
     echo -e "${BLUE}🔄 What was updated:${NC}"
+    echo "   ✓ Autonomous skills"
     echo "   ✓ Slash commands and utilities"
     echo "   ✓ Specialized agents"
     echo "   ✓ Prompt templates and examples"
@@ -393,11 +418,15 @@ print_summary() {
 rollback() {
     header "Rolling Back Update"
 
-    if [ ! -d "$BACKUP_DIR" ]; then
+    # BACKUP_DIR carries this run's timestamp, so look up the newest backup
+    # that an earlier update created.
+    BACKUP_DIR=$(find "$CLAUDE_CODE_DIR" -maxdepth 1 -type d -name 'backup-update-*' | sort | tail -n 1)
+
+    if [ -z "$BACKUP_DIR" ] || [ ! -d "$BACKUP_DIR" ]; then
         error "No backup found. Cannot rollback."
     fi
 
-    log "Rolling back to previous version..."
+    log "Rolling back to backup: $BACKUP_DIR"
 
     # Restore from backup
     if [ -d "$BACKUP_DIR/commands" ]; then
@@ -408,6 +437,11 @@ rollback() {
     if [ -d "$BACKUP_DIR/agents" ]; then
         rm -rf "$CLAUDE_CODE_DIR/agents"
         cp -r "$BACKUP_DIR/agents" "$CLAUDE_CODE_DIR/"
+    fi
+
+    if [ -d "$BACKUP_DIR/skills" ]; then
+        rm -rf "$CLAUDE_CODE_DIR/skills"
+        cp -r "$BACKUP_DIR/skills" "$CLAUDE_CODE_DIR/"
     fi
 
     if [ -d "$BACKUP_DIR/tresor-resources" ]; then
@@ -550,6 +584,7 @@ main() {
         elif [ "$RESOURCES_ONLY" = true ]; then
             update_resources
         else
+            update_skills
             update_commands
             update_agents
             update_resources

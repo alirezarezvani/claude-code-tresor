@@ -1,7 +1,7 @@
 ---
 name: create-prompt
 description: Expert prompt engineer that creates optimized, XML-structured prompts with intelligent depth selection
-argument-hint: [task description]
+argument-hint: "[task description]"
 allowed-tools: Task, Read, Write, Bash, Glob
 model: inherit
 enabled: true

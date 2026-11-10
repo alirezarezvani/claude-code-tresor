@@ -1,7 +1,7 @@
 ---
 name: debt-analysis
 description: Technical debt identification with prioritization, effort estimation, and refactoring roadmap
-argument-hint: [--category architecture,code,test,documentation,all] [--prioritize cost,risk,effort]
+argument-hint: "[--category architecture,code,test,documentation,all] [--prioritize cost,risk,effort]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

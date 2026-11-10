@@ -6,7 +6,7 @@ team: "marketing"
 subcategory: "growth"
 color: "#10B981"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Acquisition Funnel Optimization - Conversion tracking and bottleneck identification"

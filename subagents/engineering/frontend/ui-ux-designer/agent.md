@@ -6,7 +6,7 @@ team: "engineering"
 color: "#3B82F6"
 subcategory: "frontend"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "User research, persona development, and journey mapping"

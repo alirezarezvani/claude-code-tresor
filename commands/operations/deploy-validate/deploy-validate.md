@@ -1,7 +1,7 @@
 ---
 name: deploy-validate
 description: Pre-deployment validation with tests, security checks, config safety, and environment readiness verification
-argument-hint: [--env staging,production] [--skip-tests] [--quick]
+argument-hint: "[--env staging,production] [--skip-tests] [--quick]"
 allowed-tools: Task, Read, Write, Edit, Bash, Glob, Grep, SlashCommand, AskUserQuestion
 model: inherit
 enabled: true

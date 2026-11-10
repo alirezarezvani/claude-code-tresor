@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Bash, Grep, Glob, Task, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Root Cause Analysis - Comprehensive RCA framework with 5-step methodology"

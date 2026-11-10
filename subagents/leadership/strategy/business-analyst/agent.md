@@ -11,7 +11,7 @@ capabilities:
   - "Identify trends, anomalies, and recommend specific actions based on data insights"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 
