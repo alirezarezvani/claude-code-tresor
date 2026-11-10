@@ -3,8 +3,10 @@ name: Release Tag (main)
 
 # Tags main after a dev → main release PR lands. Reads version.txt
 # (maintained by release-please on dev). If the tag doesn't exist yet,
-# creates an annotated tag and a GitHub Release with auto-generated
-# notes. Idempotent — safe to re-run; existing tags are left alone.
+# creates an annotated tag and a GitHub Release. The release text comes
+# from RELEASE-NOTES-vX.Y.Z.md when that file exists, otherwise from
+# auto-generated notes. Idempotent — safe to re-run; existing tags are
+# left alone.
 
 'on':
   push:
@@ -77,13 +79,21 @@ jobs:
           git tag -a "$TAG" -m "Release $TAG"
           git push origin "$TAG"
 
-      - name: Create GitHub Release with auto-notes
+      - name: Create GitHub Release
         if: steps.kill.outputs.disabled != 'true' && steps.tagcheck.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.ver.outputs.tag }}
         run: |
-          gh release create "$TAG" \
-            --title "Claude Code Tresor $TAG" \
-            --generate-notes \
-            --verify-tag
+          notes_file="RELEASE-NOTES-${TAG}.md"
+          if [ -f "$notes_file" ]; then
+            gh release create "$TAG" \
+              --title "Claude Code Tresor $TAG" \
+              --notes-file "$notes_file" \
+              --verify-tag
+          else
+            gh release create "$TAG" \
+              --title "Claude Code Tresor $TAG" \
+              --generate-notes \
+              --verify-tag
+          fi

@@ -29,7 +29,7 @@ Claude Code Tresor supports three installation methods:
 
 ### Method 1: Full Installation (Recommended)
 
-Installs **all components**: 8 skills + 8 agents + 4 commands
+Installs **all components**: 8 skills, 8 core agents plus the extended subagent library, and 19 commands
 
 ```bash
 # Clone repository
@@ -42,8 +42,8 @@ cd claude-code-tresor
 
 **What gets installed:**
 - 8 autonomous skills in `~/.claude/skills/`
-- 8 specialized agents in `~/.claude/agents/`
-- 4 slash commands in `~/.claude/commands/`
+- 8 core agents in `~/.claude/agents/` plus the extended subagents in `~/.claude/subagents/`
+- 19 slash commands in `~/.claude/commands/`, one file per command (plus the five old workflow command names, kept until v3.0.0)
 - Prompt templates and standards
 
 **Installation time:** ~2-3 minutes
@@ -57,7 +57,7 @@ Install only specific components:
 #### Skills Only (8 Autonomous Skills)
 
 ```bash
-./scripts/install.sh --skills
+./scripts/install.sh --skills-only
 ```
 
 Installs:
@@ -70,33 +70,31 @@ Installs:
 - api-documenter
 - readme-updater
 
-#### Agents Only (8 Expert Agents)
+#### Agents Only (8 Core Agents + Library)
 
 ```bash
-./scripts/install.sh --agents
+./scripts/install.sh --agents-only
 ```
 
-Installs:
-- @code-reviewer
-- @test-engineer
-- @docs-writer
-- @architect
-- @debugger
+Installs the 8 core agents into `~/.claude/agents/`:
+- @systems-architect
+- @config-safety-reviewer
+- @root-cause-analyzer
 - @security-auditor
+- @test-engineer
 - @performance-tuner
 - @refactor-expert
+- @docs-writer
 
-#### Commands Only (4 Workflow Commands)
+It also copies the full library of 133 agents to `~/.claude/subagents/` for browsing. Copy any agent you want to use into `~/.claude/agents/`.
+
+#### Commands Only (19 Commands)
 
 ```bash
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 ```
 
-Installs:
-- /scaffold
-- /review
-- /test-gen
-- /docs-gen
+Installs all 19 commands as one file each, for example `~/.claude/commands/review.md` for `/review`. The five old workflow command names (`/create-prompt`, `/run-prompt`, `/add-to-todos`, `/check-todos`, `/whats-next`) are installed too and will be removed in v3.0.0.
 
 ---
 
@@ -140,14 +138,14 @@ ls ~/.claude/skills/
 ls ~/.claude/agents/
 
 # Expected output:
-# code-reviewer/
-# test-engineer/
-# docs-writer/
-# architect/
-# debugger/
-# security-auditor/
-# performance-tuner/
-# refactor-expert/
+# config-safety-reviewer.md
+# docs-writer.md
+# performance-tuner.md
+# refactor-expert.md
+# root-cause-analyzer.md
+# security-auditor.md
+# systems-architect.md
+# test-engineer.md
 ```
 
 ### 3. Verify Commands Installation
@@ -156,11 +154,12 @@ ls ~/.claude/agents/
 # Check installed commands
 ls ~/.claude/commands/
 
-# Expected output:
-# scaffold/
-# review/
-# test-gen/
-# docs-gen/
+# Expected output: 24 files (19 commands + 5 old names), such as:
+# scaffold.md
+# review.md
+# test-gen.md
+# docs-gen.md
+# health-check.md
 ```
 
 ### 4. Test Installation

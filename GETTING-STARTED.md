@@ -30,14 +30,14 @@ cd claude-code-tresor
 # Check installed components
 ls ~/.claude/skills/          # 8 skills
 ls ~/.claude/agents/          # 8 sub-agents
-ls ~/.claude/commands/        # 4 commands
+ls ~/.claude/commands/        # 24 command files (19 commands + 5 old names)
 
 # Test a skill (skills work automatically when coding)
 # Test a sub-agent
 claude "@code-reviewer Analyze this file"
 
 # Test a command
-claude "/development-scaffold react-component Button"
+claude "/scaffold react-component Button"
 ```
 
 **✅ You're ready!** Skills are available and Claude will invoke them during conversations when relevant.
@@ -52,7 +52,7 @@ claude "/development-scaffold react-component Button"
 
 ```bash
 # 1. Install skills
-./scripts/install.sh --skills
+./scripts/install.sh --skills-only
 
 # 2. Start Claude Code and discuss your code
 # Skills are invoked by Claude when contextually relevant:
@@ -82,14 +82,14 @@ claude "@code-reviewer --focus security"
 **What you get:** Multi-perspective code analysis
 
 ```bash
-# 1. Install sub-agents and commands
-./scripts/install.sh --agents-only --commands
+# Install all components; the installer accepts one selective mode per run
+./scripts/install.sh
 
 # 2. Stage your changes
 git add .
 
 # 3. Run comprehensive review
-claude "/workflow-review --scope staged --checks all"
+claude "/review --scope staged --checks all"
 
 # This coordinates:
 # - @code-reviewer: Code quality and patterns
@@ -110,12 +110,12 @@ claude "/workflow-review --scope staged --checks all"
 
 ```bash
 # 1. Install commands
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 
 # 2. Scaffold components/projects
-claude "/development-scaffold react-component UserProfile --hooks --tests"
-claude "/development-scaffold express-api user-service --auth --database"
-claude "/development-scaffold nextjs-app my-app --typescript --tailwind"
+claude "/scaffold react-component UserProfile --hooks --tests"
+claude "/scaffold express-api user-service --auth --database"
+claude "/scaffold nextjs-app my-app --typescript --tailwind"
 
 # 3. Generated structure:
 # - Component files with boilerplate
@@ -135,14 +135,14 @@ claude "/development-scaffold nextjs-app my-app --typescript --tailwind"
 **What you get:** Test generation and execution automation
 
 ```bash
-# 1. Install test-focused tools
-./scripts/install.sh --skills-only --agents --commands
+# Install all components; selective modes cannot be combined
+./scripts/install.sh
 
 # 2. Start conversation about testing
 # Claude invokes test-generator skill when relevant
 
 # 3. Generate comprehensive test suites
-claude "/testing-test-gen --file src/utils/api.ts --framework jest --coverage 90"
+claude "/test-gen --file src/utils/api.ts --framework jest --coverage 90"
 
 # 4. For complex testing needs
 claude "@test-engineer Create comprehensive test suite with edge cases"
@@ -163,8 +163,8 @@ claude "@test-engineer Create comprehensive test suite with edge cases"
 **What you get:** Self-updating docs from code
 
 ```bash
-# 1. Install documentation tools
-./scripts/install.sh --skills-only --agents
+# Install all components; selective modes cannot be combined
+./scripts/install.sh
 
 # 2. Discuss documentation with Claude
 # Skills are invoked when discussing docs:
@@ -182,7 +182,7 @@ function createUser(req, res) { /* code */ }
 # ✅ Documentation updates
 
 # 3. For comprehensive docs
-claude "/documentation-docs-gen api --format openapi"
+claude "/docs-gen api --format openapi"
 claude "@docs-writer Create user guide with examples"
 
 # Result: Well-documented APIs
@@ -212,13 +212,13 @@ claude
 
 # 3. Run formal review when ready
 git add src/auth/
-claude "/workflow-review --scope staged"
+claude "/review --scope staged"
 
 # 4. Generate comprehensive tests
-claude "/testing-test-gen --file src/auth/login.ts --framework jest"
+claude "/test-gen --file src/auth/login.ts --framework jest"
 
 # 5. Update documentation
-claude "/documentation-docs-gen --update-readme"
+claude "/docs-gen --update-readme"
 
 # 6. Commit
 git commit -m "feat(auth): add login with OAuth2"
@@ -264,7 +264,7 @@ git commit -m "fix(api): resolve memory leak in WebSocket"
 gh pr checkout 123
 
 # 2. Comprehensive review
-claude "/workflow-review --scope pr --checks all"
+claude "/review --scope pr --checks all"
 
 # Review covers:
 # ✅ Code quality (patterns, smells)
@@ -300,7 +300,7 @@ claude "/workflow-review --scope pr --checks all"
 ### Commands (Tier 3: Workflows)
 - **What:** Multi-agent orchestrated workflows
 - **When:** You run a command (`/command`)
-- **Examples:** /workflow-review, /development-scaffold, /testing-test-gen
+- **Examples:** /review, /scaffold, /test-gen
 
 **Think of commands like:** Running a script - automates complex multi-step processes
 
@@ -314,13 +314,7 @@ claude "/workflow-review --scope pr --checks all"
 
 **Enable sandboxing** for additional security isolation:
 
-```bash
-# During installation
-./scripts/install.sh --skills-only --sandboxing
-
-# Or configure manually per skill
-vim ~/.claude/skills/security-auditor/config.json
-```
+The Tresor installer has no sandboxing option and does not configure host sandbox settings. Configure sandboxing separately through the host CLI's supported settings.
 
 **When to enable:**
 - High-security environments
@@ -353,19 +347,19 @@ See [skills/TEMPLATES.md](skills/TEMPLATES.md) for copy-paste templates
 ## 🎓 Learning Path
 
 ### Day 1: Installation & Basics
-- ✅ Install skills (`./scripts/install.sh --skills`)
+- ✅ Install skills (`./scripts/install.sh --skills-only`)
 - ✅ Start Claude Code session and discuss your code
 - ✅ Observe Claude invoking skills during conversations
 - ✅ Request deep analysis: `@code-reviewer Analyze this`
 
 ### Day 2: Commands
-- ✅ Try scaffolding: `/development-scaffold react-component TestComponent`
-- ✅ Run code review: `/workflow-review --scope staged`
-- ✅ Generate tests: `/testing-test-gen --file utils.js`
+- ✅ Try scaffolding: `/scaffold react-component TestComponent`
+- ✅ Run code review: `/review --scope staged`
+- ✅ Generate tests: `/test-gen --file utils.js`
 
 ### Week 1: Integration
 - ✅ Use skills + sub-agents together during conversations
-- ✅ Integrate `/workflow-review` into PR workflow
+- ✅ Integrate `/review` into PR workflow
 - ✅ Discuss documentation updates with Claude (skills suggest improvements)
 
 ### Week 2: Customization
@@ -390,8 +384,8 @@ claude --list-skills
 
 **Fix:**
 ```bash
-# Reinstall skill
-./scripts/install.sh --skills
+# Reinstall skills
+./scripts/install.sh --skills-only
 ```
 
 ### Command Not Found
@@ -403,7 +397,7 @@ ls ~/.claude/commands/ | grep command-name
 
 **Fix:**
 ```bash
-./scripts/install.sh --commands
+./scripts/install.sh --commands-only
 ```
 
 ### Sub-Agent Error

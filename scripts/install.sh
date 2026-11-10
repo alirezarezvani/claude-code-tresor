@@ -50,7 +50,7 @@ check_dependencies() {
     log "Git is available"
 
     # Check if Claude Code is installed (optional check)
-    if command -v claude-code &> /dev/null; then
+    if command -v claude &> /dev/null || command -v claude-code &> /dev/null; then
         log "Claude Code CLI detected"
     else
         warn "Claude Code CLI not found. Make sure to install it from: https://claude.ai/code"
@@ -104,6 +104,46 @@ clone_repository() {
     log "Repository downloaded successfully"
 }
 
+# Copy every command file under the given source directories into
+# ~/.claude/commands as a flat <name>.md file.
+#
+# Claude Code names a command after its file path: commands/review.md is
+# /review, but commands/workflow-review/review.md is /workflow-review:review.
+# Releases before v2.8.0 installed "<category>-<name>/" directories, which
+# produced those long names, skipped scaffold/test-gen/docs-gen entirely and
+# nested a second copy on every re-install. Those directories are removed here.
+copy_command_files() {
+    local commands_src="$1"
+    local commands_dest="$2"
+    shift 2
+
+    mkdir -p "$commands_dest"
+
+    find "$@" -type f -name '*.md' ! -name 'README.md' | sort | while read -r cmd_file; do
+        local cmd_name
+        cmd_name=$(basename "$cmd_file" .md)
+        local rel="${cmd_file#"$commands_src"/}"
+        local category="${rel%%/*}"
+        local legacy_dir="$commands_dest/${category}-${cmd_name}"
+        local dest_file="$commands_dest/${cmd_name}.md"
+
+        if [ -d "$legacy_dir" ]; then
+            log "Removing old command directory: ${category}-${cmd_name}"
+            rm -rf "$legacy_dir"
+        fi
+
+        # Keep a copy if we are about to replace a file with different content
+        # (for example a personal command that happens to share the name).
+        if [ -f "$dest_file" ] && ! cmp -s "$cmd_file" "$dest_file"; then
+            cp "$dest_file" "$dest_file.bak"
+            warn "Replaced existing /${cmd_name} (previous copy: ${cmd_name}.md.bak)"
+        fi
+
+        log "Installing command: /${cmd_name}"
+        cp "$cmd_file" "$dest_file"
+    done
+}
+
 install_commands() {
     header "Installing Slash Commands"
 
@@ -112,17 +152,7 @@ install_commands() {
 
     if [ -d "$commands_src" ]; then
         log "Installing commands to: $commands_dest"
-
-        # Copy all command directories
-        find "$commands_src" -mindepth 2 -maxdepth 2 -type d | while read -r cmd_dir; do
-            local cmd_name=$(basename "$cmd_dir")
-            local category=$(basename "$(dirname "$cmd_dir")")
-            local dest_dir="$commands_dest/${category}-${cmd_name}"
-
-            log "Installing command: ${category}/${cmd_name}"
-            cp -r "$cmd_dir" "$dest_dir"
-        done
-
+        copy_command_files "$commands_src" "$commands_dest" "$commands_src"
         log "Commands installed successfully"
     else
         warn "Commands directory not found in repository"
@@ -138,18 +168,18 @@ install_orchestration_commands() {
     if [ -d "$commands_src" ]; then
         log "Installing orchestration commands to: $commands_dest"
 
-        # Install only orchestration commands (security, performance, operations, quality)
+        # Orchestration commands live in these four categories
+        local category_dirs=()
+        local category
         for category in security performance operations quality; do
             if [ -d "$commands_src/$category" ]; then
-                find "$commands_src/$category" -mindepth 1 -maxdepth 1 -type d | while read -r cmd_dir; do
-                    local cmd_name=$(basename "$cmd_dir")
-                    local dest_dir="$commands_dest/${category}-${cmd_name}"
-
-                    log "Installing orchestration command: ${category}/${cmd_name}"
-                    cp -r "$cmd_dir" "$dest_dir"
-                done
+                category_dirs+=("$commands_src/$category")
             fi
         done
+
+        if [ "${#category_dirs[@]}" -gt 0 ]; then
+            copy_command_files "$commands_src" "$commands_dest" "${category_dirs[@]}"
+        fi
 
         log "Orchestration commands installed successfully (10 commands)"
     else
@@ -225,8 +255,11 @@ install_subagents() {
     if [ -d "$subagents_src" ]; then
         log "Installing subagents to: $subagents_dest"
 
-        # Copy entire subagents directory structure
-        cp -r "$subagents_src" "$subagents_dest"
+        # Copy the contents (not the directory itself) so a re-install
+        # refreshes the library instead of nesting subagents/subagents.
+        mkdir -p "$subagents_dest"
+        rm -rf "$subagents_dest/subagents"  # left behind by older installers
+        cp -r "$subagents_src/." "$subagents_dest/"
 
         # Count installed agents
         local agent_count=$(find "$subagents_dest" -name "agent.md" -type f | wc -l)
@@ -257,8 +290,12 @@ install_skills() {
             # Check if SKILL.md exists
             if [ -f "$skill_dir/SKILL.md" ]; then
                 log "Installing skill: ${skill_name} (from ${category})"
-                # Copy directly to skills_dest (flatten, remove category layer)
-                cp -r "$skill_dir" "$skills_dest/$skill_name"
+                # Copy directly to skills_dest (flatten, remove category layer).
+                # Copy the contents so a re-install refreshes the skill instead
+                # of nesting skill-name/skill-name.
+                mkdir -p "$skills_dest/$skill_name"
+                rm -rf "$skills_dest/$skill_name/$skill_name"  # left behind by older installers
+                cp -r "$skill_dir/." "$skills_dest/$skill_name/"
             fi
         done
 
@@ -303,9 +340,15 @@ create_config() {
 
     log "Creating configuration file: $config_file"
 
+    # version.txt is the single source of truth for the release version
+    local tresor_version="unknown"
+    if [ -f "$TRESOR_DIR/version.txt" ]; then
+        tresor_version=$(tr -d '[:space:]' < "$TRESOR_DIR/version.txt")
+    fi
+
     cat > "$config_file" << EOF
 {
-  "version": "1.0.0",
+  "version": "$tresor_version",
   "installed": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
   "author": "Alireza Rezvani",
   "repository": "$REPO_URL",
@@ -322,7 +365,7 @@ create_config() {
       "docs-gen": "Documentation generation"
     },
     "agents": {
-      "code-reviewer": "Code quality analysis agent",
+      "config-safety-reviewer": "Configuration safety review agent",
       "test-engineer": "Testing specialist agent",
       "docs-writer": "Documentation specialist agent"
     }
@@ -389,6 +432,10 @@ print_summary() {
     echo "   Quality:       /code-health, /debt-analysis"
     echo "   Total: 12,682 lines of intelligent multi-phase orchestration"
     echo
+    echo "📦 Old Command Names (5) - still work, removed in v3.0.0:"
+    echo "   /create-prompt, /run-prompt, /add-to-todos, /check-todos, /whats-next"
+    echo "   Total installed commands: 24 (19 current + 5 old names)"
+    echo
     echo "🤖 Core Agents (8):"
     echo "   @systems-architect        - System design and architecture"
     echo "   @config-safety-reviewer   - Configuration safety specialist"
@@ -424,7 +471,7 @@ print_summary() {
     echo -e "${BLUE}📖 Getting Started:${NC}"
     echo "   1. Start Claude Code CLI"
     echo "   2. Try: /scaffold react-component MyComponent --tests"
-    echo "   3. Try: @code-reviewer Please review this code"
+    echo "   3. Try: @config-safety-reviewer Please review this configuration change"
     echo "   4. Browse examples in: tresor-resources/examples"
     echo
     echo -e "${YELLOW}💡 Tip:${NC} Check out the React App Setup workflow:"
@@ -443,16 +490,19 @@ show_help() {
     echo "  --skills-only       Install only autonomous skills (v2.0+)"
     echo "  --commands-only     Install only slash commands"
     echo "  --agents-only       Install only agents (133 total)"
+    echo "                      (--skills, --commands and --agents also work)"
     echo "  --orchestration     Install only orchestration commands (v2.7+, 10 commands)"
     echo "  --resources-only    Install only resources (prompts, standards, examples)"
     echo "  --update            Update existing installation"
     echo "  --backup-dir DIR    Use custom backup directory"
     echo "  --no-backup         Skip backup of existing installation"
     echo
+    echo "Use one of the 'only' options per run. Run without options to install everything."
+    echo
     echo "Examples:"
     echo "  $0                    # Full installation"
     echo "  $0 --skills-only      # Install only skills"
-    echo "  $0 --commands-only    # Install only commands (all 19)"
+    echo "  $0 --commands-only    # Install only commands (19 + 5 old names)"
     echo "  $0 --agents-only      # Install only agents (133 total)"
     echo "  $0 --orchestration    # Install only orchestration commands (10)"
     echo "  $0 --update           # Update existing installation"
@@ -475,15 +525,15 @@ while [[ $# -gt 0 ]]; do
             show_help
             exit 0
             ;;
-        --skills-only)
+        --skills-only|--skills)
             SKILLS_ONLY=true
             shift
             ;;
-        --commands-only)
+        --commands-only|--commands)
             COMMANDS_ONLY=true
             shift
             ;;
-        --agents-only)
+        --agents-only|--agents)
             AGENTS_ONLY=true
             shift
             ;;
