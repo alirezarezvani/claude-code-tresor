@@ -187,6 +187,24 @@ install_orchestration_commands() {
     fi
 }
 
+# Write one agent as the flat .md file Claude Code loads, keeping only the
+# frontmatter fields Claude Code knows: name, description, tools, model, enabled.
+# Tresor's own fields (category, team, color, capabilities, ...) are dropped.
+install_agent_file() {
+    local src="$1" dest="$2"
+    awk '
+    BEGIN { in_fm=0; fm_done=0 }
+    /^---$/ && fm_done == 0 {
+        if (in_fm == 0) { in_fm=1 } else { in_fm=0; fm_done=1 }
+        print; next
+    }
+    # A field starts at column 1; indented lines (list items) belong to it.
+    in_fm == 1 && /^[^ \t]/ { keep = ($0 ~ /^(name|description|tools|model|enabled):/) }
+    in_fm == 1 { if (keep) print; next }
+    { print }
+    ' "$src" > "$dest"
+}
+
 install_agents() {
     header "Installing Core Agents"
 
@@ -206,37 +224,7 @@ install_agents() {
 
             if [ -f "$agent_file" ]; then
                 log "Installing core agent: $agent_name"
-
-                # Strip unsupported YAML fields and create flat file
-                # Supported fields: name, description, tools, model, enabled
-                # Remove: category, team, color, subcategory, capabilities, max_iterations
-                awk '
-                BEGIN { in_frontmatter=0; frontmatter_done=0; }
-                /^---$/ {
-                    if (frontmatter_done == 0) {
-                        if (in_frontmatter == 0) {
-                            in_frontmatter = 1;
-                            print;
-                        } else {
-                            in_frontmatter = 0;
-                            frontmatter_done = 1;
-                            print;
-                        }
-                    } else {
-                        print;
-                    }
-                    next;
-                }
-                in_frontmatter == 1 {
-                    # Only keep supported fields
-                    if ($0 ~ /^(name|description|tools|model|enabled):/) {
-                        print;
-                    }
-                    # Skip unsupported fields: category, team, color, subcategory, capabilities, max_iterations
-                    next;
-                }
-                { print }
-                ' "$agent_file" > "$agents_dest/${agent_name}.md"
+                install_agent_file "$agent_file" "$agents_dest/${agent_name}.md"
             fi
         done
 
@@ -244,6 +232,36 @@ install_agents() {
     else
         warn "Subagents core directory not found in repository"
     fi
+}
+
+# Activate chosen agents from the library (--agent NAME). A NAME is an agent's
+# folder name, or its path under subagents/ when two teams share a name
+# (for example operations/support/customer-support).
+install_selected_agents() {
+    header "Activating Selected Agents"
+
+    local agents_dest="$CLAUDE_CODE_DIR/agents"
+    mkdir -p "$agents_dest"
+
+    local name matches count
+    for name in "${SELECTED_AGENTS[@]}"; do
+        if [ -f "$TRESOR_DIR/subagents/$name/agent.md" ]; then
+            matches="$TRESOR_DIR/subagents/$name/agent.md"
+        else
+            matches=$(find "$TRESOR_DIR/subagents" -path "*/$name/agent.md" -type f)
+        fi
+        count=$(printf '%s' "$matches" | grep -c . || true)
+
+        if [ "$count" -eq 0 ]; then
+            error "Agent not found: $name (see $CLAUDE_CODE_DIR/subagents/AGENT-INDEX.md)"
+        elif [ "$count" -gt 1 ]; then
+            echo "$matches" | sed "s|^$TRESOR_DIR/subagents/|  |; s|/agent.md$||" >&2
+            error "Agent name '$name' is used by more than one team. Pass one of the paths above."
+        fi
+
+        install_agent_file "$matches" "$agents_dest/$(basename "$(dirname "$matches")").md"
+        log "Activated agent: $name"
+    done
 }
 
 install_subagents() {
@@ -448,6 +466,7 @@ print_summary() {
     echo
     echo "🌍 Extended Subagents (133+):"
     echo "   Browse: $CLAUDE_CODE_DIR/subagents/"
+    echo "   Activate one: ./scripts/install.sh --agent <name>"
     echo "   Categories: Engineering, Design, Marketing, Product, Leadership,"
     echo "               Operations, Research, AI/Automation, Account/CS"
     echo "   Complete catalog: $CLAUDE_CODE_DIR/subagents/AGENT-INDEX.md"
@@ -493,6 +512,8 @@ show_help() {
     echo "                      (--skills, --commands and --agents also work)"
     echo "  --orchestration     Install only orchestration commands (v2.7+, 10 commands)"
     echo "  --resources-only    Install only resources (prompts, standards, examples)"
+    echo "  --agent NAME        Activate one library agent in ~/.claude/agents/ (repeatable)."
+    echo "                      Used alone, it only activates the named agents."
     echo "  --update            Update existing installation"
     echo "  --backup-dir DIR    Use custom backup directory"
     echo "  --no-backup         Skip backup of existing installation"
@@ -505,6 +526,7 @@ show_help() {
     echo "  $0 --commands-only    # Install only commands (19 + 5 old names)"
     echo "  $0 --agents-only      # Install only agents (133 total)"
     echo "  $0 --orchestration    # Install only orchestration commands (10)"
+    echo "  $0 --agent deployment-engineer --agent backend-architect   # Activate two library agents"
     echo "  $0 --update           # Update existing installation"
     echo
     echo "For more information, visit: $REPO_URL"
@@ -518,6 +540,7 @@ ORCHESTRATION_ONLY=false
 RESOURCES_ONLY=false
 UPDATE_ONLY=false
 NO_BACKUP=false
+SELECTED_AGENTS=()
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -556,6 +579,11 @@ while [[ $# -gt 0 ]]; do
         --no-backup)
             NO_BACKUP=true
             shift
+            ;;
+        --agent)
+            [ -n "${2:-}" ] || error "--agent needs an agent name"
+            SELECTED_AGENTS+=("$2")
+            shift 2
             ;;
         *)
             error "Unknown option: $1"
@@ -598,6 +626,8 @@ main() {
         install_subagents
         install_resources
         log "Claude Code Tresor Update completed successfully"
+    elif [ ${#SELECTED_AGENTS[@]} -gt 0 ]; then
+        install_subagents
     else
         # Full installation
         install_skills
@@ -607,6 +637,10 @@ main() {
         install_resources
         create_config
         create_update_script
+    fi
+
+    if [ ${#SELECTED_AGENTS[@]} -gt 0 ]; then
+        install_selected_agents
     fi
 
     print_summary

@@ -86,7 +86,13 @@ Installs the 8 core agents into `~/.claude/agents/`:
 - @refactor-expert
 - @docs-writer
 
-It also copies the full library of 133 agents to `~/.claude/subagents/` for browsing. Copy any agent you want to use into `~/.claude/agents/`.
+It also copies the full library of 133 agents to `~/.claude/subagents/` for browsing. Claude Code does not load that folder. To use a library agent, activate it:
+
+```bash
+./scripts/install.sh --agent backend-architect --agent data-engineer
+```
+
+Each `--agent` writes one file to `~/.claude/agents/`. A few names are used by two teams (for example `customer-support`); for those, give the path shown in the error, such as `--agent operations/support/customer-support`. Run the same command again to refresh an activated agent; `update.sh` only refreshes the 8 core agents.
 
 #### Commands Only (19 Commands)
 

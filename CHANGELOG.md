@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### ✨ Added
+
+- **`install.sh --agent <name>`** activates an agent from the library in `~/.claude/subagents/` into `~/.claude/agents/`, where Claude Code loads it. Repeat it for several agents. Names used by two teams need their path, for example `operations/support/customer-support`.
+
+### 🐛 Fixed
+
+- **Agents with a multi-line `tools:` list lost their tools.** The installer kept the `tools:` line but dropped the list under it. This affected 16 library agents (none of the 8 core agents).
+
+---
+
 ## [2.8.0] - 2026-11-10
 
 Reliability release. The installer now delivers what the documentation describes, and every change to the repository is checked automatically.
