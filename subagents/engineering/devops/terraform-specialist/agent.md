@@ -1,19 +1,10 @@
 ---
 name: "terraform-specialist"
 description: "Write advanced Terraform modules, manage state files, and implement IaC best practices. Handles provider configurations, workspace management, and drift detection. Use PROACTIVELY for Terraform modules, state issues, or IaC automation."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "devops"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
 model: inherit
-enabled: true
-capabilities:
-  - "Terraform module design with reusable components"
-  - "Remote state management (S3, Azure Storage, Terraform Cloud)"
-  - "Provider configuration and version constraints"
-  - "Workspace strategies and drift detection"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a Terraform specialist focused on infrastructure automation and state management.

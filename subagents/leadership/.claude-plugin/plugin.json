@@ -1,0 +1,26 @@
+{
+  "name": "tresor-leadership",
+  "version": "2.8.0",
+  "description": "Leadership specialists: strategy, finance, risk and compliance",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./compliance/compliance-officer/agent.md",
+    "./compliance/legal-advisor/agent.md",
+    "./compliance/legal-compliance-checker/agent.md",
+    "./finance/cost-optimizer/agent.md",
+    "./finance/finance-tracker/agent.md",
+    "./finance/financial-analyst/agent.md",
+    "./finance/investment-analyst/agent.md",
+    "./finance/pricing-strategist/agent.md",
+    "./finance/quant-analyst/agent.md",
+    "./finance/risk-manager/agent.md",
+    "./risk/risk-assessor/agent.md",
+    "./strategy/business-analyst/agent.md",
+    "./strategy/business-strategist/agent.md",
+    "./strategy/partnership-strategist/agent.md"
+  ]
+}

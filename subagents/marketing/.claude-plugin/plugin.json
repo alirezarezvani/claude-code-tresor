@@ -1,0 +1,23 @@
+{
+  "name": "tresor-marketing",
+  "version": "2.8.0",
+  "description": "Marketing specialists: content, growth, SEO and social media",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./content/content-creator/agent.md",
+    "./content/content-marketer/agent.md",
+    "./content/content-writer/agent.md",
+    "./content/tutorial-engineer/agent.md",
+    "./growth/customer-acquisition/agent.md",
+    "./growth/growth-hacker/agent.md",
+    "./seo/app-store-optimizer/agent.md",
+    "./social/instagram-curator/agent.md",
+    "./social/reddit-community-builder/agent.md",
+    "./social/tiktok-strategist/agent.md",
+    "./social/twitter-engager/agent.md"
+  ]
+}

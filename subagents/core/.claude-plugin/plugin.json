@@ -1,0 +1,24 @@
+{
+  "name": "tresor-core",
+  "version": "2.8.0",
+  "description": "The 8 core agents for architecture, review, security, testing, performance and docs. Also installs tresor-skills and tresor-commands",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./config-safety-reviewer/agent.md",
+    "./docs-writer/agent.md",
+    "./performance-tuner/agent.md",
+    "./refactor-expert/agent.md",
+    "./root-cause-analyzer/agent.md",
+    "./security-auditor/agent.md",
+    "./systems-architect/agent.md",
+    "./test-engineer/agent.md"
+  ],
+  "dependencies": [
+    "tresor-skills",
+    "tresor-commands"
+  ]
+}

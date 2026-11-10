@@ -123,7 +123,7 @@ for name in data-engineer customer-support; do
   f="$CLAUDE_CODE_DIR/agents/$name.md"
   test -f "$f" || { echo "--agent did not install $name"; exit 1; }
   # Only fields Claude Code knows may stay; list values (tools) must survive.
-  ! grep -qE '^(team|category|color|capabilities|max_iterations):' "$f" \
+  ! grep -qE '^(team|category|capabilities|enabled|max_iterations):' "$f" \
     || { echo "$name still has Tresor-only fields"; exit 1; }
 done
 grep -qE '^  - Read$' "$CLAUDE_CODE_DIR/agents/data-engineer.md" \

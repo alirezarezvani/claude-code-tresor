@@ -1,20 +1,10 @@
 ---
 name: "elixir-pro"
 description: "Write idiomatic Elixir code with OTP patterns, supervision trees, and Phoenix LiveView. Masters concurrency, fault tolerance, and distributed systems. Use PROACTIVELY for Elixir refactoring, OTP design, or complex BEAM optimizations."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "elixir"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "Elixir Best Practices - Idiomatic patterns and community conventions"
-  - "Framework Expertise - Popular Elixir frameworks and libraries"
-  - "Performance Optimization - Elixir-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are an Elixir expert specializing in concurrent, fault-tolerant, and distributed systems.

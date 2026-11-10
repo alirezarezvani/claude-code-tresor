@@ -1,0 +1,21 @@
+{
+  "name": "tresor-product",
+  "version": "2.8.0",
+  "description": "Product specialists: product management, requirements and research",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./analytics/experiment-tracker/agent.md",
+    "./management/product-manager/agent.md",
+    "./management/project-shipper/agent.md",
+    "./management/sprint-prioritizer/agent.md",
+    "./management/studio-producer/agent.md",
+    "./requirements/prd-writer/agent.md",
+    "./requirements/requirements-generator/agent.md",
+    "./research/feedback-synthesizer/agent.md",
+    "./research/trend-researcher/agent.md"
+  ]
+}

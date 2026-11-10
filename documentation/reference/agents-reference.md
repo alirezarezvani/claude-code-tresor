@@ -20,116 +20,58 @@ Agents are **specialized experts** invoked manually for deep analysis and comple
 
 ```yaml
 ---
-name: "agent-name"                   # Required: Unique identifier
-description: "Agent expertise"        # Required: What agent specializes in
-tools:                               # Required: Available tools
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Grep"
-  - "Glob"
-  - "Bash"
-  - "Task"
-model: "claude-opus-4"               # Optional: Default is opus for agents
-enabled: true                        # Optional: Default is true
-capabilities:                        # Optional: Specialized capabilities
-  - "capability1"
-  - "capability2"
-max_iterations: 50                   # Optional: Maximum tool use iterations
+name: agent-name                     # Required: unique identifier
+description: "When Claude should use this agent"   # Required
+tools: Read, Grep, Glob, Bash        # Required in Tresor: tools the agent may use
+model: inherit                       # Required in Tresor: inherit, sonnet, opus, haiku or a model ID
+color: "#3B82F6"                     # Optional: display color
+maxTurns: 50                         # Optional: maximum turns before the agent stops
 ---
 ```
+
+Tresor allows only fields that Claude Code reads, because the agents load straight from these files when installed as plugins. Claude Code ignores any other field without telling you, so a field it doesn't know does nothing. The full list of fields Claude Code supports is in the [official subagent docs](https://code.claude.com/docs/en/sub-agents). An agent's team and category come from its folder under `subagents/`.
 
 ---
 
 ## Field Reference
 
 ### name (required)
-**Type:** String
-**Format:** lowercase-with-dashes
-**Example:** `"code-reviewer"`
+**Type:** String, lowercase-with-dashes, matching the agent's folder name
+**Example:** `code-reviewer`
 
-Unique identifier used with `@agent-name` invocation.
+Used with `@agent-name`. When the agent comes from a Tresor plugin, Claude Code adds the plugin name in front, for example `@tresor-core:security-auditor`.
 
 ---
 
 ### description (required)
-**Type:** String
-**Length:** 50-300 characters
-**Example:** `"Expert code quality analyst specializing in security and performance"`
+**Type:** String, at least 40 characters
 
-Describes agent's expertise and specialization.
+Tells Claude when to hand work to this agent. Claude Code loads every installed agent's description into each session, so keep it short and put the detail in the body.
 
 ---
 
 ### tools (required)
-**Type:** Array of strings
-**All available tools:**
-- `"Read"` - Read files
-- `"Write"` - Create/overwrite files
-- `"Edit"` - Modify existing files
-- `"Grep"` - Search file contents
-- `"Glob"` - Find files by pattern
-- `"Bash"` - Execute shell commands
-- `"Task"` - Invoke other agents
+**Type:** Comma-separated string or array of strings
 
-**Example:**
-```yaml
-tools:
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Grep"
-  - "Glob"
-  - "Bash"
-  - "Task"
-```
+The tools the agent may use, such as `Read`, `Write`, `Edit`, `Grep`, `Glob`, `Bash`, `WebSearch`, `WebFetch` and `Task` (to start other agents).
 
 ---
 
-### model (optional)
+### model (required)
 **Type:** String
-**Default:** `"claude-opus-4"` (agents use Opus by default)
-**Allowed values:**
-- `"claude-opus-4"` - Most capable (recommended for agents)
-- `"claude-sonnet-4"` - Faster, less capable
-
-**Example:**
-```yaml
-model: "claude-opus-4"
-```
+**Tresor default:** `inherit`, which uses the model of the main session
 
 ---
 
-### enabled (optional)
-**Type:** Boolean
-**Default:** `true`
+### color (optional)
+**Type:** String, hex color such as `"#3B82F6"`
 
 ---
 
-### capabilities (optional)
-**Type:** Array of strings
-**Example:**
-```yaml
-capabilities:
-  - "code-analysis"
-  - "security-review"
-  - "performance-optimization"
-  - "refactoring"
-```
+### maxTurns (optional)
+**Type:** Integer, 1-200
 
----
-
-### max_iterations (optional)
-**Type:** Number
-**Default:** `50`
-**Range:** 1-200
-
-Maximum number of tool use iterations before agent times out.
-
-**Example:**
-```yaml
-max_iterations: 75  # For complex tasks
-```
+The maximum number of turns before the agent stops. Older Tresor versions called this `max_iterations`, which Claude Code never read.
 
 ---
 
@@ -219,14 +161,7 @@ tools:
   - "Glob"
   - "Bash"
   - "Task"
-model: "claude-opus-4"
-enabled: true
-capabilities:
-  - "code-analysis"
-  - "architecture-review"
-  - "best-practices"
-  - "refactoring-suggestions"
-max_iterations: 75
+model: inherit
 ---
 ```
 
@@ -290,12 +225,7 @@ tools:
   - "Grep"
   - "Glob"
   - "Bash"
-model: "claude-opus-4"
-capabilities:
-  - "test-generation"
-  - "coverage-analysis"
-  - "test-strategy"
-  - "edge-case-identification"
+model: inherit
 ---
 ```
 
@@ -365,12 +295,7 @@ tools:
   - "Edit"
   - "Grep"
   - "Glob"
-model: "claude-opus-4"
-capabilities:
-  - "api-documentation"
-  - "user-guides"
-  - "architecture-docs"
-  - "technical-writing"
+model: inherit
 ---
 ```
 
@@ -442,13 +367,7 @@ tools:
   - "Glob"
   - "Bash"
   - "Task"
-model: "claude-opus-4"
-capabilities:
-  - "system-design"
-  - "architecture-patterns"
-  - "scalability-planning"
-  - "technology-selection"
-max_iterations: 100
+model: inherit
 ---
 ```
 
@@ -516,12 +435,7 @@ tools:
   - "Grep"
   - "Glob"
   - "Bash"
-model: "claude-opus-4"
-capabilities:
-  - "bug-analysis"
-  - "root-cause-identification"
-  - "debugging-strategies"
-  - "error-trace-analysis"
+model: inherit
 ---
 ```
 
@@ -587,12 +501,7 @@ tools:
   - "Edit"
   - "Grep"
   - "Bash"
-model: "claude-opus-4"
-capabilities:
-  - "performance-profiling"
-  - "bottleneck-identification"
-  - "query-optimization"
-  - "caching-strategies"
+model: inherit
 ---
 ```
 
@@ -654,13 +563,7 @@ tools:
   - "Grep"
   - "Glob"
   - "Bash"
-model: "claude-opus-4"
-capabilities:
-  - "vulnerability-scanning"
-  - "owasp-top-10"
-  - "security-architecture"
-  - "penetration-testing"
-max_iterations: 100
+model: inherit
 ---
 ```
 
@@ -724,13 +627,7 @@ tools:
   - "Grep"
   - "Glob"
   - "Bash"
-model: "claude-opus-4"
-capabilities:
-  - "code-refactoring"
-  - "technical-debt-reduction"
-  - "design-patterns"
-  - "code-modernization"
-max_iterations: 75
+model: inherit
 ---
 ```
 
@@ -849,16 +746,11 @@ Workflow:
 ### Agent Not Found
 
 ```bash
-# Check agent exists
-ls ~/.claude/agents/code-reviewer/
+# Installed with install.sh: check the agent file exists
+ls ~/.claude/agents/code-reviewer.md
 
-# Verify configuration
-cat ~/.claude/agents/code-reviewer/SKILL.md
-
-# Check enabled field
----
-enabled: true
----
+# Installed as a plugin: check the plugin is installed and enabled
+claude plugin list
 ```
 
 **[Complete troubleshooting →](../guides/troubleshooting.md#agent-issues)**

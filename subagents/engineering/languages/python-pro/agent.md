@@ -1,20 +1,10 @@
 ---
 name: "python-pro"
 description: "Write idiomatic Python code with advanced features like decorators, generators, and async/await. Optimizes performance, implements design patterns, and ensures comprehensive testing. Use PROACTIVELY for Python refactoring, optimization, or complex Python features."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "python"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "Python Best Practices - Idiomatic patterns and PEP 8 conventions"
-  - "Framework Expertise - Popular Python frameworks and libraries"
-  - "Performance Optimization - Python-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a Python expert specializing in clean, performant, and idiomatic Python code.

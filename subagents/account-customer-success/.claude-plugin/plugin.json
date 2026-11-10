@@ -1,0 +1,20 @@
+{
+  "name": "tresor-account-customer-success",
+  "version": "2.8.0",
+  "description": "Account and customer success specialists: sales, success and support",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./account-management/account-executive/agent.md",
+    "./account-management/managed-services-engineer/agent.md",
+    "./customer-success/customer-success-manager/agent.md",
+    "./customer-success/retention-specialist/agent.md",
+    "./sales/sales-automator/agent.md",
+    "./sales/sales-engineer/agent.md",
+    "./support/customer-support/agent.md",
+    "./support/product-engineer/agent.md"
+  ]
+}

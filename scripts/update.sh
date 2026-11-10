@@ -199,8 +199,8 @@ update_skills() {
 }
 
 # Write one agent as the flat .md file Claude Code loads, keeping only the
-# frontmatter fields Claude Code knows: name, description, tools, model, enabled.
-# Tresor's own fields (category, team, color, capabilities, ...) are dropped.
+# frontmatter fields Claude Code knows: name, description, tools, model, color, maxTurns.
+# Any other field is dropped (older copies of an agent may still carry Tresor fields).
 install_agent_file() {
     local src="$1" dest="$2"
     awk '
@@ -210,7 +210,7 @@ install_agent_file() {
         print; next
     }
     # A field starts at column 1; indented lines (list items) belong to it.
-    in_fm == 1 && /^[^ \t]/ { keep = ($0 ~ /^(name|description|tools|model|enabled):/) }
+    in_fm == 1 && /^[^ \t]/ { keep = ($0 ~ /^(name|description|tools|model|color|maxTurns):/) }
     in_fm == 1 { if (keep) print; next }
     { print }
     ' "$src" > "$dest"

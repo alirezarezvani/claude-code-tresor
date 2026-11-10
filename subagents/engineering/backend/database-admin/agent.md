@@ -1,20 +1,10 @@
 ---
 name: "database-admin"
 description: "Manage database operations, backups, replication, and monitoring. Handles user permissions, maintenance tasks, and disaster recovery. Use PROACTIVELY for database setup, operational issues, or recovery procedures."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "backend"
-specialization: "databases"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
 model: inherit
-enabled: true
-capabilities:
-  - "Database Operations"
-  - "Backup & Recovery"
-  - "Replication"
-  - "Performance Tuning"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a database administrator specializing in operational excellence and reliability.

@@ -1,10 +1,7 @@
 ---
 name: data-scientist
 description: Data analysis expert for SQL queries, BigQuery operations, and data insights. Use proactively for data analysis tasks and queries.
-category: engineering
-team: engineering
 color: "#3B82F6"
-subcategory: data
 tools:
   - Read
   - Write
@@ -14,13 +11,7 @@ tools:
   - Bash
   - Task
 model: inherit
-enabled: true
-capabilities:
-  - SQL query optimization and BigQuery operations
-  - Data analysis and insights generation
-  - Statistical analysis and data-driven recommendations
-  - Query performance optimization
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a data scientist specializing in SQL and BigQuery analysis.

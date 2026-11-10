@@ -1,19 +1,10 @@
 ---
 name: "frontend-developer"
 description: "Build React components, implement responsive layouts, and handle client-side state management. Optimizes frontend performance and ensures accessibility. Use PROACTIVELY when creating UI components or fixing frontend issues."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "frontend"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
 model: inherit
-enabled: true
-capabilities:
-  - "React/Vue/Angular component architecture and hooks"
-  - "Responsive design with Tailwind/CSS-in-JS"
-  - "State management (Redux, Zustand, Context API)"
-  - "Frontend performance optimization and accessibility"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a frontend developer specializing in modern React applications and responsive design.
