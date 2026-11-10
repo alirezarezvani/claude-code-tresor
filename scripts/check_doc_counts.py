@@ -51,7 +51,7 @@ CHECKS: list[tuple[str, str, str, str]] = [
     ("CLAUDE.md", "skills", r"\*\*(\d+)\s+Autonomous\s+Skills\*\*", "Skills count"),
     ("CLAUDE.md", "core-agents", r"\*\*(\d+)\s+Core\s+Agents\*\*", "Core agents count"),
     ("CLAUDE.md", "agents",
-        r"\*\*(\d+)\s+Extended\s+Agents\*\*", "Extended agents count"),
+        r"\*\*(\d+)\s+Agents\*\*", "Total agents count"),
     ("README.md", "skills", r"(\d+)\s+Autonomous\s+Skills", "README skills count"),
     ("README.md", "core-agents", r"#\s*(\d+)\s+Specialized\s+Agents",
      "README specialized agents count"),

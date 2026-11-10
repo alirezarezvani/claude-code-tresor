@@ -1,577 +1,170 @@
 # CLAUDE.md - Development Guide
 
-> **For Claude Code instances working with Claude Code Tresor**
+> For Claude Code instances working in the Claude Code Tresor repository.
 
-## 🎯 Repository Purpose
+**Author**: Alireza Rezvani | **License**: MIT | **Version**: 2.8.0 | **Updated**: November 10, 2026
 
-Claude Code Tresor is a comprehensive collection of professional-grade utilities for Claude Code:
-- **8 Autonomous Skills**: Automatic background helpers (NEW in v2.0!)
-- **8 Core Agents**: Production-ready expert sub-agents for deep analysis
-- **133 Extended Agents**: Specialized agents organized by team and function (v2.5+)
-- **19 Slash Commands**: Workflow automation and intelligent orchestration (NEW v2.7!)
-  - 4 Development commands
-  - 5 Tresor Workflow commands
-  - 10 Orchestration commands (Security, Performance, Operations, Quality)
-- **20+ Prompt Templates**: Production-ready prompts for common development scenarios
-- **Development Standards**: Style guides, Git workflows, and team collaboration guidelines
+## What this repository is
 
-**Author**: Alireza Rezvani | **License**: MIT | **Created**: September 16, 2025 | **Updated**: November 19, 2025 (v2.7.0)
+Claude Code Tresor is a collection of ready-to-use utilities for Claude Code. It ships content (Markdown files) plus two shell scripts that copy that content into a user's `~/.claude/` folder. There is no application code and no build step.
 
-## 🏗️ Architecture
+What it contains:
+
+- **8 Autonomous Skills** - background helpers Claude picks up on its own
+- **8 Core Agents** - the main expert agents, installed and ready to use
+- **133 Agents** in total - the 8 core agents plus 125 specialized agents, organized by team
+- **19 Slash Commands** - 4 development, 5 workflow, 10 orchestration
+- Prompt templates, development standards, and example workflows
+
+## Repository layout
 
 ```
 claude-code-tresor/
-├── skills/                     # 8 Autonomous Skills (v2.0+)
-│   ├── development/            # code-reviewer, test-generator, git-commit-helper
-│   ├── security/               # security-auditor, secret-scanner, dependency-auditor
-│   └── documentation/          # api-documenter, readme-updater
-├── subagents/                  # 133 Agents - PRIMARY LOCATION (v2.7+)
-│   ├── core/                   # 8 core production agents
-│   ├── engineering/            # 54 engineering specialists
-│   ├── design/                 # 7 design specialists
-│   ├── marketing/              # 11 marketing specialists
-│   ├── product/                # 9 product specialists
-│   ├── leadership/             # 14 leadership & strategy
-│   ├── operations/             # 6 operations specialists
-│   ├── research/               # 7 research specialists
-│   ├── ai-automation/          # 9 AI/ML & automation
-│   └── account-customer-success/ # 8 account & CS specialists
-├── agents/                     # [Deprecated v2.7] Symlinks to subagents/core/
-├── commands/                   # 19 Slash Commands (v2.7+)
-│   ├── development/scaffold/   # Project/component scaffolding
-│   ├── workflow/               # 6 workflow commands (review, prompt-*, todo-*, handoff-*)
-│   ├── testing/test-gen/       # Test generation
-│   ├── documentation/docs-gen/ # Documentation generation
-│   ├── security/               # 3 NEW: audit, vulnerability-scan, compliance-check
-│   ├── performance/            # 2 NEW: profile, benchmark
-│   ├── operations/             # 3 NEW: deploy-validate, health-check, incident-response
-│   └── quality/                # 2 NEW: code-health, debt-analysis
-├── prompts/                    # 20+ Prompt templates
-├── standards/                  # Development standards
-├── examples/                   # Real-world workflows
-├── sources/                    # Extended library (200+ components)
-├── documentation/              # Comprehensive documentation
-│   ├── guides/                 # Installation, getting-started, troubleshooting
-│   ├── reference/              # Technical reference docs
-│   ├── workflows/              # Workflow examples
-│   └── plans/                  # Architecture and planning docs
-├── NAVIGATION.md               # NEW v2.7: Repository navigation guide
-├── MIGRATION.md                # NEW v2.7: Upgrade guide
-├── WORKFLOW-GUIDE.md           # NEW v2.7: Tresor Workflow Framework guide
-└── scripts/                    # Installation utilities
+├── skills/                  # 8 skills: <category>/<skill-name>/SKILL.md
+│   ├── development/         # code-reviewer, test-generator, git-commit-helper
+│   ├── security/            # security-auditor, secret-scanner, dependency-auditor
+│   └── documentation/       # api-documenter, readme-updater
+├── subagents/               # 133 agents: <team>/.../<agent-name>/agent.md
+│   ├── core/                # the 8 core agents (source of truth)
+│   └── <team>/              # engineering, design, marketing, product, leadership,
+│                            # operations, research, ai-automation, account-customer-success
+├── agents/                  # old location of the core agents, kept so old links work
+├── commands/                # 19 slash commands + 5 old command names
+│   ├── development/         # scaffold
+│   ├── testing/             # test-gen
+│   ├── documentation/       # docs-gen
+│   ├── workflow/            # review, prompt-create, prompt-run, todo-add,
+│   │                        # todo-check, handoff-create (+ 5 old names)
+│   ├── security/            # audit, vulnerability-scan, compliance-check
+│   ├── performance/         # profile, benchmark
+│   ├── operations/          # deploy-validate, health-check, incident-response
+│   └── quality/             # code-health, debt-analysis
+├── prompts/                 # prompt templates
+├── standards/               # style guides, Git workflows, templates
+├── examples/                # example workflows and case studies
+├── documentation/           # user guides, reference, workflows
+├── scripts/                 # install.sh, update.sh and the validation scripts
+├── validation/              # JSON schemas and the list of known unresolved references
+├── version.txt              # the release version (single source of truth)
+└── CHANGELOG.md             # release history
 ```
 
-## 🛠️ Common Development Commands
+Edit core agents in `subagents/core/`. The files in `agents/` are the old location: `agents/<name>/agent.md` points to `subagents/core/` automatically, but `agents/<name>.md` is a separate copy that is not installed.
 
-### Building & Testing
-```bash
-# No build process - this is a utilities collection
-# Test installation scripts
-./scripts/install.sh --check
-```
+## The three building blocks
 
-### Installation & Setup
-```bash
-# Full installation (recommended) - installs skills + agents + commands
-./scripts/install.sh
+| | Skills | Agents | Commands |
+|---|---|---|---|
+| **Started by** | Claude, automatically | The user, with `@agent-name` | The user, with `/command-name` |
+| **File** | `SKILL.md` | `agent.md` | `<command-name>.md` |
+| **Best for** | Quick checks | Deep analysis | Multi-step workflows |
 
-# Selective installation
-./scripts/install.sh --skills        # 8 autonomous skills only
-./scripts/install.sh --agents        # 133 agents only (from /subagents/)
-./scripts/install.sh --commands      # 19 commands (4 dev + 5 workflow + 10 orchestration)
-./scripts/install.sh --orchestration # 10 orchestration commands only (NEW v2.7)
-./scripts/install.sh --resources-only
+The 8 core agents are: @systems-architect, @config-safety-reviewer, @root-cause-analyzer, @security-auditor, @test-engineer, @performance-tuner, @refactor-expert, @docs-writer.
 
-# Updates
-./scripts/update.sh
-```
+### File formats
 
-### Repository Management
-```bash
-# Standard Git workflow with conventional commits
-git add .
-git commit -m "feat: add new utility"
-git push origin main
+Each file starts with a YAML header between two `---` lines. CI checks these headers against the schemas in `validation/schemas/`.
 
-# View repository structure
-find . -name "*.json" -path "*/commands/*" -o -name "*.json" -path "*/agents/*"
-```
+- **Skill** (`skills/<category>/<name>/SKILL.md`): `name`, `description`, `allowed-tools`. A `README.md` sits next to it.
+- **Agent** (`subagents/<team>/.../<name>/agent.md`): `name`, `description`, `tools`, `model`, `enabled`, plus Tresor's own fields such as `category`, `team`, `color` and `capabilities`. The installer removes Tresor's own fields for the core agents, because Claude Code does not know them.
+- **Command** (`commands/<category>/.../<name>.md`): `description`, `allowed-tools` and `model` are required. `argument-hint` must be wrapped in double quotes when it starts with `[`, otherwise other tools read it as a list instead of text.
 
-## 📋 Command & Agent Structure
+The file name of a command is its name: `review.md` becomes `/review`. Do not rename command files without updating the docs.
 
-### Slash Command Structure
-Each command in `commands/` contains:
-- `command.json` - Configuration and metadata
-- `README.md` - Comprehensive documentation with examples
-- Commands follow pattern: `/command-name --options`
+### Old command names
 
-### Agent Structure
-Each agent in `agents/` contains:
-- `agent.json` - Agent configuration and capabilities
-- `README.md` - Detailed usage guide and examples
-- Agents follow pattern: `@agent-name task description`
+Five workflow commands were renamed in v2.7.0. The old names are still shipped as copies and will be removed in v3.0.0:
 
-### Skill Structure (NEW v2.0!)
-Each skill in `skills/` contains:
-- `SKILL.md` - Skill configuration with YAML frontmatter + comprehensive docs
-- `README.md` - Quick reference guide with examples
-- Skills activate automatically based on trigger keywords
+| Old name | Current name |
+|---|---|
+| `/create-prompt` | `/prompt-create` |
+| `/run-prompt` | `/prompt-run` |
+| `/add-to-todos` | `/todo-add` |
+| `/check-todos` | `/todo-check` |
+| `/whats-next` | `/handoff-create` |
 
-## ✨ Skills Layer (NEW v2.0!)
+When you change one of these commands, apply the same change to its copy.
 
-### What Are Skills?
-**Skills** are autonomous background helpers that work continuously without manual invocation:
-- ✅ **Automatic activation** - Triggered by code changes, file saves, commits
-- ✅ **Lightweight** - Limited tool access for safety (Read, Write, Edit, Grep, Glob)
-- ✅ **Proactive** - Detect issues and opportunities in real-time
-- ✅ **Non-blocking** - Provide suggestions without interrupting workflow
-
-### 8 Core Skills
-
-**Development Skills (3):**
-1. **code-reviewer** - Real-time code quality checks
-2. **test-generator** - Auto-suggest missing tests
-3. **git-commit-helper** - Generate conventional commit messages
-
-**Security Skills (3):**
-4. **security-auditor** - OWASP Top 10 vulnerability scanning
-5. **secret-scanner** - Detect exposed API keys/secrets
-6. **dependency-auditor** - CVE checking for dependencies
-
-**Documentation Skills (2):**
-7. **api-documenter** - Auto-generate OpenAPI specs
-8. **readme-updater** - Keep README current with changes
-
-### Skills vs Agents vs Commands
-
-| Feature | Skills | Agents | Commands |
-|---------|--------|--------|----------|
-| **Invocation** | Automatic | Manual (`@agent`) | Manual (`/command`) |
-| **Tools** | Limited (safe) | Full access | Orchestrates |
-| **Context** | Shared | Separate | Coordinates |
-| **Best For** | Quick checks | Deep analysis | Workflows |
-
-**Typical Workflow:**
-1. **Skill detects** issue automatically → suggests improvement
-2. **Developer invokes Agent** → `@config-safety-reviewer` comprehensive analysis
-3. **Developer runs Command** → `/review --scope staged` full workflow
-
-### Sandboxing (Optional)
-All skills work **WITHOUT sandboxing by default**. Sandboxing is optional for additional security isolation.
-
-**See:** [Skills Guide](skills/README.md) | [Getting Started](GETTING-STARTED.md) | [Architecture](ARCHITECTURE.md)
-
-## 🔧 Key Implementation Details
-
-### Configuration Safety (Critical)
-The `/review` command emphasizes **configuration safety** to prevent outages:
-- Detects risky configuration changes (database connections, API endpoints)
-- Validates environment-specific settings
-- Checks for magic numbers and hardcoded values
-- Reviews deployment configurations
-
-### Multi-Agent Orchestration
-Commands can invoke agents using the Task tool:
-```bash
-# Example from /review command
-Task tool -> @config-safety-reviewer for configuration safety analysis
-Task tool -> @performance-tuner for optimization
-Task tool -> @security-auditor for vulnerability scan
-Task tool -> @systems-architect for architecture review
-```
-
-### Test Harness Generation
-The `/test-gen` command supports multiple frameworks:
-- **Python**: pytest, unittest, property-based testing
-- **JavaScript/TypeScript**: Jest, Vitest, Playwright
-- **Java**: JUnit, TestNG, Mockito
-- **Load Testing**: Locust, Artillery
-
-### Documentation Automation
-The `/docs-gen` command generates:
-- API documentation with OpenAPI specs
-- Architecture diagrams with Mermaid
-- Interactive documentation with Docusaurus
-- CI/CD pipeline for automated docs
-
-## 🎨 Prompt Template Categories
-
-Located in `prompts/` directory:
-- **Frontend Development**: React, NextJS, ReactJS, Vue, Angular patterns
-- **Backend Development**: APIs, databases, microservices
-- **Debugging & Analysis**: Error analysis, performance troubleshooting
-- **Best Practices**: Clean code, security, refactoring strategies
-
-## 📏 Development Standards
-
-Located in `standards/` directory:
-- **JavaScript/TypeScript**: ESLint/Prettier configurations
-- **Git Workflows**: Conventional commits, branch strategies
-- **Code Review**: Checklists and PR templates
-- **Team Collaboration**: Guidelines and best practices
-
-## 🚀 Usage Examples
-
-### Project Scaffolding
-```bash
-/scaffold react-component UserProfile --hooks --tests --typescript
-/scaffold express-api user-service --auth --database --tests
-```
-
-### Code Review Automation
-```bash
-/review --scope staged --checks security,performance,configuration
-@config-safety-reviewer Review database connection pool configuration
-@security-auditor Analyze this component for React best practices and security
-```
-
-### Test Generation
-```bash
-/test-gen --file utils.js --framework jest --coverage 90
-@test-engineer Create comprehensive tests with edge cases
-```
-
-### Documentation Generation
-```bash
-/docs-gen api --format openapi --include-examples
-@docs-writer Create user guide with setup and troubleshooting
-```
-
-### System Architecture & Debugging
-```bash
-@systems-architect Design scalable e-commerce system for 100k concurrent users
-@root-cause-analyzer Production API timing out - perform comprehensive RCA
-@performance-tuner Profile and optimize database query performance
-```
-
-### Agent Discovery
-```bash
-# Core agents (8) - Production-ready in /subagents/core/
-@systems-architect, @config-safety-reviewer, @root-cause-analyzer
-@security-auditor, @test-engineer, @performance-tuner
-@refactor-expert, @docs-writer
-
-# Extended agents (133) - Organized in /subagents/ by team
-# See subagents/README.md for complete catalog
-```
-
-### Orchestration Commands (NEW v2.7.0)
-
-**Security & Compliance:**
-```bash
-# Comprehensive security audit with OWASP Top 10, infrastructure, pentesting
-/audit
-
-# Fast CVE scanning for weekly security checks
-/vulnerability-scan --depth deep
-
-# GDPR compliance validation before audit
-/compliance-check --frameworks gdpr
-
-# Auto-fix safe vulnerabilities
-/vulnerability-scan --auto-fix
-```
-
-**Performance Optimization:**
-```bash
-# Profile to find bottlenecks
-/profile --layers frontend,backend,database
-
-# Fix identified bottlenecks, then validate with load testing
-/benchmark --pattern stress --rps 500
-
-# Quick performance check for CI/CD
-/profile --depth quick --layers backend
-```
-
-**Operations & Deployment:**
-```bash
-# Pre-deployment safety checks
-/deploy-validate --env production
-
-# Post-deployment health verification
-/health-check --comprehensive
-
-# Production incident response
-/incident-response --severity p0
-
-# Weekly health monitoring
-/health-check --env production
-```
-
-**Code Quality & Technical Debt:**
-```bash
-# Assess codebase health
-/code-health
-
-# Identify and prioritize technical debt
-/debt-analysis --prioritize roi
-
-# Plan refactoring based on debt analysis
-# [Use /prompt-create for complex refactoring prompts]
-```
-
-## Tresor Workflow Framework (v2.7.0)
-
-### Meta-Prompting System
-
-**`/prompt-create [task]`** - Expert prompt engineer
-
-- Generates optimized, XML-structured prompts for complex tasks
-- **Automatically references Tresor's CLAUDE.md** for project standards
-- **Suggests appropriate Tresor agents** based on task type
-- Follows Tresor's anti-overengineering and maintainability principles
-- Creates prompts optimized for Tresor's 141-agent ecosystem
-
-**`/prompt-run [number(s)] [--parallel|--sequential]`** - Execute prompts
-
-- Runs generated prompts in fresh sub-task contexts
-- Supports parallel and sequential execution
-- **Integrates with Tresor agents** - prompts can invoke @agents
-- Supports Tresor's subagent types (Explore, Plan, general-purpose)
-
-### Todo Management System
-
-**`/todo-add [description]`** - Capture ideas without breaking flow
-
-- Structured format: Problem, Files, Solution
-- Preserves full conversation context
-- Auto-detects Tresor components (agents, skills, commands)
-- Integrates with Tresor's project structure
-
-**`/todo-check`** - Resume work with complete context
-
-- Lists all captured todos with dates and context
-- **Detects and suggests Tresor's 141 agents** based on todo content and file paths
-- Matches todos to domain patterns (engineering/, design/, skills/, etc.)
-- Offers Tresor workflow integration (invoke agent, use skill, work directly)
-- Loads complete context for selected todo
-
-### Context Handoff System
-
-**`/handoff-create`** - Create comprehensive handoff document
-
-- Captures complete work history, decisions, and context
-- **Complements Tresor's memory bank** (projectbrief, productContext, activeContext)
-- Session-specific handoff vs long-term context
-- Enables seamless work continuation in fresh contexts
-
-### Tresor Workflow Integration Examples
-
-**Meta-Prompting with Tresor Agents**:
-```bash
-/prompt-create Design scalable microservices architecture
-# → Generates prompt referencing CLAUDE.md
-# → Suggests @systems-architect for execution
-# → Includes Tresor's maintainability principles
-
-/prompt-run 001
-# → Executes with fresh context
-# → Can invoke @systems-architect, @backend-architect, @security-auditor
-```
-
-**Todo Management with Agent Discovery**:
-```bash
-# During coding, spot issue
-/todo-add Optimize N+1 queries in user API - src/api/users.ts:45-67
-
-# Later
-/todo-check
-# → Detects backend/database work
-# → Suggests @database-optimizer or @performance-tuner
-# → One-click agent invocation
-```
-
-**Context Handoff with Memory Bank**:
-```
-Tresor Memory Bank (long-term):
-- activeContext.md (updated regularly)
-- productContext.md (architectural decisions)
-- projectbrief.md (project vision)
-
-Tresor Workflow Handoff (session-specific):
-- whats-next.md (created via /handoff-create command)
-- Detailed task state, exact file positions
-- Resume with zero information loss
-```
-
-## Orchestration Commands (v2.7.0)
-
-### Overview
-
-**10 production-grade orchestration commands** with intelligent multi-phase orchestration, automatic agent selection from 141-agent ecosystem, and full Tresor Workflow integration.
-
-**Total:** 12,682 lines of orchestration code across 4 categories
-
-### Security Commands (3)
-
-**`/audit`** - Comprehensive security audit (2-4 hours, 4 phases, 4-5 agents)
-- OWASP Top 10 vulnerability scanning
-- Infrastructure security review
-- Active penetration testing
-- Comprehensive RCA for critical findings
-
-**`/vulnerability-scan`** - CVE & dependency scanning (30-60 min, 3 phases, 2-4 agents)
-- NVD/GitHub Advisories correlation
-- SAST code pattern matching
-- Exploit database correlation (Exploit-DB, Metasploit)
-- Auto-remediation (`--auto-fix` flag)
-
-**`/compliance-check`** - Regulatory compliance (1-2 hours, 4 phases, 3-6 agents)
-- Multi-framework: GDPR, SOC2, HIPAA, PCI-DSS, ISO 27001, CCPA
-- Data flow mapping (PII/PHI tracking)
-- Technical control validation
-- Auditor-ready reports (65+ pages)
-
-### Performance Commands (2)
-
-**`/profile`** - Performance profiling (15min-2h, 3 phases, 3-5 agents)
-- Multi-layer: frontend, backend, database
-- Core Web Vitals (LCP, FID, CLS)
-- Database query optimization (EXPLAIN ANALYZE)
-- Quick wins prioritization (impact × ease)
-
-**`/benchmark`** - Load testing (5-30 min, 3 phases, 2-4 agents)
-- Intelligent scenario generation (auto-detects endpoints)
-- Multiple patterns: baseline, stress, spike, soak
-- Breaking point detection
-- Capacity planning with cost analysis
-
-### Operations Commands (3)
-
-**`/deploy-validate`** - Pre-deployment validation (10-20 min, 3 phases, 3-4 agents)
-- Complete test suite execution
-- Configuration safety review
-- Security pre-deployment scan
-- Go/No-Go decision with risk scoring
-
-**`/health-check`** - System health verification (5-15 min, 3 phases, 3-4 agents)
-- Multi-layer health checks (app, database, infrastructure)
-- Anomaly detection (trend analysis)
-- Alert generation (PagerDuty/Slack integration)
-
-**`/incident-response`** - Production incident coordination (30min-2h, 4 phases, 3-5 agents)
-- Emergency triage (5-10 min response)
-- Parallel specialist investigation
-- Comprehensive RCA with timeline
-- Blameless postmortem generation
-
-### Quality Commands (2)
-
-**`/code-health`** - Codebase quality assessment (20-40 min, 3 phases, 3-4 agents)
-- Code quality metrics (complexity, duplication, smells)
-- Test coverage analysis
-- Documentation assessment
-- Maintainability scoring (0-10 rating)
-
-**`/debt-analysis`** - Technical debt identification (30-60 min, 3 phases, 3-4 agents)
-- Multi-category debt identification
-- Cost quantification (time wasted)
-- Risk assessment
-- ROI-based prioritization
-
-### Key Features Across All Orchestration Commands
-
-**1. Intelligent Agent Selection:**
-- Auto-detects tech stack (languages, frameworks, databases)
-- Selects optimal agents from 141-agent ecosystem
-- Confidence-based ranking
-
-**2. Multi-Phase Orchestration:**
-- 3-4 phases per command
-- Parallel Phase 1 (up to 3 agents)
-- Sequential Phases 2-4 (deep analysis)
-
-**3. Dependency Verification:**
-- Checks file write conflicts
-- Checks data dependencies
-- Auto-fallback to sequential if conflicts
-
-**4. Tresor Workflow Integration:**
-- Auto-calls `/todo-add` for all findings
-- Auto-calls `/prompt-create` for complex fixes
-- Supports `/handoff-create` for multi-session work
-
-### Usage Examples
+## Installation scripts
 
 ```bash
-# Security workflow
-/audit                          # Quarterly comprehensive audit
-/vulnerability-scan             # Weekly CVE scanning
-/compliance-check --frameworks gdpr,soc2
-
-# Performance workflow
-/profile                        # Find bottlenecks
-# [Fix bottlenecks]
-/benchmark                      # Validate under load
-
-# Operations workflow
-/deploy-validate --env production  # Before deployment
-# [Deploy]
-/health-check                   # Verify deployment
-# [If incident]
-/incident-response             # Emergency response
-
-# Quality workflow
-/code-health                    # Assess current quality
-/debt-analysis                  # Plan refactoring
+./scripts/install.sh                   # install everything (recommended)
+./scripts/install.sh --skills-only     # the 8 skills
+./scripts/install.sh --agents-only     # core agents + the agent library
+./scripts/install.sh --commands-only   # all commands
+./scripts/install.sh --orchestration   # only the 10 orchestration commands
+./scripts/install.sh --resources-only  # prompts, standards, examples
+./scripts/update.sh                    # pull the latest version and refresh
+./scripts/update.sh --rollback         # restore the backup from the last update
 ```
 
-**See:** [NAVIGATION.md](NAVIGATION.md) | [Orchestration Commands Summary](documentation/plans/ORCHESTRATION-COMMANDS-COMPLETE.md)
+Use one "only" option per run. They cannot be combined.
 
-## 🔍 Important Context
+Where things end up:
 
-### Production Focus
-All utilities are designed for **production use** with emphasis on:
-- Safety-first approach (especially configuration changes)
-- Comprehensive error handling and validation
-- Real-world outage prevention patterns
-- Professional code quality standards
+| Content | Installed to | Notes |
+|---|---|---|
+| Skills | `~/.claude/skills/<name>/` | Category folder is removed |
+| Core agents | `~/.claude/agents/<name>.md` | One file per agent |
+| All 133 agents | `~/.claude/subagents/` | A library to browse. Claude Code does not load it. Users copy what they need into `~/.claude/agents/` |
+| Commands | `~/.claude/commands/<name>.md` | One file per command, so the name is `/<name>` |
+| Prompts, standards, examples | `~/.claude/tresor-resources/` | For reference |
 
-### Extensibility
-The `sources/` directory contains 200+ additional components:
-- 80+ specialized agents for various domains
-- Advanced slash commands for specific workflows
-- Industry-specific prompts and templates
+Rules for changing the scripts:
 
-### Community & Contributions
-- MIT License allows commercial and personal use
-- Contribution guidelines in `CONTRIBUTING.md`
-- Professional support available for teams
-- Active development with regular updates
+- The installer downloads the repository from GitHub (`main`) into `~/.claude/tresor/` and installs from there, not from the local folder.
+- Running a script twice must give the same result as running it once.
+- Only replace Tresor's own files. Never delete a user's own commands, agents or skills.
+- `install.sh` and `update.sh` contain the same copy logic. Change both.
 
-## 📚 Documentation
+## Checks to run before committing
 
-Complete documentation available in `documentation/`:
+CI runs these on every pull request. Run them locally first:
 
-### Quick Links
-- **[Master Index →](documentation/README.md)** - Complete documentation navigation
-- **[Installation Guide →](documentation/guides/installation.md)** - Install Claude Code Tresor
-- **[Getting Started →](documentation/guides/getting-started.md)** - First-time user walkthrough
-- **[FAQ →](documentation/reference/faq.md)** - Frequently asked questions
+```bash
+python3 scripts/validate_frontmatter.py all   # YAML headers of skills, agents, commands
+python3 scripts/check_agent_references.py     # every @agent mention points to a real agent
+python3 scripts/check_doc_counts.py           # counts in the docs match the files
+bash scripts/smoke_install.sh                 # install, re-install, update and rollback
+shellcheck --severity=error scripts/install.sh scripts/update.sh scripts/smoke_install.sh
+```
 
-### Documentation Categories
-- **[User Guides →](documentation/guides/)** - Installation, getting-started, configuration, troubleshooting, migration, contributing
-- **[Technical Reference →](documentation/reference/)** - Skills, agents, commands, FAQ
-- **[Workflows →](documentation/workflows/)** - Git workflow, GitHub automation, agent-skill integration
+If you add or remove a skill, agent or command, update the counts in this file and in `README.md`. CI also checks the links in `README.md`, `CLAUDE.md` and `NAVIGATION.md`.
 
----
+## Git workflow and releases
 
-## ⚠️ Safety Guidelines
+Full description: [documentation/workflows/git-workflow.md](documentation/workflows/git-workflow.md).
 
-1. **Configuration Changes**: Always review configuration changes carefully
-2. **Database Migrations**: Validate schema changes in staging first
-3. **API Modifications**: Ensure backward compatibility
-4. **Environment Variables**: Never commit secrets or keys
-5. **Deployment Scripts**: Test deployment automation thoroughly
+- Two permanent branches: `main` (released) and `dev` (work in progress).
+- Every change goes into `dev` through a pull request. Only `dev` may be merged into `main`. CI rejects any other pull request to `main`.
+- Branch names must start with one of: `feat/`, `fix/`, `docs/`, `chore/`, `refactor/`, `test/`, `build/`, `ci/`, `perf/`, `style/`, `hotfix/`, `release/`, `claude/`.
+- Commit messages follow Conventional Commits, for example `fix: stop installer from nesting folders`. CI checks this.
 
-## 📞 Support
+Releasing a version:
 
-- **[FAQ →](documentation/reference/faq.md)** - Common questions answered
-- **[Troubleshooting →](documentation/guides/troubleshooting.md)** - Fix common issues
-- **[GitHub Issues →](https://github.com/alirezarezvani/claude-code-tresor/issues)** - Report bugs and feature requests
-- **[GitHub Discussions →](https://github.com/alirezarezvani/claude-code-tresor/discussions)** - Ask questions and share ideas
-- **Professional Support**: Available for custom development and training
+1. Set the new version in `version.txt` and `.release-please-manifest.json`, and add the entry to `CHANGELOG.md`. The `release-please` workflow is meant to prepare this as a pull request on `dev`.
+2. Optionally add `RELEASE-NOTES-v<version>.md`. If the file exists, it becomes the text of the GitHub release.
+3. Open a pull request from `dev` to `main` and merge it.
+4. The `release-tag` workflow reads `version.txt`, creates the tag `v<version>` and publishes the GitHub release.
+5. Merge `main` back into `dev`.
+
+## Safety guidelines
+
+1. **Installer changes**: test with `scripts/smoke_install.sh`. These scripts write into a user's home folder.
+2. **Secrets**: never commit keys, tokens or passwords.
+3. **Renames**: renaming a command, agent or skill breaks user habits and links. Keep the old name working for one major version and document it in `MIGRATION.md`.
+4. **Counts and versions**: do not write numbers into docs that you have not checked against the files.
+
+## Where to find more
+
+- [README.md](README.md) - overview and the full command list
+- [NAVIGATION.md](NAVIGATION.md) - where everything is
+- [GETTING-STARTED.md](GETTING-STARTED.md) - first steps for users
+- [documentation/README.md](documentation/README.md) - index of all guides
+- [subagents/README.md](subagents/README.md) - the agent catalog
+- [CONTRIBUTING.md](CONTRIBUTING.md) - how to contribute
+- [MIGRATION.md](MIGRATION.md) - upgrade notes
+- [GitHub Issues](https://github.com/alirezarezvani/claude-code-tresor/issues) - bugs and feature requests
 
 ## COMMUNICATION STANDARDS & BEHAVIOR
 
@@ -615,4 +208,4 @@ Complete documentation available in `documentation/`:
 
 ---
 
-**Remember**: This repository provides utilities TO users, not a development project itself. Focus on helping users implement, customize, and extend these utilities for their own projects. Provide brutally honest, technically sound guidance that prevents costly mistakes while maintaining code simplicity and readability.No technical jargons that is complicated for the user. Always use the current date,even when you create files or examples.
+**Remember**: This repository provides utilities TO users, not a development project itself. Focus on helping users implement, customize, and extend these utilities for their own projects. Provide brutally honest, technically sound guidance that prevents costly mistakes while maintaining code simplicity and readability. No technical jargon that is complicated for the user. Always use the current date, even when you create files or examples.
