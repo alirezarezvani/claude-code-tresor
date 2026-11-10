@@ -141,13 +141,12 @@ Full description: [documentation/workflows/git-workflow.md](documentation/workfl
 - Branch names must start with one of: `feat/`, `fix/`, `docs/`, `chore/`, `refactor/`, `test/`, `build/`, `ci/`, `perf/`, `style/`, `hotfix/`, `release/`, `claude/`.
 - Commit messages follow Conventional Commits, for example `fix: stop installer from nesting folders`. CI checks this.
 
-Releasing a version:
+Merging and releasing are automated (details in the workflow guide):
 
-1. Set the new version in `version.txt` and `.release-please-manifest.json`, and add the entry to `CHANGELOG.md`. The `release-please` workflow is meant to prepare this as a pull request on `dev`.
-2. Optionally add `RELEASE-NOTES-v<version>.md`. If the file exists, it becomes the text of the GitHub release.
-3. Open a pull request from `dev` to `main` and merge it.
-4. The `release-tag` workflow reads `version.txt`, creates the tag `v<version>` and publishes the GitHub release.
-5. Merge `main` back into `dev`.
+1. A pull request into `dev` from the repository owner or a bot is merged automatically once CI passes. A draft is merged only after it is marked ready, or when it has the label `automerge`. The label `hold` stops any automatic merge.
+2. After each merge, `release-please` opens or updates a release pull request (`chore(dev): release X.Y.Z`) with the new version and the `CHANGELOG.md` entry. It is merged automatically too, unless the repository variable `AUTO_RELEASE` is `false`.
+3. `release.yml` then tags `v<version>`, publishes the GitHub release and moves `main` forward to that commit. Nobody merges `dev` into `main` by hand, and `main` never needs to be merged back into `dev`.
+4. Raising the version by hand in `version.txt` still works: the release is published on the next push to `dev`. If `RELEASE-NOTES-v<version>.md` exists, it becomes the release text.
 
 ## Safety guidelines
 

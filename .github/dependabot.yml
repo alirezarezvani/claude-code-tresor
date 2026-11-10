@@ -1,0 +1,15 @@
+---
+# Keeps GitHub Actions versions current. Updates open against dev and
+# are merged by the automerge job in ci.yml once CI passes.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+    commit-message:
+      prefix: ci

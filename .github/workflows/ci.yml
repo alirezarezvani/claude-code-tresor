@@ -1,11 +1,18 @@
 ---
 name: CI
 
+# Validates every pull request. Pushes to `dev` are validated by
+# release.yml, which calls this workflow before it releases anything.
+# The `automerge` job merges trusted pull requests into `dev` once
+# validation passes (rules in the job). New CI gates (for example
+# plugin evals) go in as jobs; add them to `automerge.needs`.
+
 'on':
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
   push:
-    branches: [dev, main]
+    branches: [main]
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
@@ -27,25 +34,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Honor workflow kill switch
-        run: |
-          if [ -f .github/WORKFLOW_KILLSWITCH ]; then
-            status=$(grep -E '^STATUS:' .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
-            if [ "$status" = "DISABLED" ]; then
-              echo "::notice::Workflows disabled by .github/WORKFLOW_KILLSWITCH"
-              exit 0
-            fi
-          fi
-
       - name: Validate branch name
         if: github.event_name == 'pull_request' && github.event.pull_request.base.ref != 'main'
         env:
           BRANCH: ${{ github.head_ref }}
         run: |
           # Feature branches PR into dev. Allowed prefixes cover conventional
-          # types, automation bots, and Claude AI sessions.
+          # types, automation bots, and Claude AI sessions. release-please
+          # opens its release PR from release-please--branches--dev--...
           pattern='^(feat|fix|docs|chore|refactor|test|build|ci|perf|style|hotfix|release|claude|dependabot|renovate)/[a-z0-9][a-z0-9._/-]*$'
-          if [[ "$BRANCH" =~ $pattern || "$BRANCH" == "dev" ]]; then
+          if [[ "$BRANCH" =~ $pattern || "$BRANCH" == "dev" || "$BRANCH" == release-please--* ]]; then
             echo "::notice::branch '$BRANCH' OK"
           else
             echo "::error::branch '$BRANCH' must match $pattern"
@@ -75,14 +73,18 @@ jobs:
           shellcheck --version
 
       - name: Validate commit messages
-        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref != 'main'
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.base.ref != 'main' &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          # Release PRs (dev → main) are squash-merged with a single clean
-          # message, so commitlint is skipped above. Feature PRs to dev get
-          # full validation.
+          # dev → main PRs only carry commits that were already checked on
+          # their way into dev, so commitlint runs on feature PRs only.
+          # Dependabot writes conventional subjects (prefix set in
+          # dependabot.yml) but long footers, so it is skipped too.
           npm install --no-save --silent \
             @commitlint/cli@18.6.0 @commitlint/config-conventional@18.6.0
           npx commitlint --from "$BASE_SHA" --to "$HEAD_SHA"
@@ -125,3 +127,46 @@ jobs:
           npx --yes markdown-link-check@3.12.2 \
             --config .markdown-link-check.json \
             README.md CLAUDE.md NAVIGATION.md
+
+      - name: Validate plugin marketplace (once it exists)
+        if: hashFiles('.claude-plugin/marketplace.json') != ''
+        run: |
+          npm install -g --silent @anthropic-ai/claude-code
+          claude plugin validate .
+
+  automerge:
+    name: Auto-merge
+    needs: validate
+    # Same-repo pull requests into dev only. Fork PRs never get here
+    # with write access, and dev → main is merged by release.yml.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.base.ref == 'dev' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      (github.event.pull_request.user.login == github.repository_owner ||
+       github.event.pull_request.user.login == 'github-actions[bot]' ||
+       github.event.pull_request.user.login == 'dependabot[bot]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
+      - name: Decide and merge
+        env:
+          # A personal access token makes the merge trigger release.yml;
+          # the default token cannot start other workflows.
+          GH_TOKEN: ${{ secrets.RELEASE_PAT || github.token }}
+          HAS_PAT: ${{ secrets.RELEASE_PAT != '' }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.head_ref }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          OWNER: ${{ github.repository_owner }}
+          AUTO_RELEASE: ${{ vars.AUTO_RELEASE }}
+        run: bash .github/scripts/automerge.sh

@@ -21,7 +21,7 @@ CI enforces this pattern on feature branches:
 
 Examples: `feat/orchestration-rollback`, `fix/install-backup-recursion`, `ci/trunk-based-cleanup`, `claude/<auto-slug>`, `dependabot/...`.
 
-Release PRs (`dev → main`) bypass branch-name validation because the head branch is literally `dev`.
+The release PR that release-please opens (`release-please--branches--dev--...`) is also allowed.
 
 ## Commit messages
 
@@ -34,7 +34,7 @@ Release PRs (`dev → main`) bypass branch-name validation because the head bran
 | `feat!:` / `BREAKING CHANGE:` | major | `feat!: rename core agents`           |
 | `docs:` / `chore:` / `test:` / `ci:` / `refactor:` | none | n/a |
 
-Release PRs are squash-merged with a single clean title; commitlint is skipped for them.
+commitlint is skipped for Dependabot PRs and for `dev → main` PRs, whose commits were already checked on the way into `dev`.
 
 ## Feature workflow
 
@@ -53,28 +53,27 @@ gh pr create --base dev
 
 CI runs the `Validate` job on every PR: branch name, commit messages, frontmatter schemas, cross-references, doc-count drift, shellcheck, install smoke test, internal markdown links.
 
-Merge once green.
+The `automerge` job then merges the PR into `dev`. Rules (in `.github/scripts/automerge.sh`):
+
+| Pull request | Merged automatically? |
+| --- | --- |
+| From the repository owner, `github-actions[bot]` or `dependabot[bot]` | Yes, once CI passes |
+| Draft | Only after "Ready for review", or with the label `automerge` |
+| Label `hold` | Never |
+| From anyone else, or from a fork | No, a maintainer merges it |
+| release-please release PR | Yes, unless the repository variable `AUTO_RELEASE` is `false` |
 
 ## Release workflow
 
-Two automated stages.
+Fully automated by `release.yml`, which runs on every push to `dev`:
 
-**Stage 1 — version bump on `dev`** (handled by `release-please.yml`):
+1. **Validate**: runs the whole of `ci.yml` on the pushed commit.
+2. **Release**:
+   - If `version.txt` holds a version that has no tag yet (a version raised by hand), it publishes `v<version>` right away. The text comes from `RELEASE-NOTES-v<version>.md` when that file exists, otherwise from generated notes.
+   - release-please opens or updates one PR titled `chore(dev): release X.Y.Z` with the next version (from the conventional commits), the `CHANGELOG.md` entry, and updated `version.txt` and `.release-please-manifest.json`. Once that PR is merged, release-please tags `vX.Y.Z` and publishes the GitHub release.
+3. **Promote**: fast-forwards `main` to the released commit. `main` therefore always equals the latest release, and there are no merge commits to bring back into `dev`. If `main` ever has commits that `dev` lacks, the job opens a `dev → main` PR and fails so someone resolves it.
 
-After every merge into `dev`, release-please opens or updates a single PR titled `chore(dev): release X.Y.Z`. The PR contains:
-
-- The next version (calculated from conventional-commit history)
-- A CHANGELOG.md entry
-- An updated `version.txt` and `.release-please-manifest.json`
-
-Merge that PR when you're ready to cut a version. `dev` now has the bumped version committed but no tag yet.
-
-**Stage 2 — tag on `main`** (handled by `release-tag.yml`):
-
-Open a release PR: `dev → main`. The `Main Branch Protection Guard` workflow enforces that the head branch is literally `dev`. Once that PR merges:
-
-- `release-tag.yml` reads `version.txt`, creates an annotated tag `vX.Y.Z`, and publishes a GitHub Release. If `RELEASE-NOTES-vX.Y.Z.md` exists in the repository root, it is used as the release text; otherwise the notes are auto-generated.
-- Idempotent — re-runs are safe.
+The workflows need a repository secret `RELEASE_PAT` (a fine-grained token for this repository with read and write access to Contents, Pull requests and Workflows). Without it, merges and release PRs made by the default token do not start the next workflow, and pushing workflow changes to `main` is refused.
 
 ## On-demand AI
 
@@ -88,7 +87,7 @@ Set `.github/WORKFLOW_KILLSWITCH` to:
 STATUS: DISABLED
 ```
 
-All workflows that consult this file (`ci.yml`, `release-please.yml`, `release-tag.yml`) short-circuit until you flip it back.
+Automatic merges (`ci.yml`) and releases (`release.yml`) stop until you flip it back. CI checks keep running.
 
 ## See also
 
