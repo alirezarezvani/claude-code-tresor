@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "ruby"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Ruby Best Practices - Idiomatic patterns and community conventions"

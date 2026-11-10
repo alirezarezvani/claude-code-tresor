@@ -11,7 +11,7 @@ capabilities:
   - "Analyze cost structures with activity-based costing and optimization roadmaps"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

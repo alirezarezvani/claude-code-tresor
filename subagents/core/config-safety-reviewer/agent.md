@@ -5,7 +5,7 @@ category: "core"
 team: "core"
 color: "#FFD700"
 tools: [Read, Edit, Grep, Glob, Bash, Task, Skill]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Configuration Safety Analysis - Magic numbers, pool sizes, timeouts, connection limits"

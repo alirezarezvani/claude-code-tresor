@@ -6,7 +6,7 @@ team: "design"
 subcategory: "ux"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Rapid Research Methodologies - Lean user research within sprint timelines"

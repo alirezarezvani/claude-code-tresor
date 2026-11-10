@@ -11,7 +11,7 @@ capabilities:
   - "Analyze customer feedback patterns and provide escalation criteria for complex issues"
 team: "operations"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

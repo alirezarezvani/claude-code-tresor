@@ -6,7 +6,7 @@ team: "design"
 subcategory: "ui"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Design Analysis & Feedback - Thorough UI/UX evaluations and usability assessments"

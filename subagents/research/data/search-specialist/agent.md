@@ -11,7 +11,7 @@ capabilities:
   - "Verify facts across multiple sources and track contradictions versus consensus"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

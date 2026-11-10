@@ -6,7 +6,7 @@ team: "product"
 subcategory: "requirements"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Core Value Extraction - Identify business problems and user pain points"

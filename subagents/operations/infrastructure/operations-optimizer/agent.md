@@ -11,7 +11,7 @@ capabilities:
   - "Implement lean methodologies with waste elimination and continuous improvement frameworks"
 team: "operations"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

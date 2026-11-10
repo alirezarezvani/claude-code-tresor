@@ -11,7 +11,7 @@ capabilities:
   - "Prepare comprehensive financial reports and dashboards for investors and stakeholders"
 team: "leadership"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

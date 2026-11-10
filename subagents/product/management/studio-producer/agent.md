@@ -6,7 +6,7 @@ team: "product"
 subcategory: "management"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Cross-Team Coordination - Map dependencies and create clear handoff processes"

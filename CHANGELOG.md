@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`install.sh --agent <name>`** activates an agent from the library in `~/.claude/subagents/` into `~/.claude/agents/`, where Claude Code loads it. Repeat it for several agents. Names used by two teams need their path, for example `operations/support/customer-support`.
 
+### 🔄 Changed
+
+- **All 133 agents now use `model: inherit`** instead of `model: claude-opus-4`, so each agent runs on the model of the session that calls it and the files no longer go stale with each model release. Set a model in the agent file if you want to pin one.
+
 ### 🐛 Fixed
 
 - **Agents with a multi-line `tools:` list lost their tools.** The installer kept the `tools:` line but dropped the list under it. This affected 16 library agents (none of the 8 core agents).

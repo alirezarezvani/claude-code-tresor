@@ -11,7 +11,7 @@ capabilities:
   - "Present fact-based analysis with direct source attribution and strategic implications"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

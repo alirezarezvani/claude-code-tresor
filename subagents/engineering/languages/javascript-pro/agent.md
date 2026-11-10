@@ -7,7 +7,7 @@ color: "#3B82F6"
 subcategory: "languages"
 language: "javascript"
 tools: Read, Edit, Grep, Glob, Bash
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "JavaScript Best Practices - Idiomatic patterns and ES6+ conventions"

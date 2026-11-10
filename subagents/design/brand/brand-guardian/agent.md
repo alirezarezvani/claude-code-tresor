@@ -6,7 +6,7 @@ team: "design"
 subcategory: "brand"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Brand Foundation Development - Define core values, visual identity, and voice"

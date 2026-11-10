@@ -11,7 +11,7 @@ capabilities:
   - "Optimize infrastructure costs through resource analysis, rightsizing, and committed use discounts"
 team: "operations"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

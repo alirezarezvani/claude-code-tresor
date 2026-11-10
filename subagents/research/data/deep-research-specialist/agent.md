@@ -11,7 +11,7 @@ capabilities:
   - "Synthesize findings with graduated language, confidence levels, and multi-source validation"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

@@ -11,7 +11,7 @@ capabilities:
   - "Analyze market growth rates, trends, drivers, and future projections with validation"
 team: "research"
 tools: Read, Write, Edit, Grep, Glob, Bash, WebSearch, WebFetch, Task
-model: claude-opus-4
+model: inherit
 enabled: true
 ---
 

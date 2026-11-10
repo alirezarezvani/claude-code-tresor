@@ -6,7 +6,7 @@ team: "product"
 subcategory: "analytics"
 color: "#8B5CF6"
 tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
-model: claude-opus-4
+model: inherit
 enabled: true
 capabilities:
   - "Experiment Design & Setup - Define success metrics and calculate sample sizes"
