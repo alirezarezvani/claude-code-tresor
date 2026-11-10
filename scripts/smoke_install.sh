@@ -37,41 +37,82 @@ fi
 git clone --quiet --bare "$WORK_CLONE" "$LOCAL_BARE"
 export TRESOR_REPO_URL="$LOCAL_BARE"
 
+# Files a user might already have. The installer and updater must never
+# delete them: only Tresor's own files may be replaced.
+mkdir -p "$CLAUDE_CODE_DIR/commands" "$CLAUDE_CODE_DIR/agents"
+echo "personal command" > "$CLAUDE_CODE_DIR/commands/my-own-command.md"
+echo "personal agent"   > "$CLAUDE_CODE_DIR/agents/my-own-agent.md"
+
+# A leftover from installers before v2.8.0, which must be cleaned up.
+mkdir -p "$CLAUDE_CODE_DIR/commands/workflow-review"
+echo "old layout" > "$CLAUDE_CODE_DIR/commands/workflow-review/review.md"
+
+expected_commands=$(find "$REPO_ROOT/commands" -type f -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+
+# Verify the installed layout. Called after every install/update so that
+# re-runs are proven idempotent (no nested or duplicated copies).
+assert_layout() {
+  local stage="$1"
+
+  local skills_n agents_n commands_n nested_n
+  skills_n=$(find "$CLAUDE_CODE_DIR/skills" -name SKILL.md | wc -l | tr -d ' ')
+  agents_n=$(find "$CLAUDE_CODE_DIR/agents" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+  commands_n=$(find "$CLAUDE_CODE_DIR/commands" -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')
+  nested_n=$(find "$CLAUDE_CODE_DIR/commands" -mindepth 1 -type d | wc -l | tr -d ' ')
+
+  echo "[$stage] skills=$skills_n agents=$agents_n commands=$commands_n"
+
+  # 8 skills, exactly once each (a nested copy would double the count)
+  [ "$skills_n" -eq 8 ] || { echo "[$stage] expected 8 skills, got $skills_n"; exit 1; }
+  # 8 core agents + the personal agent
+  [ "$agents_n" -eq 9 ] || { echo "[$stage] expected 9 agent files, got $agents_n"; exit 1; }
+  # every command as a flat file + the personal command
+  [ "$commands_n" -eq $((expected_commands + 1)) ] || {
+    echo "[$stage] expected $((expected_commands + 1)) command files, got $commands_n"; exit 1; }
+  [ "$nested_n" -eq 0 ] || { echo "[$stage] commands must be flat files, found directories"; exit 1; }
+
+  local name
+  for name in scaffold review test-gen docs-gen audit prompt-create; do
+    test -f "$CLAUDE_CODE_DIR/commands/$name.md" || { echo "[$stage] missing /$name"; exit 1; }
+  done
+  test ! -e "$CLAUDE_CODE_DIR/commands/README.md" || { echo "[$stage] README installed as a command"; exit 1; }
+  test ! -e "$CLAUDE_CODE_DIR/subagents/subagents" || { echo "[$stage] nested subagents copy"; exit 1; }
+
+  grep -q "personal command" "$CLAUDE_CODE_DIR/commands/my-own-command.md" \
+    || { echo "[$stage] personal command was removed"; exit 1; }
+  grep -q "personal agent" "$CLAUDE_CODE_DIR/agents/my-own-agent.md" \
+    || { echo "[$stage] personal agent was removed"; exit 1; }
+}
+
 echo "=== smoke: install (fresh) ==="
 bash "$REPO_ROOT/scripts/install.sh" >/dev/null
+assert_layout "install"
 
-# Assertions: structure exists and at least one of each artifact installed
-test -d "$CLAUDE_CODE_DIR/skills"   || { echo "missing skills dir"; exit 1; }
-test -d "$CLAUDE_CODE_DIR/agents"   || { echo "missing agents dir"; exit 1; }
-test -d "$CLAUDE_CODE_DIR/commands" || { echo "missing commands dir"; exit 1; }
-
-skills_n=$(find "$CLAUDE_CODE_DIR/skills" -name SKILL.md | wc -l | tr -d ' ')
-agents_n=$(find "$CLAUDE_CODE_DIR/agents" -name '*.md' | wc -l | tr -d ' ')
-commands_n=$(find "$CLAUDE_CODE_DIR/commands" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
-
-echo "installed: skills=$skills_n agents=$agents_n command-dirs=$commands_n"
-[ "$skills_n"  -ge 8  ] || { echo "expected >=8 skills";   exit 1; }
-[ "$agents_n"  -ge 8  ] || { echo "expected >=8 agents";   exit 1; }
-[ "$commands_n" -ge 5 ] || { echo "expected >=5 commands"; exit 1; }
+subagents_n=$(find "$CLAUDE_CODE_DIR/subagents" -name agent.md | wc -l | tr -d ' ')
+[ "$subagents_n" -ge 100 ] || { echo "expected the subagent library, got $subagents_n"; exit 1; }
 
 echo "=== smoke: install (re-run, idempotent) ==="
 bash "$REPO_ROOT/scripts/install.sh" >/dev/null
 test -d "$CLAUDE_CODE_DIR/tresor" || { echo "tresor dir missing after re-install"; exit 1; }
+assert_layout "re-install"
 
 # Backup directory should be created on the re-run as a sibling of CLAUDE_CODE_DIR
 backups=$(find "$(dirname "$CLAUDE_CODE_DIR")" -maxdepth 1 -type d \
   -name "$(basename "$CLAUDE_CODE_DIR").backup-*" | wc -l | tr -d ' ')
 [ "$backups" -ge 1 ] || { echo "no backup created on re-install"; exit 1; }
 
-echo "=== smoke: update ==="
-bash "$REPO_ROOT/scripts/update.sh" >/dev/null || {
-  status=$?
-  # update.sh exits non-zero when there are no updates to pull, which is the
-  # expected state in a self-pointing smoke test. Accept that explicitly.
-  if [ "$status" -ne 0 ] && [ "$status" -ne 1 ]; then
-    echo "update.sh failed with unexpected status $status"
-    exit "$status"
-  fi
-}
+echo "=== smoke: update (no changes upstream) ==="
+bash "$REPO_ROOT/scripts/update.sh" >/dev/null
+assert_layout "update"
+
+echo "=== smoke: update --force ==="
+# --force runs the full update path even though nothing changed upstream.
+bash "$REPO_ROOT/scripts/update.sh" --force >/dev/null
+assert_layout "update --force"
+
+echo "=== smoke: rollback ==="
+rm "$CLAUDE_CODE_DIR/commands/review.md"
+bash "$REPO_ROOT/scripts/update.sh" --rollback >/dev/null
+assert_layout "rollback"
 
 echo "smoke install: OK"
