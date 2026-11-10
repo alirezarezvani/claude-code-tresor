@@ -136,3 +136,6 @@ __pycache__/
 /TO-DOS.md
 /whats-next.md
 .cursor/*
+
+# Eval run output (claude plugin eval)
+**/evals/results/

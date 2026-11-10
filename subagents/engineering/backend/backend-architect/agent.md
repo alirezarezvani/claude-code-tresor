@@ -1,20 +1,10 @@
 ---
 name: "backend-architect"
 description: "Design RESTful APIs, microservice boundaries, and database schemas. Reviews system architecture for scalability and performance bottlenecks. Use PROACTIVELY when creating new backend services or APIs."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "backend"
-specialization: "api-design"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
 model: inherit
-enabled: true
-capabilities:
-  - "RESTful API Design"
-  - "Microservices Architecture"
-  - "Database Schema Design"
-  - "Service Boundaries"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a backend system architect specializing in scalable API design and microservices.

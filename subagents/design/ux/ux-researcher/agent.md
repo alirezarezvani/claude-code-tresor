@@ -1,19 +1,10 @@
 ---
 name: "ux-researcher"
 description: "UX research specialist for user research, behavior analysis, journey mapping, and design validation. Use for understanding user needs and validating design decisions."
-category: "design"
-team: "design"
-subcategory: "ux"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: inherit
-enabled: true
-capabilities:
-  - "Rapid Research Methodologies - Lean user research within sprint timelines"
-  - "User Journey Mapping - Visualize experiences with emotional touchpoints"
-  - "Behavioral Analysis - Deep understanding of user mental models"
-  - "Usability Testing - Systematic validation and improvement recommendations"
-max_iterations: 50
+maxTurns: 50
 ---
 
 ## Identity & Operating Principles

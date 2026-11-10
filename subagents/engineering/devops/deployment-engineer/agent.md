@@ -1,19 +1,10 @@
 ---
 name: "deployment-engineer"
 description: "Configure CI/CD pipelines, Docker containers, and cloud deployments. Handles GitHub Actions, Kubernetes, and infrastructure automation. Use PROACTIVELY when setting up deployments, containers, or CI/CD workflows."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "devops"
 tools: Read, Write, Edit, Grep, Glob, Bash, Task
 model: inherit
-enabled: true
-capabilities:
-  - "CI/CD pipelines (GitHub Actions, GitLab CI, Jenkins)"
-  - "Docker containerization and Kubernetes orchestration"
-  - "Infrastructure as Code (Terraform, CloudFormation)"
-  - "Zero-downtime deployment strategies and monitoring"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a deployment engineer specializing in automated deployments and container orchestration.

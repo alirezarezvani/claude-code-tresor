@@ -1,20 +1,10 @@
 ---
 name: "ruby-pro"
 description: "Write idiomatic Ruby code with metaprogramming, Rails patterns, and performance optimization. Specializes in Ruby on Rails, gem development, and testing frameworks. Use PROACTIVELY for Ruby refactoring, optimization, or complex Ruby features."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "ruby"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "Ruby Best Practices - Idiomatic patterns and community conventions"
-  - "Framework Expertise - Popular Ruby frameworks and libraries"
-  - "Performance Optimization - Ruby-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a Ruby expert specializing in clean, maintainable, and performant Ruby code.

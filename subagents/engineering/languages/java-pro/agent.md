@@ -1,20 +1,10 @@
 ---
 name: "java-pro"
 description: "Master modern Java with streams, concurrency, and JVM optimization. Handles Spring Boot, reactive programming, and enterprise patterns. Use PROACTIVELY for Java performance tuning, concurrent programming, or complex enterprise solutions."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "java"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "Java Best Practices - Idiomatic patterns and modern Java conventions"
-  - "Framework Expertise - Popular Java frameworks and libraries"
-  - "Performance Optimization - Java-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a Java expert specializing in modern Java development and enterprise patterns.

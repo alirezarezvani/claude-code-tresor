@@ -1,0 +1,18 @@
+{
+  "name": "tresor-operations",
+  "version": "2.8.0",
+  "description": "Operations specialists: analytics, infrastructure and support",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./analytics/analytics-reporter/agent.md",
+    "./analytics/revenue-analyst/agent.md",
+    "./infrastructure/infrastructure-maintainer/agent.md",
+    "./infrastructure/operations-optimizer/agent.md",
+    "./support/customer-support/agent.md",
+    "./support/support-responder/agent.md"
+  ]
+}

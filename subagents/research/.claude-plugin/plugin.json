@@ -1,0 +1,19 @@
+{
+  "name": "tresor-research",
+  "version": "2.8.0",
+  "description": "Research specialists: deep research, market and competitive intelligence",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./data/deep-research-specialist/agent.md",
+    "./data/search-specialist/agent.md",
+    "./market/business-model-analyzer/agent.md",
+    "./market/competitive-intelligence/agent.md",
+    "./market/market-research-analyst/agent.md",
+    "./market/reddit-intelligence/agent.md",
+    "./market/tam-market-sizing/agent.md"
+  ]
+}

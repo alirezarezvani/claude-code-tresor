@@ -1,0 +1,21 @@
+{
+  "name": "tresor-ai-automation",
+  "version": "2.8.0",
+  "description": "AI and automation specialists: AI engineering, ML, prompts and workflow automation",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./ai-engineering/ai-engineer/agent.md",
+    "./ai-engineering/ai-workflow-designer/agent.md",
+    "./automation/automation-architect/agent.md",
+    "./automation/integration-specialist/agent.md",
+    "./automation/workflow-analyst/agent.md",
+    "./ml-engineering/ml-engineer/agent.md",
+    "./ml-engineering/mlops-engineer/agent.md",
+    "./prompts/prompt-engineer-advanced/agent.md",
+    "./prompts/prompt-engineer/agent.md"
+  ]
+}

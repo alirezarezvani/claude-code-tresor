@@ -1,19 +1,10 @@
 ---
 name: "ui-designer"
 description: "UI design specialist for creating beautiful, functional interfaces that can be implemented quickly. Use for interface design, component systems, and visual aesthetics."
-category: "design"
-team: "design"
-subcategory: "ui"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: inherit
-enabled: true
-capabilities:
-  - "Rapid UI Conceptualization - High-impact designs for quick implementation"
-  - "Component System Architecture - Reusable, scalable component patterns"
-  - "Trend Translation - Adapting trending UI patterns while maintaining usability"
-  - "Developer Handoff Optimization - Implementation-ready specifications"
-max_iterations: 50
+maxTurns: 50
 ---
 
 ## Identity & Operating Principles

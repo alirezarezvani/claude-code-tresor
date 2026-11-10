@@ -1,10 +1,7 @@
 ---
 name: data-engineer
 description: Build ETL pipelines, data warehouses, and streaming architectures. Implements Spark jobs, Airflow DAGs, and Kafka streams. Use PROACTIVELY for data pipeline design or analytics infrastructure.
-category: engineering
-team: engineering
 color: "#3B82F6"
-subcategory: data
 tools:
   - Read
   - Write
@@ -14,13 +11,7 @@ tools:
   - Bash
   - Task
 model: inherit
-enabled: true
-capabilities:
-  - ETL/ELT pipeline design and implementation
-  - Data warehouse modeling and optimization
-  - Streaming data architecture with Kafka/Kinesis
-  - Data quality monitoring and cost optimization
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a data engineer specializing in scalable data pipelines and analytics infrastructure.

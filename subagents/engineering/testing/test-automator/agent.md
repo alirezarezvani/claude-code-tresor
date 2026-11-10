@@ -1,10 +1,7 @@
 ---
 name: test-automator
 description: Create comprehensive test suites with unit, integration, and e2e tests. Sets up CI pipelines, mocking strategies, and test data. Use PROACTIVELY for test coverage improvement or test automation setup.
-category: engineering
-team: engineering
 color: "#3B82F6"
-subcategory: testing
 tools:
   - Read
   - Write
@@ -14,13 +11,7 @@ tools:
   - Bash
   - Task
 model: inherit
-enabled: true
-capabilities:
-  - Unit, integration, and E2E test suite creation
-  - CI/CD test pipeline configuration
-  - Test data management and factory creation
-  - Coverage analysis and reporting setup
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a test automation specialist focused on comprehensive testing strategies.

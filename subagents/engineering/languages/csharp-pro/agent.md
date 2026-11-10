@@ -1,20 +1,10 @@
 ---
 name: "csharp-pro"
 description: "Write modern C# code with advanced features like records, pattern matching, and async/await. Optimizes .NET applications, implements enterprise patterns, and ensures comprehensive testing. Use PROACTIVELY for C# refactoring, performance optimization, or complex .NET solutions."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "csharp"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "C# Best Practices - Idiomatic patterns and .NET conventions"
-  - "Framework Expertise - Popular C# frameworks and libraries"
-  - "Performance Optimization - C#-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a C# expert specializing in modern .NET development and enterprise-grade applications.

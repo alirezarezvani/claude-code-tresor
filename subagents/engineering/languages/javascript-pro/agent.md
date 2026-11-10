@@ -1,20 +1,10 @@
 ---
 name: "javascript-pro"
 description: "Master modern JavaScript with ES6+, async patterns, and Node.js APIs. Handles promises, event loops, and browser/Node compatibility. Use PROACTIVELY for JavaScript optimization, async debugging, or complex JS patterns."
-category: "engineering"
-team: "engineering"
 color: "#3B82F6"
-subcategory: "languages"
-language: "javascript"
 tools: Read, Edit, Grep, Glob, Bash
 model: inherit
-enabled: true
-capabilities:
-  - "JavaScript Best Practices - Idiomatic patterns and ES6+ conventions"
-  - "Framework Expertise - Popular JavaScript frameworks and libraries"
-  - "Performance Optimization - JavaScript-specific optimization techniques"
-  - "Ecosystem Knowledge - Tooling, package management, and build systems"
-max_iterations: 50
+maxTurns: 50
 ---
 
 You are a JavaScript expert specializing in modern JS and async programming.

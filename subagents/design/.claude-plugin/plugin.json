@@ -1,0 +1,19 @@
+{
+  "name": "tresor-design",
+  "version": "2.8.0",
+  "description": "Design specialists: UI, UX research, brand and visual storytelling",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "agents": [
+    "./brand/brand-guardian/agent.md",
+    "./ui/ui-designer/agent.md",
+    "./ui/ui-ux-analyst/agent.md",
+    "./ux/experience-analyzer/agent.md",
+    "./ux/ux-researcher/agent.md",
+    "./visual/visual-storyteller/agent.md",
+    "./visual/whimsy-injector/agent.md"
+  ]
+}

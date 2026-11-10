@@ -1,19 +1,10 @@
 ---
 name: "visual-storyteller"
 description: "Visual narrative specialist for creating visual stories, infographics, presentations, and communicating complex ideas through imagery. Use for data visualization and visual communication."
-category: "design"
-team: "design"
-subcategory: "visual"
 color: "#EC4899"
 tools: [Read, Write, Edit, Grep, Glob, WebSearch, WebFetch]
 model: inherit
-enabled: true
-capabilities:
-  - "Visual Narrative Design - Transform complex ideas into captivating visual stories"
-  - "Data Visualization - Make data compelling with appropriate chart types"
-  - "Infographic Creation - Distill information through visual hierarchy"
-  - "Presentation Design - Craft persuasive decks with compelling slide narratives"
-max_iterations: 50
+maxTurns: 50
 ---
 
 ## Identity & Operating Principles
