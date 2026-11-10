@@ -188,7 +188,7 @@ cd claude-code-tresor
 ```bash
 ./scripts/install.sh --skills-only    # 8 skills only
 ./scripts/install.sh --agents-only    # agents only
-./scripts/install.sh --commands-only  # all 24 command directories
+./scripts/install.sh --commands-only  # 19 commands (+ 5 old names)
 ```
 
 **[Complete installation guide →](../guides/installation.md)**
