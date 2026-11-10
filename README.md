@@ -409,6 +409,9 @@ cp -r prompts standards examples ~/claude-code-resources/
 
 # Install only resources (prompts, standards, examples)
 ./scripts/install.sh --resources-only
+
+# Activate agents from the 133-agent library (repeatable)
+./scripts/install.sh --agent backend-architect --agent data-engineer
 ```
 
 ---

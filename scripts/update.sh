@@ -198,6 +198,24 @@ update_skills() {
     fi
 }
 
+# Write one agent as the flat .md file Claude Code loads, keeping only the
+# frontmatter fields Claude Code knows: name, description, tools, model, enabled.
+# Tresor's own fields (category, team, color, capabilities, ...) are dropped.
+install_agent_file() {
+    local src="$1" dest="$2"
+    awk '
+    BEGIN { in_fm=0; fm_done=0 }
+    /^---$/ && fm_done == 0 {
+        if (in_fm == 0) { in_fm=1 } else { in_fm=0; fm_done=1 }
+        print; next
+    }
+    # A field starts at column 1; indented lines (list items) belong to it.
+    in_fm == 1 && /^[^ \t]/ { keep = ($0 ~ /^(name|description|tools|model|enabled):/) }
+    in_fm == 1 { if (keep) print; next }
+    { print }
+    ' "$src" > "$dest"
+}
+
 update_agents() {
     header "Updating Agents"
 
@@ -220,33 +238,7 @@ update_agents() {
             if [ -f "$agent_file" ]; then
                 log "Updating core agent: $agent_name"
 
-                # Strip unsupported YAML fields (same as install.sh)
-                awk '
-                BEGIN { in_frontmatter=0; frontmatter_done=0; }
-                /^---$/ {
-                    if (frontmatter_done == 0) {
-                        if (in_frontmatter == 0) {
-                            in_frontmatter = 1;
-                            print;
-                        } else {
-                            in_frontmatter = 0;
-                            frontmatter_done = 1;
-                            print;
-                        }
-                    } else {
-                        print;
-                    }
-                    next;
-                }
-                in_frontmatter == 1 {
-                    # Only keep supported fields
-                    if ($0 ~ /^(name|description|tools|model|enabled):/) {
-                        print;
-                    }
-                    next;
-                }
-                { print }
-                ' "$agent_file" > "$agents_dest/${agent_name}.md"
+                install_agent_file "$agent_file" "$agents_dest/${agent_name}.md"
             fi
         done
 

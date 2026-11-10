@@ -115,4 +115,31 @@ rm "$CLAUDE_CODE_DIR/commands/review.md"
 bash "$REPO_ROOT/scripts/update.sh" --rollback >/dev/null
 assert_layout "rollback"
 
+echo "=== smoke: --agent activates library agents ==="
+agents_before=$(find "$CLAUDE_CODE_DIR/agents" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+bash "$REPO_ROOT/scripts/install.sh" --no-backup \
+  --agent data-engineer --agent operations/support/customer-support >/dev/null
+for name in data-engineer customer-support; do
+  f="$CLAUDE_CODE_DIR/agents/$name.md"
+  test -f "$f" || { echo "--agent did not install $name"; exit 1; }
+  # Only fields Claude Code knows may stay; list values (tools) must survive.
+  ! grep -qE '^(team|category|color|capabilities|max_iterations):' "$f" \
+    || { echo "$name still has Tresor-only fields"; exit 1; }
+done
+grep -qE '^  - Read$' "$CLAUDE_CODE_DIR/agents/data-engineer.md" \
+  || { echo "data-engineer lost its tools list"; exit 1; }
+agents_after=$(find "$CLAUDE_CODE_DIR/agents" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+[ "$agents_after" -eq $((agents_before + 2)) ] \
+  || { echo "expected $((agents_before + 2)) agent files, got $agents_after"; exit 1; }
+grep -q "personal agent" "$CLAUDE_CODE_DIR/agents/my-own-agent.md" \
+  || { echo "--agent removed the personal agent"; exit 1; }
+
+# Names used by two teams and unknown names must stop with an error.
+if bash "$REPO_ROOT/scripts/install.sh" --no-backup --agent customer-support >/dev/null 2>&1; then
+  echo "ambiguous --agent name was accepted"; exit 1
+fi
+if bash "$REPO_ROOT/scripts/install.sh" --no-backup --agent no-such-agent >/dev/null 2>&1; then
+  echo "unknown --agent name was accepted"; exit 1
+fi
+
 echo "smoke install: OK"

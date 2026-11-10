@@ -94,6 +94,7 @@ When you change one of these commands, apply the same change to its copy.
 ./scripts/install.sh --commands-only   # all commands
 ./scripts/install.sh --orchestration   # only the 10 orchestration commands
 ./scripts/install.sh --resources-only  # prompts, standards, examples
+./scripts/install.sh --agent <name>    # activate one library agent (repeatable)
 ./scripts/update.sh                    # pull the latest version and refresh
 ./scripts/update.sh --rollback         # restore the backup from the last update
 ```
@@ -106,7 +107,7 @@ Where things end up:
 |---|---|---|
 | Skills | `~/.claude/skills/<name>/` | Category folder is removed |
 | Core agents | `~/.claude/agents/<name>.md` | One file per agent |
-| All 133 agents | `~/.claude/subagents/` | A library to browse. Claude Code does not load it. Users copy what they need into `~/.claude/agents/` |
+| All 133 agents | `~/.claude/subagents/` | A library to browse. Claude Code does not load it. `install.sh --agent <name>` activates one into `~/.claude/agents/` |
 | Commands | `~/.claude/commands/<name>.md` | One file per command, so the name is `/<name>` |
 | Prompts, standards, examples | `~/.claude/tresor-resources/` | For reference |
 
