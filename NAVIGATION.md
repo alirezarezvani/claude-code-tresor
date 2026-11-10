@@ -2,8 +2,8 @@
 
 > Quick reference for finding your way around the Claude Code Tresor repository
 
-**Version:** 2.7.0
-**Last Updated:** November 19, 2025
+**Version:** 2.8.0
+**Last Updated:** November 10, 2026
 
 ---
 
@@ -243,9 +243,9 @@ claude-code-tresor/
 ./scripts/install.sh
 
 # Selective installation
-./scripts/install.sh --skills        # 8 autonomous skills only
-./scripts/install.sh --agents        # 133 agents only
-./scripts/install.sh --commands      # 9 workflow commands only
+./scripts/install.sh --skills-only   # 8 autonomous skills only
+./scripts/install.sh --agents-only   # 8 core agents + the library of 133 agents
+./scripts/install.sh --commands-only # all 19 commands
 ```
 
 **See:** [Installation Guide →](documentation/guides/installation.md)
@@ -276,7 +276,7 @@ claude-code-tresor/
 
 ---
 
-**Version:** 2.7.0
-**Last Updated:** November 19, 2025
+**Version:** 2.8.0
+**Last Updated:** November 10, 2026
 **License:** MIT
 **Author:** Alireza Rezvani

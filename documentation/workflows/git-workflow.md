@@ -73,7 +73,7 @@ Merge that PR when you're ready to cut a version. `dev` now has the bumped versi
 
 Open a release PR: `dev → main`. The `Main Branch Protection Guard` workflow enforces that the head branch is literally `dev`. Once that PR merges:
 
-- `release-tag.yml` reads `version.txt`, creates an annotated tag `vX.Y.Z`, and drafts a GitHub Release with auto-generated notes.
+- `release-tag.yml` reads `version.txt`, creates an annotated tag `vX.Y.Z`, and publishes a GitHub Release. If `RELEASE-NOTES-vX.Y.Z.md` exists in the repository root, it is used as the release text; otherwise the notes are auto-generated.
 - Idempotent — re-runs are safe.
 
 ## On-demand AI

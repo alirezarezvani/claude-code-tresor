@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.8.0] - 2026-11-10
+
+Reliability release. The installer now delivers what the documentation describes, and every change to the repository is checked automatically.
+
+### 🐛 Fixed
+
+#### Installation and update scripts
+
+- **Three commands were never installed.** `/scaffold`, `/test-gen` and `/docs-gen` were skipped because the installer only copied folders, and these command files sit next to their folder. All 19 commands are installed now.
+- **Command names did not match the docs.** Commands were installed as `~/.claude/commands/<category>-<name>/<name>.md`, which current Claude Code versions name `/<category>-<name>:<name>` (for example `/workflow-review:review`). Commands are now installed as one file each (`~/.claude/commands/review.md`), so the name is `/review` as documented. Folders created by older installers are removed automatically.
+- **README files showed up as commands.** The `README.md` inside each command folder was installed too and appeared as an extra command. Only command files are installed now.
+- **Re-installing created duplicates.** Running the installer or updater a second time put a second copy of every command, skill and the agent library inside the first one. Both scripts now give the same result no matter how often they run.
+- **Updating removed personal files.** `update.sh` emptied `~/.claude/commands/` and `~/.claude/agents/` before copying, which also removed the user's own commands and agents. It now only replaces Tresor's own files.
+- **`update.sh` did not update skills.** It does now, and includes them in its backup.
+- **`update.sh --rollback` never found its backup.** It now restores the most recent one.
+- **Re-install failed with "cannot copy a directory into itself".** The backup folder was created inside the folder being backed up. It is now created next to it (`~/.claude.backup-<date>`).
+- **`--skills`, `--agents` and `--commands` were rejected** although several guides used them. The installer accepts them now, next to `--skills-only`, `--agents-only` and `--commands-only`.
+- **`tresor.config.json` always said version 1.0.0.** It now records the real version from `version.txt`.
+
+#### Commands
+
+- Quoted the `argument-hint` value in 16 command files. Unquoted values starting with `[` were read as a list instead of text, which made GitHub Copilot CLI 1.0.65 and newer drop these commands ([#60](https://github.com/alirezarezvani/claude-code-tresor/issues/60), reported by @thejesh23).
+
+#### Documentation
+
+- Corrected command counts and install options in the README, getting-started guide, installation guide, documentation index and FAQ ([#62](https://github.com/alirezarezvani/claude-code-tresor/pull/62) by @dajiaohuang).
+- Removed the description of a `--sandboxing` install option that never existed.
+- The getting-started guide uses the real command names again (`/scaffold`, `/review`, ...).
+- The installation guide lists the current core agent names.
+- Rewrote `CLAUDE.md`: removed references to files and options that do not exist (`command.json`, `agent.json`, `sources/`, `install.sh --check`) and added the validation and release steps.
+
+### ✨ Added
+
+- **Automatic checks on every pull request**: file headers of all skills, agents and commands are validated against schemas, `@agent` mentions must point to real agents, counts in the docs must match the files, shell scripts are linted, and the installer is run end to end (install, re-install, update, rollback).
+- **Curated release text**: if `RELEASE-NOTES-v<version>.md` exists, it is used as the text of the GitHub release.
+- `version.txt` as the single place that holds the release version.
+
+### 🔄 Changed
+
+- **Simpler automation**: one CI workflow replaces four. Automatic AI review and security-audit workflows were removed; mention `@claude` in a pull request or issue to request a review.
+- **Release process**: work is merged into `dev`, releases go from `dev` to `main`, and merging into `main` creates the tag and the GitHub release. See `documentation/workflows/git-workflow.md`.
+
+### ⚠️ Upgrade notes
+
+- Run `./scripts/install.sh` again. No other step is needed.
+- If you used the long command names (for example `/workflow-review:review`), use the short ones (`/review`).
+- The five old workflow command names (`/create-prompt`, `/run-prompt`, `/add-to-todos`, `/check-todos`, `/whats-next`) are still installed and will be removed in v3.0.0.
+- v2.7.0 was never published as a GitHub release. If you are coming from v2.6.0, see the 2.7.0 entry below as well.
+
+---
+
 ## [2.7.0] - 2025-11-19
 
 ### 🚀 Major Features

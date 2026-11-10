@@ -3,7 +3,7 @@
 > A world-class collection of Claude Code utilities: autonomous skills, expert agents, slash commands, and prompts that supercharge your development workflow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.7.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
+[![Version](https://img.shields.io/badge/version-2.8.0-blue.svg)](https://github.com/alirezarezvani/claude-code-tresor)
 [![Quality](https://img.shields.io/badge/quality-9.7%2F10-brightgreen.svg)](docs/archive/VALIDATION-REPORT-CONTENT.md)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue.svg)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -13,14 +13,28 @@
 
 **Author**: Alireza Rezvani
 **Created**: September 16, 2025
-**Updated**: December 17, 2025 (v2.7.0 - Tresor Workflow Framework)
+**Updated**: November 10, 2026 (v2.8.0 - Reliable Installation)
 **Quality**: 9.7/10 (Exceptional)
 **License**: MIT
 **Repository**: https://github.com/alirezarezvani/claude-code-tresor
 
 ---
 
-## 🎉 What's New in v2.7.0
+## 🎉 What's New in v2.8.0
+
+**Reliable Installation** - the installer now delivers exactly what the docs promise.
+
+- ✅ **All 19 commands install** - `/scaffold`, `/test-gen` and `/docs-gen` were silently skipped before
+- 🏷️ **Command names match the docs** - `/review`, not `/workflow-review:review`
+- 🔁 **Safe to re-run** - installing or updating twice no longer creates duplicate copies
+- 🛡️ **Your own files stay** - updating no longer removes your personal commands and agents
+- 🧪 **Automatic checks** - every change is now validated (file headers, links, counts, a full test install)
+
+**Upgrading:** run `./scripts/install.sh` again. Old command folders are cleaned up for you. See [RELEASE-NOTES-v2.8.0.md](RELEASE-NOTES-v2.8.0.md).
+
+---
+
+### Previous: v2.7.0 - Orchestration Commands
 
 **Major Release** - 10 New Orchestration Commands + Tresor Workflow Framework!
 
@@ -93,9 +107,9 @@ Claude Code Tresor is the ultimate collection of **professional-grade utilities*
 
 ## ✨ What's Included
 
-### 🚀 Slash Commands (19 Featured Commands)
+### 🚀 Slash Commands (19 Total)
 
-The inventory below covers the 19 featured commands (4 development, 5 workflow, and 10 orchestration). The installer copies all 24 command directories under `commands/`, including five additional workflow directories: `add-to-todos`, `check-todos`, `create-prompt`, `run-prompt`, and `whats-next`.
+The list below covers the 19 commands (4 development, 5 workflow, and 10 orchestration). The installer also installs the five old workflow command names (`/create-prompt`, `/run-prompt`, `/add-to-todos`, `/check-todos`, `/whats-next`) so existing habits keep working. They do the same as the new names and will be removed in v3.0.0.
 
 **Development Commands** (4):
 
@@ -319,7 +333,7 @@ This guide answers:
 | **Deploy pre-built expertise** for professional roles | [**Skills Library**](https://github.com/alirezarezvani/claude-skills) |
 
 **Complete Workflow Example:**
-1. **Start here** (Claude Code Tresor) → Install 8 skills, 8 core agents, and 24 command directories (19 featured plus five additional workflow entries)
+1. **Start here** (Claude Code Tresor) → Install 8 skills, 8 core agents, and 19 commands for development workflows
 2. **Browse Skills Library** → Add marketing, product, or engineering domain expertise packages
 3. **Build custom with Skill Factory** → Generate proprietary skills for your company's unique needs
 
@@ -361,7 +375,7 @@ chmod +x scripts/install.sh
 **What's installed:**
 - ✅ **8 Skills** - Automatic background helpers
 - ✅ **8 Agents** - Manual expert sub-agents
-- ✅ **24 command directories** - 19 featured commands plus five additional workflow entries
+- ✅ **19 Commands** - Workflow automation (plus 5 old command names kept until v3.0.0)
 
 **First time?** See [GETTING-STARTED.md](GETTING-STARTED.md) for 5-minute quick start.
 
@@ -483,7 +497,7 @@ claude-code-tresor/
 │   ├── performance-tuner/          # Performance optimization
 │   └── refactor-expert/            # Code refactoring
 ├──
-├── ⚡ commands/                     # 24 directories (19 featured + 5 additional workflow entries)
+├── ⚡ commands/                     # 19 Slash Commands (+ 5 old names)
 │   ├── development/                # Project scaffolding and tools
 │   ├── testing/                    # Test generation and analysis
 │   ├── documentation/              # Doc generation utilities
@@ -601,16 +615,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 **This Repository:**
 - **✨ Skills**: 8 autonomous background helpers (v2.0+)
 - **🤖 Agents**: 133 total (8 core + 125 specialized) organized by team (v2.5+)
-- **⚡ Commands**: 24 command directories are copied by the installer; 19 are featured below (4 dev + 5 workflow + 10 orchestration), with five additional workflow entries listed above (v2.7+)
+- **⚡ Commands**: 19 total (4 dev + 5 workflow + 10 orchestration), plus 5 old workflow command names kept until v3.0.0 (v2.7+)
   - **Development**: scaffold, review, test-gen, docs-gen
   - **Workflow**: prompt-create, prompt-run, todo-add, todo-check, handoff-create
   - **Orchestration**: audit, vulnerability-scan, compliance-check, profile, benchmark, deploy-validate, health-check, incident-response, code-health, debt-analysis
 - **📝 Prompt Templates**: 20+ battle-tested prompts
 - **📏 Standards**: 5 comprehensive style guides
 - **💡 Examples**: 10+ real-world workflows
-- **📦 Source Library**: 200+ additional components
 - **⏱️ Installation Time**: < 2 minutes
-- **📈 Version**: 2.7.0 (Major update: Orchestration Commands!)
+- **📈 Version**: 2.8.0 (Reliable installation and automatic checks)
 
 **Complete Ecosystem:**
 - **🏭 [Skill Factory](https://github.com/alirezarezvani/claude-code-skill-factory)**: Generate unlimited custom skills and agents
