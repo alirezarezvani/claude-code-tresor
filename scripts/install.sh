@@ -50,7 +50,7 @@ check_dependencies() {
     log "Git is available"
 
     # Check if Claude Code is installed (optional check)
-    if command -v claude-code &> /dev/null; then
+    if command -v claude &> /dev/null || command -v claude-code &> /dev/null; then
         log "Claude Code CLI detected"
     else
         warn "Claude Code CLI not found. Make sure to install it from: https://claude.ai/code"
