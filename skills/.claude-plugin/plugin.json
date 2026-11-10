@@ -1,0 +1,15 @@
+{
+  "name": "tresor-skills",
+  "version": "2.8.0",
+  "description": "8 skills Claude uses on its own: code review, tests, commit messages, security and docs",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "skills": [
+    "./development/",
+    "./documentation/",
+    "./security/"
+  ]
+}

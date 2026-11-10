@@ -1,0 +1,31 @@
+{
+  "name": "tresor-commands",
+  "version": "2.8.0",
+  "description": "19 slash commands: scaffolding, review, test and docs generation, audits, profiling and operations",
+  "author": {
+    "name": "Alireza Rezvani"
+  },
+  "homepage": "https://github.com/alirezarezvani/claude-code-tresor",
+  "license": "MIT",
+  "commands": [
+    "./development/scaffold.md",
+    "./documentation/docs-gen.md",
+    "./operations/deploy-validate/deploy-validate.md",
+    "./operations/health-check/health-check.md",
+    "./operations/incident-response/incident-response.md",
+    "./performance/benchmark/benchmark.md",
+    "./performance/profile/profile.md",
+    "./quality/code-health/code-health.md",
+    "./quality/debt-analysis/debt-analysis.md",
+    "./security/audit/audit.md",
+    "./security/compliance-check/compliance-check.md",
+    "./security/vulnerability-scan/vulnerability-scan.md",
+    "./testing/test-gen.md",
+    "./workflow/handoff-create/handoff-create.md",
+    "./workflow/prompt-create/prompt-create.md",
+    "./workflow/prompt-run/prompt-run.md",
+    "./workflow/review/review.md",
+    "./workflow/todo-add/todo-add.md",
+    "./workflow/todo-check/todo-check.md"
+  ]
+}

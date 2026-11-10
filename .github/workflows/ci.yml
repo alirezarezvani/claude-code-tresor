@@ -110,6 +110,9 @@ jobs:
       - name: Verify documented counts match repo state
         run: python3 scripts/check_doc_counts.py
 
+      - name: Verify marketplace.json matches repo state
+        run: python3 scripts/build_marketplace.py --check
+
       - name: ShellCheck install/update/smoke scripts
         run: |
           # Severity=error blocks real bugs. SC2155/SC2115 style warnings

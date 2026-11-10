@@ -41,8 +41,9 @@ DENYLIST = {
     "app", "the",
 }
 
-# Match @kebab-name that is NOT a path (@src/foo) or filename (@package.json)
-REF_RE = re.compile(r"(?<![\w/.])@([a-z][a-z0-9-]{2,})(?![\w./-])")
+# Match @kebab-name that is NOT a path (@src/foo) or filename (@package.json).
+# A plugin prefix (@tresor-core:security-auditor) is allowed; the agent name after it is checked.
+REF_RE = re.compile(r"(?<![\w/.])@(?:tresor-[a-z0-9-]+:)?([a-z][a-z0-9-]{2,})(?![\w./:-])")
 
 
 def collect_known() -> set[str]:

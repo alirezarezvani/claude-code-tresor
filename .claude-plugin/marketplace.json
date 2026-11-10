@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "tresor",
+  "description": "Claude Code Tresor: agents, skills and commands for professional development",
+  "owner": {
+    "name": "Alireza Rezvani",
+    "url": "https://github.com/alirezarezvani"
+  },
+  "metadata": {
+    "version": "2.8.0"
+  },
+  "plugins": [
+    {
+      "name": "tresor-core",
+      "source": "./subagents/core",
+      "description": "The 8 core agents for architecture, review, security, testing, performance and docs. Also installs tresor-skills and tresor-commands",
+      "category": "development"
+    },
+    {
+      "name": "tresor-skills",
+      "source": "./skills",
+      "description": "8 skills Claude uses on its own: code review, tests, commit messages, security and docs",
+      "category": "development"
+    },
+    {
+      "name": "tresor-commands",
+      "source": "./commands",
+      "description": "19 slash commands: scaffolding, review, test and docs generation, audits, profiling and operations",
+      "category": "development"
+    },
+    {
+      "name": "tresor-engineering",
+      "source": "./subagents/engineering",
+      "description": "Engineering specialists: languages, backend, frontend, mobile, DevOps, testing and data",
+      "category": "development"
+    },
+    {
+      "name": "tresor-design",
+      "source": "./subagents/design",
+      "description": "Design specialists: UI, UX research, brand and visual storytelling",
+      "category": "development"
+    },
+    {
+      "name": "tresor-marketing",
+      "source": "./subagents/marketing",
+      "description": "Marketing specialists: content, growth, SEO and social media",
+      "category": "development"
+    },
+    {
+      "name": "tresor-product",
+      "source": "./subagents/product",
+      "description": "Product specialists: product management, requirements and research",
+      "category": "development"
+    },
+    {
+      "name": "tresor-leadership",
+      "source": "./subagents/leadership",
+      "description": "Leadership specialists: strategy, finance, risk and compliance",
+      "category": "development"
+    },
+    {
+      "name": "tresor-operations",
+      "source": "./subagents/operations",
+      "description": "Operations specialists: analytics, infrastructure and support",
+      "category": "development"
+    },
+    {
+      "name": "tresor-research",
+      "source": "./subagents/research",
+      "description": "Research specialists: deep research, market and competitive intelligence",
+      "category": "development"
+    },
+    {
+      "name": "tresor-ai-automation",
+      "source": "./subagents/ai-automation",
+      "description": "AI and automation specialists: AI engineering, ML, prompts and workflow automation",
+      "category": "development"
+    },
+    {
+      "name": "tresor-account-customer-success",
+      "source": "./subagents/account-customer-success",
+      "description": "Account and customer success specialists: sales, success and support",
+      "category": "development"
+    }
+  ]
+}

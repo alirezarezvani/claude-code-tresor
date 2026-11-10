@@ -360,6 +360,25 @@ All three repositories are **MIT licensed** and maintained by Alireza Rezvani.
 
 ## 🚀 Quick Start
 
+### Install as plugins (new)
+
+Inside Claude Code, add the Tresor marketplace and install what you need:
+
+```bash
+/plugin marketplace add alirezarezvani/claude-code-tresor
+/plugin install tresor-core@tresor          # 8 core agents, plus tresor-skills and tresor-commands
+/plugin install tresor-engineering@tresor   # optional: one plugin per agent team
+```
+
+| Plugin | Contents |
+|---|---|
+| `tresor-core` | The 8 core agents. Also installs `tresor-skills` and `tresor-commands` |
+| `tresor-skills` | The 8 skills |
+| `tresor-commands` | The 19 slash commands |
+| `tresor-engineering`, `tresor-design`, `tresor-marketing`, `tresor-product`, `tresor-leadership`, `tresor-operations`, `tresor-research`, `tresor-ai-automation`, `tresor-account-customer-success` | The agents of one team |
+
+Plugins update through `/plugin`, and you can switch each one off on its own. Their agents and commands carry the plugin name in front, for example `@tresor-core:security-auditor` and `/tresor-commands:review`. Install only the team plugins you use: every installed agent adds its description to every session.
+
 ### Option 1: Automated Installation (Recommended)
 
 ```bash

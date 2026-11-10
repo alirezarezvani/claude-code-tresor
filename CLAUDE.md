@@ -66,7 +66,7 @@ The 8 core agents are: @systems-architect, @config-safety-reviewer, @root-cause-
 Each file starts with a YAML header between two `---` lines. CI checks these headers against the schemas in `validation/schemas/`.
 
 - **Skill** (`skills/<category>/<name>/SKILL.md`): `name`, `description`, `allowed-tools`. A `README.md` sits next to it.
-- **Agent** (`subagents/<team>/.../<name>/agent.md`): `name`, `description`, `tools`, `model`, `enabled`, plus Tresor's own fields such as `category`, `team`, `color` and `capabilities`. The installer removes Tresor's own fields for the core agents, because Claude Code does not know them.
+- **Agent** (`subagents/<team>/.../<name>/agent.md`): `name`, `description`, `tools` and `model` are required; `color` and `maxTurns` are optional. No other fields are allowed, because Claude Code ignores fields it doesn't know and the plugins load these files as they are. The team comes from the folder.
 - **Command** (`commands/<category>/.../<name>.md`): `description`, `allowed-tools` and `model` are required. `argument-hint` must be wrapped in double quotes when it starts with `[`, otherwise other tools read it as a list instead of text.
 
 The file name of a command is its name: `review.md` becomes `/review`. Do not rename command files without updating the docs.
@@ -101,6 +101,10 @@ When you change one of these commands, apply the same change to its copy.
 
 Use one "only" option per run. They cannot be combined.
 
+### Plugin marketplace
+
+`.claude-plugin/marketplace.json` lists 12 plugins: `tresor-core` (core agents, and it pulls in `tresor-skills` and `tresor-commands`) plus one plugin per agent team. Each plugin points at an existing folder, so nothing moves. The file is generated: after adding, removing or moving an agent, skill or command, run `python3 scripts/build_marketplace.py`. CI fails when the file is out of date. A plugin can't use the repository root as its source, because Claude Code would then also load the root `agents/` and `commands/` folders into it.
+
 Where things end up:
 
 | Content | Installed to | Notes |
@@ -118,6 +122,18 @@ Rules for changing the scripts:
 - Only replace Tresor's own files. Never delete a user's own commands, agents or skills.
 - `install.sh` and `update.sh` contain the same copy logic. Change both.
 
+## Evals
+
+Agents are tested with `claude plugin eval`, which runs each test case with and without the plugin and reports the difference. Cases live in `subagents/<team>/evals/<agent>/<case>/`: a `prompt.md` written the way a user would ask, and a `graders/` folder. Every case has an `agent-used` grader that checks Claude actually handed the work to the agent.
+
+```bash
+cd subagents/engineering
+claude plugin eval . --trust-plugin --allow-tools Write   # every case, with and without the plugin
+claude plugin eval . --case 'mutable-default-bug' --runs 1 --ablation none   # one quick run
+```
+
+Every run is a real model call and costs money, so CI doesn't run evals yet. Phase 1 covers 5 agents: python-pro, database-optimizer, api-tester, prd-writer and content-writer.
+
 ## Checks to run before committing
 
 CI runs these on every pull request. Run them locally first:
@@ -126,6 +142,8 @@ CI runs these on every pull request. Run them locally first:
 python3 scripts/validate_frontmatter.py all   # YAML headers of skills, agents, commands
 python3 scripts/check_agent_references.py     # every @agent mention points to a real agent
 python3 scripts/check_doc_counts.py           # counts in the docs match the files
+python3 scripts/build_marketplace.py --check  # marketplace.json matches the files
+claude plugin validate .                      # marketplace and plugin entries are valid
 bash scripts/smoke_install.sh                 # install, re-install, update and rollback
 shellcheck --severity=error scripts/install.sh scripts/update.sh scripts/smoke_install.sh
 ```
