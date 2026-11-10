@@ -147,7 +147,7 @@ Advanced workflows and integration patterns:
   - Branch naming conventions
   - Conventional commits
   - PR workflow
-  - Automated releases (release-please on dev, tag workflow on main)
+  - Automatic merges and releases (release-please on dev, main follows the latest release)
 
 - **[Quick Reference →](workflows/quick-reference.md)** - Git workflow cheat sheet
   - Daily workflow

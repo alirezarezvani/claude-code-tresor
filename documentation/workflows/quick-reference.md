@@ -31,18 +31,13 @@ git push -u origin feat/your-feature
 gh pr create --base dev --title "feat: your feature"
 ```
 
-CI runs the `Validate` job. Merge once green.
+CI runs the `Validate` job and merges the PR automatically once it is green (owner and bot PRs only). Drafts merge after "Ready for review" or with the label `automerge`. Add the label `hold` to stop an automatic merge.
 
-## Cut a release
+## Releases
 
-1. **Wait for the release-please PR on `dev`** (auto-opened/updated after every merge). It's titled `chore(dev): release X.Y.Z`. Merge it.
-2. **Open a `dev → main` PR**:
-   ```bash
-   gh pr create --base main --head dev --title "chore(release): vX.Y.Z"
-   ```
-3. **Merge it.** `release-tag.yml` runs on main, creates the tag, and drafts a GitHub Release.
+Nothing to do. After each merge into `dev`, release-please updates the PR `chore(dev): release X.Y.Z`; it is merged automatically, then `release.yml` tags the version, publishes the GitHub release and moves `main` to it.
 
-`main` only ever receives merges from `dev` — enforced by `main-branch-guard.yml`.
+To review releases before they go out, set the repository variable `AUTO_RELEASE` to `false` and merge the release PR yourself.
 
 ## On-demand AI
 
@@ -55,4 +50,4 @@ In any PR or issue, comment `@claude review this for security` (or any prompt). 
 STATUS: DISABLED
 ```
 
-Disables CI, release-please, and release-tag workflows.
+Stops automatic merges and releases. CI checks keep running.

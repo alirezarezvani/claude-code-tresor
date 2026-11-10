@@ -10,8 +10,9 @@ UPDATED: 2025-11-04
 # 3. Commit and push
 #
 # Workflows affected:
-# - Claude Code Review
-# - Security Audit
+# - Automatic merges (automerge job in ci.yml)
+# - Releases and promotion to main (release.yml)
+# CI validation keeps running.
 #
 # To re-enable:
 # 1. Change STATUS to ENABLED

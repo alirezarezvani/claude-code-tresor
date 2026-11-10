@@ -1,0 +1,156 @@
+---
+name: Release
+
+# Runs on every push to dev. Three steps, each skipped when there is
+# nothing to do:
+#   1. validate  - the full CI (ci.yml) on the pushed commit.
+#   2. release   - publishes v<version.txt> if it has no tag yet (this
+#                  covers versions bumped by hand), then lets
+#                  release-please open or update the release PR, or tag
+#                  and publish the release once that PR is merged.
+#   3. promote   - fast-forwards main to the released commit, so main
+#                  always equals the latest release.
+# Merging the release PR is the release decision. ci.yml merges it
+# automatically unless the repo variable AUTO_RELEASE is "false".
+
+'on':
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: release-dev
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: write
+      pull-requests: write
+
+  release:
+    name: Release
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      tag: ${{ steps.result.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Honor workflow kill switch
+        id: kill
+        run: |
+          if grep -qE '^STATUS:[[:space:]]*DISABLED' .github/WORKFLOW_KILLSWITCH 2>/dev/null; then
+            echo "disabled=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::release disabled by .github/WORKFLOW_KILLSWITCH"
+          fi
+
+      - name: Publish version.txt if it has no release yet
+        id: manual
+        if: steps.kill.outputs.disabled != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT || github.token }}
+        run: |
+          version=$(tr -d '[:space:]' < version.txt)
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::version.txt content '$version' is not semver"
+            exit 1
+          fi
+          tag="v$version"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
+            echo "$tag already released"
+            exit 0
+          fi
+          # A merged release-please PR is tagged by release-please below.
+          pending=$(gh pr list --base dev --state merged \
+            --label 'autorelease: pending' --json number --jq length)
+          if [ "$pending" != "0" ]; then
+            echo "release-please will publish $tag"
+            exit 0
+          fi
+          notes="RELEASE-NOTES-$tag.md"
+          if [ -f "$notes" ]; then
+            gh release create "$tag" --target "$GITHUB_SHA" \
+              --title "Claude Code Tresor $tag" --notes-file "$notes"
+          else
+            gh release create "$tag" --target "$GITHUB_SHA" \
+              --title "Claude Code Tresor $tag" --generate-notes
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: release-please
+        id: rp
+        if: steps.kill.outputs.disabled != 'true'
+        uses: googleapis/release-please-action@v4
+        with:
+          # A personal access token lets CI run on the release PR; PRs
+          # opened with the default token start no workflows.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
+          target-branch: dev
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Result
+        id: result
+        env:
+          MANUAL_TAG: ${{ steps.manual.outputs.tag }}
+          RP_CREATED: ${{ steps.rp.outputs.release_created }}
+          RP_TAG: ${{ steps.rp.outputs.tag_name }}
+        run: |
+          tag="$MANUAL_TAG"
+          if [ "$RP_CREATED" = "true" ]; then tag="$RP_TAG"; fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "::notice::released: ${tag:-nothing}"
+
+  promote:
+    name: Promote to main
+    needs: release
+    if: needs.release.outputs.tag != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Pushing commits that change workflow files needs a token
+          # with the `workflows` permission; the default token lacks it.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
+
+      - name: Fast-forward main to the release
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT || github.token }}
+          TAG: ${{ needs.release.outputs.tag }}
+        run: |
+          git fetch --tags --force origin
+          sha=$(git rev-list -n 1 "$TAG")
+          # Plain push: git refuses anything that is not a fast-forward,
+          # so a diverged main is never overwritten.
+          if git push origin "$sha:refs/heads/main"; then
+            echo "::notice::main is now $TAG ($sha)"
+            exit 0
+          fi
+          echo "::warning::main has commits that dev lacks; opening a dev → main PR instead"
+          open=$(gh pr list --base main --head dev --state open --json number --jq '.[0].number // empty')
+          if [ -z "$open" ]; then
+            gh pr create --base main --head dev --title "chore(release): promote $TAG to main" \
+              --body "main could not be fast-forwarded to $TAG. Merge main into dev or resolve the divergence, then merge this PR."
+          else
+            echo "::notice::reusing PR #$open"
+          fi
+          exit 1
