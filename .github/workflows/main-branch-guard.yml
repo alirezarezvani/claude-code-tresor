@@ -20,9 +20,9 @@ jobs:
     steps:
       - name: Check source branch
         id: check
+        env:
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
-          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
-
           echo "::error::Direct PRs to 'main' are only allowed from 'dev' branch"
           echo "::error::Current source branch: $SOURCE_BRANCH"
           echo "::error::Please create PR to 'dev' instead, then 'dev' → 'main' for releases"
@@ -32,6 +32,9 @@ jobs:
       - name: Comment on PR
         if: failure()
         uses: actions/github-script@v7
+        env:
+          PR_REF: ${{ github.event.pull_request.head.ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -39,7 +42,7 @@ jobs:
 
             **Error**: Direct PRs to \`main\` are only allowed from \`dev\` branch.
 
-            **Current**: \`${{ github.event.pull_request.head.ref }}\` → \`main\` ❌
+            **Current**: \`${process.env.PR_REF}\` → \`main\` ❌
             **Required**: \`dev\` → \`main\` ✅
 
             ### Git Flow Strategy
@@ -60,7 +63,7 @@ jobs:
             1. **Close this PR**
             2. **Create PR to dev instead**:
                \`\`\`bash
-               gh pr create --base dev --title "${{ github.event.pull_request.title }}"
+               gh pr create --base dev --title "${process.env.PR_TITLE}"
                \`\`\`
             3. **After merging to dev**, create release PR:
                \`\`\`bash
